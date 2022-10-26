@@ -80,28 +80,27 @@ class LoginForm extends StatelessWidget {
                   style: TextStyle(color: blueColor),
                 )),
           ),
-          const SizedBox(height: defaultPadding),
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                await AuthController().signInWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text);
-              }
-            },
-            child: Text(
-              "Log In".toUpperCase(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 90.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await AuthController().signInWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text);
+                }
+              },
+              child: Text(
+                "Log In".toUpperCase(),
+              ),
             ),
           ),
-          const SizedBox(height: defaultPadding),
+          const SizedBox(height: 10.0),
           AlreadyHaveAnAccountCheck(
             press: () {
               Get.off(const SignUpScreen());
             },
           ),
-          const SizedBox(
-            height: 20,
-          )
         ],
       ),
     );

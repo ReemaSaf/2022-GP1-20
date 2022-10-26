@@ -37,7 +37,7 @@ class _ViewMap extends State<ViewMap> {
         backgroundColor: blueColor,
         child: const Icon(Icons.logout_rounded),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
           target: LatLng(24.71619956670347, 46.68385748947401),

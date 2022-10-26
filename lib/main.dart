@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'Homepage/viewmap.dart';
 import 'Welcome/welcome_screen.dart';
 import 'helpers/firebase_options.dart';
-import 'Homepage/navigation.dart';
 import 'others/constants.dart';
 
 Future<void> main() async {

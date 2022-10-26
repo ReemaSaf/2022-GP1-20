@@ -3,7 +3,10 @@ import 'viewmap.dart';
 //import '/Welcome/welcome_screen.dart'; ...
 
 class Nav extends StatefulWidget {
+  const Nav({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _NavState createState() => _NavState();
 }
 
@@ -11,10 +14,10 @@ class _NavState extends State<Nav> {
   int index = 0;
 
   final screens = [
-    ViewMap(),
-    Center(child: Text('plan a route', style: (TextStyle(fontSize: 72)))),
-    Center(child: Text('digital card', style: (TextStyle(fontSize: 72)))),
-    Center(child: Text('profile', style: (TextStyle(fontSize: 72)))),
+    const ViewMap(),
+    const Center(child: Text('plan a route', style: (TextStyle(fontSize: 72)))),
+    const Center(child: Text('digital card', style: (TextStyle(fontSize: 72)))),
+    const Center(child: Text('profile', style: (TextStyle(fontSize: 72)))),
   ];
 
   @override
@@ -23,8 +26,8 @@ class _NavState extends State<Nav> {
         body: screens[index],
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
-              indicatorColor: Color.fromARGB(126, 80, 177, 204),
-              labelTextStyle: MaterialStateProperty.all(TextStyle(
+              indicatorColor: const Color.fromARGB(126, 80, 177, 204),
+              labelTextStyle: MaterialStateProperty.all(const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Color(0xff273A69),
@@ -34,21 +37,22 @@ class _NavState extends State<Nav> {
               selectedIndex: index,
               onDestinationSelected: (index) =>
                   setState(() => this.index = index),
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              // ignore: prefer_const_literals_to_create_immutables
               destinations: [
-                NavigationDestination(
+                const NavigationDestination(
                   icon: Icon(Icons.map_outlined),
                   label: 'Map',
                 ),
-                NavigationDestination(
+                const NavigationDestination(
                   icon: Icon(Icons.train_outlined),
                   label: 'Plan a route',
                 ),
-                NavigationDestination(
+                const NavigationDestination(
                   icon: Icon(Icons.account_balance_wallet_outlined),
                   label: 'Digital Card',
                 ),
-                NavigationDestination(
+                const NavigationDestination(
                   icon: Icon(Icons.person),
                   label: 'Profile',
                 ),
