@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'viewmap.dart';
-//import '/Welcome/welcome_screen.dart'; ...
+import 'package:sekkah_app/Homepage/viewmap.dart';
 
 class Nav extends StatefulWidget {
   const Nav({super.key});
@@ -14,7 +13,7 @@ class _NavState extends State<Nav> {
   int index = 0;
 
   final screens = [
-    const ViewMap(),
+    ViewMap(),
     const Center(child: Text('plan a route', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('digital card', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('profile', style: (TextStyle(fontSize: 72)))),

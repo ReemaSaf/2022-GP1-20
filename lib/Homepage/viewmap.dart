@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sekkah_app/Register/signup_screen.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
+import 'package:sekkah_app/Homepage/navigation.dart';
 import '../helpers/map_locations.dart';
 
 class ViewMap extends StatefulWidget {
