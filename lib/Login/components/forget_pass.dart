@@ -102,7 +102,7 @@ class ResetForm extends StatelessWidget {
                 height: defaultPadding * 0.1,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                padding: const EdgeInsets.symmetric(horizontal: 115.0),
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -112,7 +112,9 @@ class ResetForm extends StatelessWidget {
                         Get.back();
                         Get.snackbar('Success',
                             'Password Reset link has been sent, Please check your Email.',
-                            backgroundColor: greenColor, duration: 6.seconds);
+                            backgroundColor: greenColor,
+                            colorText: blueColor,
+                            duration: 6.seconds);
                       }
                     }
                   },

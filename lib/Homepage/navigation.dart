@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sekkah_app/Homepage/viewmap.dart';
+import 'package:sekkah_app/others/constants.dart';
 
-class Nav extends StatefulWidget {
-  const Nav({super.key});
+class NavScreen extends StatefulWidget {
+  const NavScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _NavState createState() => _NavState();
+  _NavScreenState createState() => _NavScreenState();
 }
 
-class _NavState extends State<Nav> {
+class _NavScreenState extends State<NavScreen> {
   int index = 0;
 
   final screens = [
-    ViewMap(),
+    const ViewMap(),
     const Center(child: Text('plan a route', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('digital card', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('profile', style: (TextStyle(fontSize: 72)))),
@@ -25,11 +26,11 @@ class _NavState extends State<Nav> {
         body: screens[index],
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
-              indicatorColor: const Color.fromARGB(126, 80, 177, 204),
+              indicatorColor: greenColor,
               labelTextStyle: MaterialStateProperty.all(const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: Color(0xff273A69),
+                color: blueColor,
               ))),
           child: NavigationBar(
               height: 60,

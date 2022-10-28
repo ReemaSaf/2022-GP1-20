@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:sekkah_app/Register/signup_screen.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
-import 'package:sekkah_app/Homepage/navigation.dart';
-import '../helpers/map_locations.dart';
 
 const LatLng Khurais_Road = LatLng(24.740946376833584, 46.798506629342775);
 const LatLng Al_Hamra = LatLng(24.776695973800166, 46.777197831194556);
@@ -333,3 +331,97 @@ class _ViewMap extends State<ViewMap> {
     setState(() {});
   }
 }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:sekkah_app/Homepage/map_controller.dart';
+// //import 'package:firebase_auth/firebase_auth.dart';
+// //import 'package:get/get.dart';
+// //import 'package:sekkah_app/Register/signup_screen.dart';
+// //import 'package:sekkah_app/others/auth_controller.dart';
+// //import 'package:sekkah_app/others/constants.dart';
+// // ignore: unused_import
+// import 'package:sekkah_app/Homepage/navigation.dart';
+// import 'package:sekkah_app/helpers/stations_model.dart';
+// import 'package:sekkah_app/others/auth_controller.dart';
+// //import '../helpers/map_locations.dart';
+
+// class ViewMap extends StatefulWidget {
+//   const ViewMap({super.key});
+
+//   @override
+//   // ignore: library_private_types_in_public_api
+//   _ViewMap createState() => _ViewMap();
+// }
+
+// class _ViewMap extends State<ViewMap> {
+//   // ignore: unused_field
+//   late GoogleMapController _mapController;
+//   // MapStationsController mapController = Get.put(MapStationsController());
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetX<MapStationsController>(
+//         init: MapStationsController(),
+//         builder: (controller) {
+//           return Scaffold(
+//             appBar: AppBar(
+//               title: const Text('Map'),
+//               backgroundColor: Colors.blue,
+//               actions: [
+//                 TextButton(
+//                     onPressed: () => AuthController().signOut(),
+//                     child: Text(
+//                       "Signout",
+//                       style: TextStyle(color: Colors.white),
+//                     ))
+//               ],
+//             ),
+//             body: GoogleMap(
+//                 markers: Set<Marker>.of(controller.markers.values),
+//                 initialCameraPosition: const CameraPosition(
+//                   target: LatLng(24.71619956670347, 46.68385748947401),
+//                   zoom: 11,
+//                 ),
+//                 onMapCreated: (GoogleMapController controller) async {
+//                   String style = await DefaultAssetBundle.of(context)
+//                       .loadString('assets/mapstyle.json');
+//                   //customize your map style at: https://mapstyle.withgoogle.com/
+//                   controller.setMapStyle(style);
+//                   _mapController = controller;
+//                 }),
+//           );
+//           // return SafeArea(
+//           //   child: Scaffold(
+//           //     body: Column(
+//           //       children: [
+//           //         // TextButton(
+//           //         //     onPressed: () => controller.init(),
+//           //         //     child: Text("fetch values")),
+//           //         // Expanded(
+//           //         //   child: ListView.builder(
+//           //         //       shrinkWrap: true,
+//           //         //       itemCount: controller.allStations.length,
+//           //         //       itemBuilder: (context, index) {
+//           //         //         return Text(
+//           //         //           controller.allStations[index].Name,
+//           //         //           style: TextStyle(color: Colors.black),
+//           //         //         );
+//           //         //       }),
+//           //         // ),
+//           //       ],
+//           //     ),
+//           //     // body: ,
+//           //   ),
+//           // );
+//         });
+//   }
+// }
+
