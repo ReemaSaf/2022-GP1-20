@@ -92,6 +92,10 @@ const LatLng GOSI = LatLng(24.6865786216132, 46.718205888877705);
 const LatLng Ministry_Of_Finance = LatLng(24.65372808690647, 46.71666113915717);
 const LatLng AlSulimaniyah = LatLng(24.711752875638634, 46.70299012147462);
 const LatLng Salahaddin = LatLng(24.7286941806714, 46.70017119397027);
+const LatLng Terminal_5 =
+    LatLng(24.943735740641507, 46.70861834770829); //not sure
+const LatLng KAFD = LatLng(24.7676320, 46.6433677);
+const LatLng PNU = LatLng(24.8416078, 46.7173098);
 
 class ViewMap extends StatefulWidget {
   const ViewMap({Key? key}) : super(key: key);
@@ -157,30 +161,30 @@ class _ViewMap extends State<ViewMap> {
           addMarker('King Salman Oasis', King_Salman_Oasis);
           addMarker('Tuwaiq', Tuwaiq);
           addMarker('Granada', Granada);
-          addMarker('King_Abdulaziz_Road', King_Abdulaziz_Road);
-          addMarker('Harun_AlRasheed', Harun_AlRasheed);
-          addMarker('King_Abdullah_Road', King_Abdullah_Road);
-          addMarker('AlImam_Hospital', AlImam_Hospital);
-          addMarker('King_Khalid_Airport_Terminal_1_2',
+          addMarker('King Abdulaziz Road', King_Abdulaziz_Road);
+          addMarker('Harun AlRasheed', Harun_AlRasheed);
+          addMarker('King Abdullah Road', King_Abdullah_Road);
+          addMarker('AlImam Hospital', AlImam_Hospital);
+          addMarker('King Khalid International Airport Terminal 1&2',
               King_Khalid_Airport_Terminal_1_2);
-          addMarker('King_Khalid_Airport_Terminal_3_4',
+          addMarker('King Khalid International Airport Terminal 3&4',
               King_Khalid_Airport_Terminal_3_4);
-          addMarker('Hassan_Ibn_Tahit_Street', Hassan_Ibn_Tahit_Street);
-          addMarker('West_Station', West_Station);
+          addMarker('Hassan Ibn Tahit Street', Hassan_Ibn_Tahit_Street);
+          addMarker('West Station', West_Station);
           addMarker('AlSahafah', AlSahafah);
           addMarker('Khalid Ibn AlWaleed Road', Khalid_Ibn_AlWaleed_Road);
-          addMarker('National_Museum', National_Museum);
+          addMarker('National Museum', National_Museum);
           // addMarker('DK4', DK4);
-          addMarker('Passport_Department', Passport_Department);
+          addMarker('Passport Department', Passport_Department);
           addMarker('AlNaseem', An_Naseem);
           addMarker('Khashm AlAn', Khashm_AlAn);
           addMarker('Sultanah', Sultanah);
-          addMarker('AlDar_AlBaidha', AlDar_AlBaidha);
+          addMarker('AlDar AlBaidha', AlDar_AlBaidha);
           addMarker('First Industrial City', First_Industrial_City);
           addMarker('AlSulimaniyah', AlSulimaniyah);
           addMarker('AlHilla', AlHilla);
           addMarker('Aziziyah', Aziziyah);
-          addMarker('Officers_Club', Officers_Club);
+          addMarker('Officers Club', Officers_Club);
           addMarker('AlKhaleej', AlKhaleej);
           addMarker('SAPTCO', SAPTCO);
           addMarker('Southern_Ring_Road', Southern_Ring_Road);
@@ -206,13 +210,16 @@ class _ViewMap extends State<ViewMap> {
           addMarker('As Salam', As_Salam);
           addMarker('SABIC', SABIC);
           addMarker('Abu Dhabi Square', Abu_Dhabi_Square);
-          addMarker('Ad_Dhabab', Ad_Dhabab);
+          addMarker('Ad Dhabab', Ad_Dhabab);
           addMarker('GOSI', GOSI);
           addMarker('AlWizarat', AlWizarat);
           addMarker('MEW & A', Mew_and_A); //5A2
           addMarker('Ministry Of Defence', Ministry_Of_Defence); //defence
           addMarker('Ministry Of Finance', Ministry_Of_Finance);
           addMarker('Salahaddin', Salahaddin);
+          addMarker('King Khalid International Airport Terminal 5', Terminal_5);
+          addMarker('KAFD', KAFD);
+          addMarker('PNU', PNU);
         },
         polylines: _polyline,
         markers: _marker.values.toSet(),
@@ -294,6 +301,17 @@ class _ViewMap extends State<ViewMap> {
     National_Museum,
   ];
 
+  List<LatLng> yellow_line = [
+    King_Khalid_Airport_Terminal_1_2,
+    King_Khalid_Airport_Terminal_3_4,
+    Terminal_5,
+    PNU,
+    SABIC,
+    Uthman_bin_Affan_Road,
+    Ar_Rabi,
+    KAFD,
+  ];
+
   addMarker(String id, LatLng location) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -326,6 +344,11 @@ class _ViewMap extends State<ViewMap> {
 
     _polyline.add(Polyline(
         polylineId: PolylineId('4'), points: green_line, color: Colors.green));
+
+    _polyline.add(Polyline(
+        polylineId: PolylineId('6'),
+        points: yellow_line,
+        color: Colors.yellow));
 
     _marker[id] = marker;
     setState(() {});
