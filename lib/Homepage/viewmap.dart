@@ -18,7 +18,7 @@ const LatLng Ar_Rabi = LatLng(24.78629195996191, 46.66013792585841);
 const LatLng King_Abdullah_Financial_District =
     LatLng(24.767467334723097, 46.64305311230236);
 const LatLng AlYarmuk = LatLng(24.791197738712103, 46.76626014236253);
-const LatLng Qasr_AlHukm = LatLng(24.62898633421732, 46.71614447119793);
+const LatLng Qasr_AlHukm = LatLng(24.629451072535158, 46.716342959436645);
 const LatLng AlWurud = LatLng(24.728513713582622, 46.66647663657381);
 const LatLng STC = LatLng(24.72780279168026, 46.66402971583957);
 const LatLng An_Nuzhah = LatLng(24.748232849680114, 46.712524046659894);
@@ -57,7 +57,6 @@ const LatLng Sultanah = LatLng(24.61531601628477, 46.68652440053348);
 const LatLng AlDar_AlBaidha = LatLng(24.56012323575007, 46.77638578519186);
 const LatLng First_Industrial_City =
     LatLng(24.645128413131246, 46.73924760053349);
-const LatLng DK6 = LatLng(24.710032819169204, 46.708629158204296);
 const AlHilla = LatLng(24.63236794377303, 46.72130899552275);
 const Aziziyah = LatLng(24.587767444827744, 46.76085043121673);
 const Officers_Club = LatLng(24.698023843619875, 46.7180571582043);
@@ -86,6 +85,15 @@ const LatLng Courts_Complex = LatLng(24.626383321200905, 46.71147031596318);
 const LatLng AlAndalus = LatLng(24.7597732531332, 46.790691465801785);
 const LatLng As_Salam = LatLng(24.723618363309235, 46.810809833504834);
 const LatLng SABIC = LatLng(24.808213877339156, 46.711586173743825);
+const LatLng AlWizarat = LatLng(24.67610434565068, 46.71835829611576);
+const LatLng Mew_and_A = LatLng(24.6603043923217, 46.71769858358802);
+const LatLng Ministry_Of_Defence = LatLng(24.6676428850683, 46.71837036275971);
+const LatLng Abu_Dhabi_Square = LatLng(24.706231, 46.718126);
+const LatLng Ad_Dhabab = LatLng(24.70975189111837, 46.70861809542127);
+const LatLng GOSI = LatLng(24.6865786216132, 46.718205888877705);
+const LatLng Ministry_Of_Finance = LatLng(24.65372808690647, 46.71666113915717);
+const LatLng AlSulimaniyah = LatLng(24.711752875638634, 46.70299012147462);
+const LatLng Salahaddin = LatLng(24.7286941806714, 46.70017119397027);
 
 class ViewMap extends StatefulWidget {
   const ViewMap({Key? key}) : super(key: key);
@@ -171,7 +179,7 @@ class _ViewMap extends State<ViewMap> {
           addMarker('Sultanah', Sultanah);
           addMarker('AlDar_AlBaidha', AlDar_AlBaidha);
           addMarker('First Industrial City', First_Industrial_City);
-          addMarker('DK6', DK6);
+          addMarker('AlSulimaniyah', AlSulimaniyah);
           addMarker('AlHilla', AlHilla);
           addMarker('Aziziyah', Aziziyah);
           addMarker('Officers_Club', Officers_Club);
@@ -199,6 +207,14 @@ class _ViewMap extends State<ViewMap> {
           addMarker('AlAndalus', AlAndalus);
           addMarker('As Salam', As_Salam);
           addMarker('SABIC', SABIC);
+          addMarker('Abu Dhabi Square', Abu_Dhabi_Square);
+          addMarker('Ad_Dhabab', Ad_Dhabab);
+          addMarker('GOSI', GOSI);
+          addMarker('AlWizarat', AlWizarat);
+          addMarker('MEW & A', Mew_and_A); //5A2
+          addMarker('Ministry Of Defence', Ministry_Of_Defence); //defence
+          addMarker('Ministry Of Finance', Ministry_Of_Finance);
+          addMarker('Salahaddin', Salahaddin);
         },
         polylines: _polyline,
         markers: _marker.values.toSet(),
@@ -265,6 +281,21 @@ class _ViewMap extends State<ViewMap> {
     An_Naseem,
   ];
 
+  List<LatLng> green_line = [
+    MOE,
+    Salahaddin,
+    AlSulimaniyah,
+    Ad_Dhabab,
+    Abu_Dhabi_Square,
+    Officers_Club,
+    GOSI,
+    AlWizarat,
+    Ministry_Of_Defence,
+    Mew_and_A,
+    Ministry_Of_Finance,
+    National_Museum,
+  ];
+
   addMarker(String id, LatLng location) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -294,6 +325,9 @@ class _ViewMap extends State<ViewMap> {
         polylineId: PolylineId('3'),
         points: purple_line,
         color: Colors.purple));
+
+    _polyline.add(Polyline(
+        polylineId: PolylineId('4'), points: green_line, color: Colors.green));
 
     _marker[id] = marker;
     setState(() {});
