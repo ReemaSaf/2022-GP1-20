@@ -193,7 +193,7 @@ class _ViewMap extends State<ViewMap> {
           addMarker('King Khalid International Airport Terminal 3&4',
               King_Khalid_Airport_Terminal_3_4);
           addMarker('Hassan Ibn Tahit Street', Hassan_Ibn_Tahit_Street);
-          addMarker('West_Station', West_Station);
+          addMarker('West Station', West_Station);
           // addMarker('AlSahafah', AlSahafah);
           addMarker('Khalid Ibn AlWaleed Road', Khalid_Ibn_AlWaleed_Road);
           addMarker('National Museum', National_Museum);
@@ -253,7 +253,7 @@ class _ViewMap extends State<ViewMap> {
           addMarker('Ministry Of Interior', Ministry_Of_Interior);
           addMarker('Al Murabba', Al_Murabba);
           addMarker('Passport Department', Passport_Department);
-          addMarker('Al Washim', Al_Washim),
+          addMarker('Al Washim', Al_Washim);
           addMarker('Al Owd', Al_Owd);
           addMarker('King Khalid International Airport Terminal 5', Terminal_5);
           addMarker('KAFD', KAFD);
@@ -382,7 +382,7 @@ class _ViewMap extends State<ViewMap> {
   addMarker(String id, LatLng location) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
-      'assets/images/metroIcon.png',
+      'assets/images/Item.png',
     );
     var marker = Marker(
       markerId: MarkerId(id),
