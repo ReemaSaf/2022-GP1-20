@@ -94,6 +94,10 @@ const LatLng GOSI = LatLng(24.6865786216132, 46.718205888877705);
 const LatLng Ministry_Of_Finance = LatLng(24.65372808690647, 46.71666113915717);
 const LatLng AlSulimaniyah = LatLng(24.711752875638634, 46.70299012147462);
 const LatLng Salahaddin = LatLng(24.7286941806714, 46.70017119397027);
+const LatLng Terminal_5 =
+    LatLng(24.943735740641507, 46.70861834770829); //not sure
+const LatLng KAFD = LatLng(24.7676320, 46.6433677);
+const LatLng PNU = LatLng(24.8416078, 46.7173098);
 const LatLng SABB = LatLng(24.82972077842592, 46.61659757976025);
 const LatLng Dr_Sulaiman_Al_Habib =
     LatLng(24.811755538683347, 46.62551655092465);
@@ -186,7 +190,7 @@ class _ViewMap extends State<ViewMap> {
           addMarker('Al Iman Hospital', Al_Iman_Hospital);
           addMarker('King Khalid Airport terminal 1,2',
               King_Khalid_Airport_Terminal_1_2);
-          addMarker('King Khalid Airport Terminal 3,4',
+          addMarker('King Khalid International Airport Terminal 3&4',
               King_Khalid_Airport_Terminal_3_4);
           addMarker('Hassan Ibn Tahit Street', Hassan_Ibn_Tahit_Street);
           addMarker('West_Station', West_Station);
@@ -251,6 +255,9 @@ class _ViewMap extends State<ViewMap> {
           addMarker('Passport Department', Passport_Department);
           addMarker('Al Washim', Al_Washim),
           addMarker('Al Owd', Al_Owd);
+          addMarker('King Khalid International Airport Terminal 5', Terminal_5);
+          addMarker('KAFD', KAFD);
+          addMarker('PNU', PNU);
         },
         polylines: _polyline,
         markers: _marker.values.toSet(),
@@ -361,6 +368,17 @@ class _ViewMap extends State<ViewMap> {
     Ad_Dar_Al_Baida
   ];
 
+  List<LatLng> yellow_line = [
+    King_Khalid_Airport_Terminal_1_2,
+    King_Khalid_Airport_Terminal_3_4,
+    Terminal_5,
+    PNU,
+    SABIC,
+    Uthman_bin_Affan_Road,
+    Ar_Rabi,
+    KAFD,
+  ];
+
   addMarker(String id, LatLng location) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -400,6 +418,16 @@ class _ViewMap extends State<ViewMap> {
         polylineId: const PolylineId('5'),
         points: blue_line,
         color: Colors.blue));
+
+    _polyline.add(Polyline(
+        polylineId: PolylineId('6'),
+        points: yellow_line,
+        color: Colors.yellow));
+
+    _polyline.add(Polyline(
+        polylineId: PolylineId('6'),
+        points: yellow_line,
+        color: Colors.yellow));
 
     _marker[id] = marker;
     setState(() {});
