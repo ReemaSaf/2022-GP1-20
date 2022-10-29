@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:sekkah_app/Homepage/widget/panel_widget.dart';
 import 'package:sekkah_app/Register/signup_screen.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 const LatLng Khurais_Road = LatLng(24.740946376833584, 46.798506629342775);
 const LatLng Al_Hamra = LatLng(24.776695973800166, 46.777197831194556);
@@ -151,6 +153,7 @@ class _ViewMap extends State<ViewMap> {
         child: const Icon(Icons.logout_rounded),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      body: SlidingUpPanel(
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
           target: LatLng(24.71619956670347, 46.68385748947401),
@@ -261,6 +264,10 @@ class _ViewMap extends State<ViewMap> {
         },
         polylines: _polyline,
         markers: _marker.values.toSet(),
+      ),
+        panelBuilder: (controller) => PanelWidget(
+        controller: controller,
+        ),
       ),
     );
   }
