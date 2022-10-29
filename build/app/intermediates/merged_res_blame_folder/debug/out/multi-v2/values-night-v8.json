@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/razan/Documents/GitHub/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Users/yara/Desktop/SEKKAH/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/razan/Documents/GitHub/Sekkah/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/yara/Desktop/SEKKAH/Sekkah/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
