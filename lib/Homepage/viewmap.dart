@@ -130,14 +130,20 @@ class ViewMap extends StatefulWidget {
 }
 
 class _ViewMap extends State<ViewMap> {
+  final panelController=PanelController();
   // ignore: unused_field
   late GoogleMapController _mapController;
   // ignore: prefer_final_fields
   Map<String, Marker> _marker = {};
 
+
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+    final panelHeightClosed=MediaQuery.of(context).size.height*0.1;
+    final panelHeightOpen= MediaQuery.of(context).size.height*0.7;
+
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -154,6 +160,11 @@ class _ViewMap extends State<ViewMap> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: SlidingUpPanel(
+        controller: panelController,
+        maxHeight:panelHeightOpen ,
+        minHeight: panelHeightClosed,
+        parallaxEnabled: true,
+        parallaxOffset: .5,
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
           target: LatLng(24.71619956670347, 46.68385748947401),
@@ -267,7 +278,9 @@ class _ViewMap extends State<ViewMap> {
       ),
         panelBuilder: (controller) => PanelWidget(
         controller: controller,
+        panelController: panelController,
         ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
       ),
     );
   }
