@@ -1,5 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -29,11 +28,11 @@ class Stations {
 
   factory Stations.fromMap(Map<String, dynamic> map) {
     return Stations(
-      ID: map['ID'] as int,
-      Type: map['Type'] as String,
-      Name: map['Name'] as String,
+      ID: map['ID'],
+      Type: map['Type'],
+      Name: map['Name'],
       Location: map['Location'],
-      Available: map['Available'] as bool,
+      Available: map['Available'],
     );
   }
 

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sekkah_app/Homepage/navigation.dart';
-import 'package:sekkah_app/Homepage/viewmap.dart';
 import 'package:sekkah_app/main.dart';
-import 'package:sekkah_app/others/background.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,9 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateview() async {
-    await Future.delayed(Duration(microseconds: 1500), () {});
+    await Future.delayed(const Duration(microseconds: 1500), () {});
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: ((context) => MainPage())));
+        context, MaterialPageRoute(builder: ((context) => const MainPage())));
   }
 
   @override
