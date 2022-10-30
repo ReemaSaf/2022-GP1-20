@@ -42,7 +42,7 @@ dependencies:
   get: ^4.6.5
   google_maps_flutter: ^2.2.1
   flutter_svg: ^1.1.5
-
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
