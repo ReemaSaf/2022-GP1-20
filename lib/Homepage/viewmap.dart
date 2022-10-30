@@ -4,7 +4,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/others/map_controller.dart';
 import 'package:sekkah_app/helpers/stations_model.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../others/constants.dart';
+import 'widget/panel_widget.dart';
 
 class ViewMap extends StatefulWidget {
   const ViewMap({super.key});
@@ -15,6 +17,7 @@ class ViewMap extends StatefulWidget {
 }
 
 class _ViewMap extends State<ViewMap> {
+  final panelController = PanelController();
   // ignore: unused_field
   late GoogleMapController _mapController;
   MapStationsController controller = Get.put(MapStationsController());
@@ -26,6 +29,9 @@ class _ViewMap extends State<ViewMap> {
 
   @override
   Widget build(BuildContext context) {
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
+    final panelHeightOpen = MediaQuery.of(context).size.height * 0.7;
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Map'),
@@ -48,33 +54,45 @@ class _ViewMap extends State<ViewMap> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
 
-      body: StreamBuilder<List<Stations>?>(
-          stream: controller.getAllStations(),
-          builder: ((context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            controller.setAllStations = snapshot.data ?? [];
-            // ignore: avoid_print
-            print(controller.allStations);
+      body: SlidingUpPanel(
+        controller: panelController,
+        maxHeight: panelHeightOpen,
+        minHeight: panelHeightClosed,
+        parallaxEnabled: true,
+        parallaxOffset: .5,
+        body: StreamBuilder<List<Stations>?>(
+            stream: controller.getAllStations(),
+            builder: ((context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              controller.setAllStations = snapshot.data ?? [];
+              // ignore: avoid_print
+              print(controller.allStations);
 
-            return GoogleMap(
-                markers: Set<Marker>.of(controller.markers.values),
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(24.71619956670347, 46.68385748947401),
-                  zoom: 12,
-                ),
-                onMapCreated: (GoogleMapController controller) async {
-                  String style = await DefaultAssetBundle.of(context)
-                      .loadString('assets/mapstyle.json');
-                  //customize your map style at: https://mapstyle.withgoogle.com/
-                  controller.setMapStyle(style);
+              return GoogleMap(
+                  markers: Set<Marker>.of(controller.markers.values),
+                  initialCameraPosition: const CameraPosition(
+                    target: LatLng(24.71619956670347, 46.68385748947401),
+                    zoom: 12,
+                  ),
+                  onMapCreated: (GoogleMapController controller) async {
+                    String style = await DefaultAssetBundle.of(context)
+                        .loadString('assets/mapstyle.json');
+                    //customize your map style at: https://mapstyle.withgoogle.com/
+                    controller.setMapStyle(style);
 
-                  _mapController = controller;
+                    _mapController = controller;
 
-                  //polylines: _polyline,
-                });
-          })),
+                    //polylines: _polyline,
+                  });
+            })),
+        panelBuilder: (controller) => PanelWidget(
+          controller: controller,
+          panelController: panelController,
+        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+      ),
     );
   }
 }
