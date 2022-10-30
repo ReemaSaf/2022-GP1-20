@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/najdalnasrallah/Documents/GitHub/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rCA/values-en-rCA.xml",
+            "outputFile": "/Users/yara/Desktop/SEKKAH/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
-                    "source": "/Users/najdalnasrallah/.gradle/caches/transforms-3/52bdb465cd3537e0eb13c370deec4479/transformed/browser-1.4.0/res/values-en-rCA/values-en-rCA.xml",
+                    "source": "/Users/yara/.gradle/caches/transforms-3/52bdb465cd3537e0eb13c370deec4479/transformed/browser-1.4.0/res/values-en-rCA/values-en-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/najdalnasrallah/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/values-en-rCA/values-en-rCA.xml",
+                    "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/values-en-rCA/values-en-rCA.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

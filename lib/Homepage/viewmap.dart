@@ -15,7 +15,6 @@ class ViewMap extends StatefulWidget {
 }
 
 class _ViewMap extends State<ViewMap> {
-  final panelController=PanelController();
   // ignore: unused_field
   late GoogleMapController _mapController;
   MapStationsController controller = Get.put(MapStationsController());
@@ -25,15 +24,8 @@ class _ViewMap extends State<ViewMap> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
-    final panelHeightClosed=MediaQuery.of(context).size.height*0.1;
-    final panelHeightOpen= MediaQuery.of(context).size.height*0.7;
-
-
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Map'),
@@ -55,22 +47,6 @@ class _ViewMap extends State<ViewMap> {
         child: const Icon(Icons.logout_rounded),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      body: SlidingUpPanel(
-        controller: panelController,
-        maxHeight:panelHeightOpen ,
-        minHeight: panelHeightClosed,
-        parallaxEnabled: true,
-        parallaxOffset: .5,
-      body: GoogleMap(
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(24.71619956670347, 46.68385748947401),
-          zoom: 11,
-        ),
-        onMapCreated: (controller) async {
-          String style = await DefaultAssetBundle.of(context)
-              .loadString('assets/mapstyle.json');
-          //customize your map style at: https://mapstyle.withgoogle.com/
-          controller.setMapStyle(style);
 
       body: StreamBuilder<List<Stations>?>(
           stream: controller.getAllStations(),
@@ -102,7 +78,6 @@ class _ViewMap extends State<ViewMap> {
     );
   }
 }
-
 //    final Set<Polyline> _polyline = {};
 
 
@@ -148,4 +123,4 @@ class _ViewMap extends State<ViewMap> {
 //         polylineId: PolylineId('6'),
 //         points: yellow_line,
 //         color: Colors.yellow));
-// 
+// }
