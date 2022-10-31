@@ -19,9 +19,7 @@ class PanelWidget extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 12),
           buildDragHandle(),
-          const SizedBox(height: 15),
-          // buildAboutText(),
-          const SizedBox(height: 24),
+          const SizedBox(height: 5),
           builTabSection(context),
         ],
       );
@@ -47,8 +45,7 @@ class PanelWidget extends StatelessWidget {
         : panelController.open();
   }
 
-  Widget buildAboutText() => const Text('Welcome to Station');
-
+ 
   builTabSection(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.7,

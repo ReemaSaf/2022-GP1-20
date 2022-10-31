@@ -139,7 +139,7 @@ class _ViewMap extends State<ViewMap> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.13;
     final panelHeightOpen = MediaQuery.of(context).size.height * 0.7;
 
     return Scaffold(
@@ -157,6 +157,7 @@ class _ViewMap extends State<ViewMap> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: SlidingUpPanel(
+        color: Colors.grey.shade100,
         controller: panelController,
         maxHeight: panelHeightOpen,
         minHeight: panelHeightClosed,
