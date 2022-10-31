@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/yara/Desktop/SEKKAH/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "/Users/najdalnasrallah/Documents/GitHub/Sekkah/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/values-v16/values-v16.xml",
+                    "source": "/Users/najdalnasrallah/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
