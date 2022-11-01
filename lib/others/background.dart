@@ -8,7 +8,7 @@ class Background extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final String backGroundImage = "assets/images/HOME.png";
+  final String backGroundImage = "assets/images/sekkah-Bg.png";
 // show me what you removed from the database?
   @override
   Widget build(BuildContext context) {

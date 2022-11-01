@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
-import 'dart:developer';
+//import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,7 @@ class MapStationsController extends GetxController {
   void initMarker(Stations specify, String specifyId) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
-      'assets/images/80.png',
+      'assets/images/metro.png',
     );
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
@@ -221,13 +221,13 @@ class MapStationsController extends GetxController {
       }
     }
 
-    log(route2Stations.length.toString());
-    log(line2.length.toString());
+    //  log(route2Stations.length.toString());
+    //  log(line2.length.toString());
 
-    for (var element in route2Stations) {
-      log(element.Name);
-      log(element.ID.toString());
-    }
+    //  for (var element in route2Stations) {
+    //   log(element.Name);
+    //   log(element.ID.toString());
+    //   }
 
     //adding polylines to map
     _polyline.value.add(

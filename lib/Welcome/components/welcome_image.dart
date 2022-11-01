@@ -17,7 +17,7 @@ class WelcomeImage extends StatelessWidget {
             Expanded(
               flex: 8,
               child: Image.asset(
-                "assets/images/Perfect.png",
+                "assets/images/logo.png",
                 height: 320.0,
               ),
             ),

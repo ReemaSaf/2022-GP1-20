@@ -66,12 +66,12 @@ class AuthController {
   Future<void> signUpAsGuest() async {
     try {
       await _auth.signInAnonymously(); // continue as guest
-      UserModel user =
-          UserModel(email: 'guest', firstName: "guest", lastName: 'guest');
-      _firestore
-          .collection('Passengers')
-          .doc(_auth.currentUser!.uid)
-          .set(user.toMap());
+      // UserModel user =
+      //     UserModel(email: 'guest', firstName: "guest", lastName: 'guest');
+      // _firestore
+      //     .collection('Passengers')
+      //     .doc(_auth.currentUser!.uid)
+      //     .set(user.toMap());
     } on Exception catch (err) {
       Get.snackbar("error", err.toString());
     }

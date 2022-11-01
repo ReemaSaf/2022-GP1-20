@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               ),
             )),
         home: AnimatedSplashScreen(
-            splash: "assets/images/BEST.png",
+            splash: "assets/images/splash.png",
             duration: 3000,
             splashTransition: SplashTransition.scaleTransition,
             backgroundColor: Colors.white,
