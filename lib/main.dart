@@ -50,10 +50,11 @@ class MyApp extends StatelessWidget {
               ),
             )),
         home: AnimatedSplashScreen(
-            splash: "assets/images/logosekkah.png",
+            splash: "assets/images/BEST.png",
             duration: 3000,
             splashTransition: SplashTransition.scaleTransition,
             backgroundColor: Colors.white,
+            splashIconSize: 200,
             nextScreen: const MainPage()),
       );
 }

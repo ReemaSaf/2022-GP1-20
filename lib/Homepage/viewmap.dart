@@ -1,10 +1,14 @@
+// ignore_for_file: unused_local_variable
+
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/others/map_controller.dart';
 import 'package:sekkah_app/helpers/stations_model.dart';
-import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+// ignore: unused_import
+import '../others/auth_controller.dart';
 import '../others/constants.dart';
 import 'widget/panel_widget.dart';
 
@@ -18,42 +22,37 @@ class ViewMap extends StatefulWidget {
 
 class _ViewMap extends State<ViewMap> {
   final panelController = PanelController();
+
   // ignore: unused_field
   late GoogleMapController _mapController;
   MapStationsController controller = Get.put(MapStationsController());
-  // MapStationsController mapController = Get.put(MapStationsController());
   @override
   void initState() {
     super.initState();
   }
 
+  RxBool showMarkers = true.obs;
+  final panelHeightClosed = Get.height * 0.1;
+  final panelHeightOpen = Get.height * 0.7;
   @override
   Widget build(BuildContext context) {
-    final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
-    final panelHeightOpen = MediaQuery.of(context).size.height * 0.7;
-
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Map'),
-      //   backgroundColor: Colors.blue,
-      //   elevation: 0,
-      //   actions: [
-      //     TextButton(
-      //         onPressed: () => AuthController().signOut(),
-      //         child: const Text(
-      //           "Signout",
-      //           style: TextStyle(color: Colors.white),
-      //         ))
-      //   ],
-      // ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () => AuthController().signOut(),
+        onPressed: () async {
+          await AuthController().signOut();
+          // showMarkers.value = !showMarkers.value;
+
+          // log(controller.route1Stations.length.toString());
+          // log(controller.route2Stations.length.toString());
+          // log(controller.route3Stations.length.toString());
+          // log(controller.route4Stations.length.toString());
+          // log(controller.route5Stations.length.toString());
+          // log(controller.route6Stations.length.toString());
+        },
         backgroundColor: blueColor,
-        child: const Icon(Icons.logout_rounded),
+        child: const Icon(Icons.login_rounded),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-
       body: SlidingUpPanel(
         controller: panelController,
         maxHeight: panelHeightOpen,
@@ -61,30 +60,49 @@ class _ViewMap extends State<ViewMap> {
         parallaxEnabled: true,
         parallaxOffset: .5,
         body: StreamBuilder<List<Stations>?>(
+            initialData: controller.allStations,
             stream: controller.getAllStations(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
               controller.setAllStations = snapshot.data ?? [];
+              if (controller.allStations.isNotEmpty) {
+                initMarkers();
+              }
               // ignore: avoid_print
-              print(controller.allStations);
+              // print(controller.allStations);
 
-              return GoogleMap(
-                  markers: Set<Marker>.of(controller.markers.values),
-                  initialCameraPosition: const CameraPosition(
-                    target: LatLng(24.71619956670347, 46.68385748947401),
-                    zoom: 12,
-                  ),
-                  onMapCreated: (GoogleMapController controller) async {
-                    String style = await DefaultAssetBundle.of(context)
-                        .loadString('assets/mapstyle.json');
-                    //customize your map style at: https://mapstyle.withgoogle.com/
-                    controller.setMapStyle(style);
+              return FutureBuilder<void>(
+                  future: controller.markers.isEmpty ? initMarkers() : null,
+                  builder: (context, markersSnapshot) {
+                    if (markersSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return Obx(() {
+                      return GoogleMap(
+                          polylines: controller.polyline,
+                          markers: showMarkers.value
+                              ? Set<Marker>.of(controller.markers.values)
+                              : Set<Marker>.of(controller.emptyMarkers.values),
+                          initialCameraPosition: const CameraPosition(
+                            target:
+                                LatLng(24.71619956670347, 46.68385748947401),
+                            zoom: 11,
+                          ),
+                          // polylines: ,
+                          onMapCreated: (GoogleMapController controller) async {
+                            String style = await DefaultAssetBundle.of(context)
+                                .loadString('assets/mapstyle.json');
+                            //customize your map style at: https://mapstyle.withgoogle.com/
+                            controller.setMapStyle(style);
 
-                    _mapController = controller;
+                            _mapController = controller;
 
-                    //polylines: _polyline,
+                            //polylines: _polyline,
+                          });
+                    });
                   });
             })),
         panelBuilder: (controller) => PanelWidget(
@@ -95,50 +113,14 @@ class _ViewMap extends State<ViewMap> {
       ),
     );
   }
+
+  Future<void> initMarkers() async {
+    controller.allStations.isEmpty ? null : await 2.seconds.delay();
+    await controller.getAllContains();
+    await controller.getAllLines();
+    controller.setPolyLineData();
+    for (var element in controller.allStations) {
+      controller.initMarker(element, "Station_${element.ID}");
+    }
+  }
 }
-//    final Set<Polyline> _polyline = {};
-
-
-//     List<LatLng> red_line = [];
-//     List<LatLng> orange_line = [];
-//      List<LatLng> purple_line = [];
-//      List<LatLng> green_line = [];
-//      List<LatLng> blue_line = [];
-//       List<LatLng> yellow_line = [];
-
-
-//        _polyline.add(
-//       Polyline(
-//           polylineId: PolylineId('1'), points: red_line, color: Colors.red),
-//     );
-
-//     _polyline.add(Polyline(
-//         polylineId: const PolylineId('2'),
-//         points: orange_line,
-//         color: Colors.orange));
-
-//     _polyline.add(Polyline(
-//         polylineId: const PolylineId('3'),
-//         points: purple_line,
-//         color: Colors.purple));
-
-//     _polyline.add(Polyline(
-//         polylineId: const PolylineId('4'),
-//         points: green_line,
-//         color: Colors.green));
-
-//     _polyline.add(Polyline(
-//         polylineId: const PolylineId('5'),
-//         points: blue_line,
-//         color: Colors.blue));
-
-//     _polyline.add(Polyline(
-//         polylineId: PolylineId('6'),
-//         points: yellow_line,
-//         color: Colors.yellow));
-
-//     _polyline.add(Polyline(
-//         polylineId: PolylineId('6'),
-//         points: yellow_line,
-//         color: Colors.yellow));
-// }
