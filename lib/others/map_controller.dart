@@ -11,7 +11,7 @@ class MapStationsController extends GetxController {
   List<Stations> get allStations => _allStations.value;
   set setAllStations(List<Stations> value) => _allStations.value = value;
 
-  Stream<List<Stations>> getAllStations() {
+  Stream<List<Stations>> getAllStations() { 
     return FirebaseFirestore.instance
         .collection('Stations')
         .snapshots()
@@ -20,7 +20,9 @@ class MapStationsController extends GetxController {
             }).toList());
   }
 
-  void initMarker(Stations specify, String specifyId) async {
+  
+
+  void initMarker(Stations specify, String specifyId) async { 
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
       'assets/images/Itemmetro.png',

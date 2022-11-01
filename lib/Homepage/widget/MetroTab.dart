@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../helpers/station_controller.dart';
 
-class MetroTab extends StatelessWidget {
+class MetroTab extends StatefulWidget {
   const MetroTab({super.key});
 
   @override
+  State<MetroTab> createState() => _MetroTabState();
+}
+
+class _MetroTabState extends State<MetroTab> {
+  var Busstations= Get.put(StationsController());
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Busstations.stations_loading.isTrue
+        ? const Center(child: CircularProgressIndicator())
+        :Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: ListView.builder(
-          itemCount: 10,
+          itemCount: Busstations.MetroStations.length,
           itemBuilder: ((context, index) => Container(
                 padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.all(8),
@@ -22,14 +32,14 @@ class MetroTab extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Metro Station',
+                      Text('${Busstations.MetroStations[index]['Name']}',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle1!
                               .copyWith(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black45)),
-                      Text('2.1 km',
+                      Text('${Busstations.MetroStations[index]['Available']}',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle1!
@@ -38,6 +48,6 @@ class MetroTab extends StatelessWidget {
                   ),
                 ),
               ))),
-    );
+    ));
   }
 }

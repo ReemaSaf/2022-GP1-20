@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../helpers/station_controller.dart';
 import 'BusTab.dart';
 import 'MetroTab.dart';
 
@@ -12,8 +14,11 @@ class TabSection extends StatefulWidget {
 class _TabSectionState extends State<TabSection>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  var Busstations= Get.put(StationsController());
   @override
   void initState() {
+    Busstations.get_bus_stations();
+    Busstations.get_Metro_stations();
     super.initState();
     tabController = TabController(length: 2, vsync: this);
   }
