@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sekkah_app/Homepage/widget/TabSection.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatelessWidget {
@@ -18,9 +19,8 @@ class PanelWidget extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 12),
           buildDragHandle(),
-          const SizedBox(height: 15),
-          buildAboutText(),
-          const SizedBox(height: 24),
+          const SizedBox(height: 5),
+          builTabSection(context),
         ],
       );
 
@@ -45,23 +45,10 @@ class PanelWidget extends StatelessWidget {
         : panelController.open();
   }
 
-  Widget buildAboutText() => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              'Nearby Stations',
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromRGBO(39, 58, 105, 1),
-                  fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 12),
-            Text(
-              'fbfbfbfbfbfbbf',
-            ),
-          ],
-        ),
-      );
+  builTabSection(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.7,
+      child: const TabSection(),
+    );
+  }
 }

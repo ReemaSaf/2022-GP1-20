@@ -1,23 +1,19 @@
-// ignore_for_file: unused_local_variable
-
-import 'dart:developer';
+//import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/others/map_controller.dart';
-import 'package:sekkah_app/helpers/stations_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-// ignore: unused_import
+import 'package:sekkah_app/Homepage/widget/panel_widget.dart';
+import 'package:sekkah_app/others/constants.dart';
+import '../helpers/stations_model.dart';
 import '../others/auth_controller.dart';
-import '../others/constants.dart';
-import 'widget/panel_widget.dart';
 
 class ViewMap extends StatefulWidget {
-  const ViewMap({super.key});
+  const ViewMap({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ViewMap createState() => _ViewMap();
+  State<ViewMap> createState() => _ViewMap();
 }
 
 class _ViewMap extends State<ViewMap> {
@@ -54,6 +50,7 @@ class _ViewMap extends State<ViewMap> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: SlidingUpPanel(
+        color: Colors.grey.shade100,
         controller: panelController,
         maxHeight: panelHeightOpen,
         minHeight: panelHeightClosed,
@@ -70,7 +67,7 @@ class _ViewMap extends State<ViewMap> {
               if (controller.allStations.isNotEmpty) {
                 initMarkers();
               }
-              // ignore: avoid_print
+
               // print(controller.allStations);
 
               return FutureBuilder<void>(
