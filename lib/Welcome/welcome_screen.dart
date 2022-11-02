@@ -29,7 +29,7 @@ class MobileWelcomeScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const SizedBox(
-          height: 30,
+          height: 70,
         ),
         const WelcomeImage(),
         Row(

@@ -10,21 +10,21 @@ class WelcomeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: defaultPadding * 1.5),
+        const SizedBox(height: defaultPadding * 7.0),
         Row(
           children: [
-            // const Spacer(),
+            const Spacer(),
             Expanded(
-              flex: 8,
+              flex: 16,
               child: Image.asset(
-                "assets/images/logo.png",
-                height: 320.0,
+                "assets/images/splash.png",
+                height: 265.0,
               ),
             ),
-            // const Spacer(),
+            const Spacer(),
           ],
         ),
-        // const SizedBox(height: defaultPadding * 0.3),
+        const SizedBox(height: defaultPadding * 0.5),
       ],
     );
   }

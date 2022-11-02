@@ -51,10 +51,11 @@ class MyApp extends StatelessWidget {
             )),
         home: AnimatedSplashScreen(
             splash: "assets/images/splash.png",
-            duration: 3000,
+            duration: 2500,
             splashTransition: SplashTransition.scaleTransition,
             backgroundColor: Colors.white,
-            splashIconSize: 200,
+            splashIconSize: 230,
+            centered: true,
             nextScreen: const MainPage()),
       );
 }

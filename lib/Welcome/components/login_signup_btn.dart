@@ -15,7 +15,7 @@ class LoginAndSignupBtn extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: ElevatedButton(
             onPressed: () {
               Get.to(const LoginScreen());
@@ -26,9 +26,9 @@ class LoginAndSignupBtn extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: ElevatedButton(
             onPressed: () {
               Get.to(const SignUpScreen());
@@ -41,7 +41,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8.0),
+        // const SizedBox(height: 0.5),
         TextButton(
             onPressed: () async {
               await AuthController().signUpAsGuest();

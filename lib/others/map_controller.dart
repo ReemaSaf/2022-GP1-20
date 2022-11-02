@@ -8,17 +8,24 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/helpers/contains_model.dart';
 import 'package:sekkah_app/helpers/line_model.dart';
+import '../helpers/bus_ model.dart';
 import '../helpers/stations_model.dart';
 
 class MapStationsController extends GetxController {
-  Rx<Map<MarkerId, Marker>> _markers = Rx<Map<MarkerId, Marker>>({});
-  Map<MarkerId, Marker> get markers => _markers.value;
+  Rx<Map<MarkerId, Marker>> _allMarkers = Rx<Map<MarkerId, Marker>>({});
+  Map<MarkerId, Marker> get allMarkers => _allMarkers.value;
+  Rx<Map<MarkerId, Marker>> _stationMarkers = Rx<Map<MarkerId, Marker>>({});
+  Map<MarkerId, Marker> get stationMarkers => _stationMarkers.value;
+  Rx<Map<MarkerId, Marker>> _busMarkers = Rx<Map<MarkerId, Marker>>({});
+  Map<MarkerId, Marker> get busMarkers => _busMarkers.value;
   Map<MarkerId, Marker> emptyMarkers = {};
   Rx<List<Stations>> _allStations = Rx<List<Stations>>([]);
   List<Stations> get allStations => _allStations.value;
+  Rx<List<BusModel>> _allBuses = Rx<List<BusModel>>([]);
+  List<BusModel> get allBuses => _allBuses.value;
   Rx<List<LineModel>> _allLines = Rx<List<LineModel>>([]);
   List<LineModel> get allLines => _allLines.value;
-
+  set setAllBuses(List<BusModel> value) => _allBuses.value = value;
   set setAllStations(List<Stations> value) => _allStations.value = value;
   Rx<Set<Polyline>> _polyline = Rx<Set<Polyline>>({});
   Set<Polyline> get polyline => _polyline.value;
@@ -67,7 +74,16 @@ class MapStationsController extends GetxController {
             }).toList());
   }
 
-  void initMarker(Stations specify, String specifyId) async {
+  Stream<List<BusModel>> getAllBuses() {
+    return FirebaseFirestore.instance
+        .collection("Bus")
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              return BusModel.fromMap(doc.data());
+            }).toList());
+  }
+
+  void initStationMarkers(Stations specify, String specifyId) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
       'assets/images/metro.png',
@@ -80,7 +96,30 @@ class MapStationsController extends GetxController {
       infoWindow: InfoWindow(title: 'Metro Station', snippet: specify.Name),
       icon: markerIcon,
     );
-    _markers.value[markerId] = marker;
+    _stationMarkers.value[markerId] = marker;
+  }
+
+  void initBusMarkers(BusModel specify, String specifyId) async {
+    var markerIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      'assets/images/bus.png',
+    );
+    var markerIdVal = specifyId;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(specify.Location.latitude, specify.Location.longitude),
+      infoWindow: InfoWindow(
+          title: 'Bus Station', snippet: "${specify.Name} ${specify.Number}"),
+      icon: markerIcon,
+    );
+    _busMarkers.value[markerId] = marker;
+  }
+
+  void setAllMarkers() {
+    _allMarkers.value.clear();
+    _allMarkers.value.addAll(stationMarkers);
+    _allMarkers.value.addAll(busMarkers);
   }
 
   void setPolyLineData() {
@@ -223,7 +262,6 @@ class MapStationsController extends GetxController {
 
     //  log(route2Stations.length.toString());
     //  log(line2.length.toString());
-
     //  for (var element in route2Stations) {
     //   log(element.Name);
     //   log(element.ID.toString());
@@ -233,12 +271,14 @@ class MapStationsController extends GetxController {
     _polyline.value.add(
       Polyline(
           polylineId: const PolylineId('1'),
+          width: 4,
           points:
               geoPointToLatLng(route1Stations.map((e) => e.Location).toList()),
           color: Colors.blue),
     );
     _polyline.value.add(
       Polyline(
+          width: 4,
           polylineId: const PolylineId('2'),
           points:
               geoPointToLatLng(route2Stations.map((e) => e.Location).toList()),
@@ -246,6 +286,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
+          width: 4,
           polylineId: const PolylineId('3'),
           points:
               geoPointToLatLng(route3Stations.map((e) => e.Location).toList()),
@@ -253,6 +294,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
+          width: 6,
           polylineId: const PolylineId('4'),
           points:
               geoPointToLatLng(route4Stations.map((e) => e.Location).toList()),
@@ -260,6 +302,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
+          width: 4,
           polylineId: const PolylineId('5'),
           points:
               geoPointToLatLng(route5Stations.map((e) => e.Location).toList()),
@@ -267,6 +310,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
+          width: 4,
           polylineId: const PolylineId('6'),
           points:
               geoPointToLatLng(route6Stations.map((e) => e.Location).toList()),

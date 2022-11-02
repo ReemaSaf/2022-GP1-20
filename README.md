@@ -1,16 +1,30 @@
-# sekkah_app
 
-A new Flutter project.
+PROJECT TITLE :  
 
-## Getting Started
+## SEKKAH - سِكّة 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+- INTRODUCTION : 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## The Riyadh Metro is a rapid transit system that would serve as Riyadh's public transportation backbone. In the near future, Riyadh's metro will launch officially. Yet, people have no clear guidance on the lines and routes of Riyadh's buses and metro stations, nor their departure information. For that reason, a technological solution is an utmost necessity, as it offers an efficient approach by implementing a mobile-based application that provides people with the services and features of Riyadh's Metro.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+- TECHNOLOGY :
+
+## Using Flutter and Dart as a new hybrid mobile programming language.
+
+
+
+- LAUNCHING INSTRUCTIONS : 
+
+## To launch the code using Visual Studio Code, you must do the following : 
+
+## - Navigate to the lib directory
+## - Open the main.dart file
+## - Make sure the emulator is turned on from the bottom status bar
+## - Click on the run tab , then choose "Start Debugging"
+## - The application will start running in a few moments, just wait..
+  
+
+
+

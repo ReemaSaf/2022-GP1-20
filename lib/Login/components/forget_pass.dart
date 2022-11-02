@@ -16,7 +16,7 @@ class ResetForm extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
-  final String backGroundImage = "assets/images/HOME.png";
+  final String backGroundImage = "assets/images/sekkah-Bg.png";
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class ResetForm extends StatelessWidget {
                   'Forgot Password ?',
                   style: TextStyle(
                       color: greenColor,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       fontSize: 32),
                 ),
               ),
@@ -66,7 +66,7 @@ class ResetForm extends StatelessWidget {
                   'Please enter your email to receive a password reset link.',
                   style: TextStyle(
                       color: blueColor,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.w500,
                       fontSize: 14),
                 ),
               ),
