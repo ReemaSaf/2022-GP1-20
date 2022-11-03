@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "423820409744",
+    "project_id": "sekkahgp",
+    "storage_bucket": "sekkahgp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423820409744:android:681238d5d61bda82b29115",
+        "android_client_info": {
+          "package_name": "com.GP.sekkah_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423820409744-v57amik6q1rkia1mchila8iufgh05cs7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl6oRHwYV_nc-lQpPZ9s8b2FYH2rsG0xE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423820409744-v57amik6q1rkia1mchila8iufgh05cs7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
