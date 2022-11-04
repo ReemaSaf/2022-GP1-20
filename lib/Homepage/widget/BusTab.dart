@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import '../../helpers/station_controller.dart';
 
 class BusTab extends StatefulWidget {
-  const BusTab({super.key});
+  const BusTab({
+    super.key,
+  });
 
   @override
   State<BusTab> createState() => _BusTabState();
@@ -20,7 +22,7 @@ class _BusTabState extends State<BusTab> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.grey.shade100,
-            body: Busstations.BusStations.length == 0
+            body: Busstations.BusStations.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,6 +38,7 @@ class _BusTabState extends State<BusTab> {
                   )
                 : ListView.builder(
                     itemCount: Busstations.BusStations.length,
+<<<<<<< HEAD
                     itemBuilder: ((context, index) => InkWell(
                           onTap: () {
                             Busstations.get_bus_stations();
@@ -70,9 +73,46 @@ class _BusTabState extends State<BusTab> {
                                   //         .copyWith(color: Colors.black45)),
                                 ],
                               ),
+=======
+                    itemBuilder: ((context, index) {
+                      final station = Busstations.BusStations[index];
+
+                      return InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    '${station.Name}'
+                                    ' '
+                                    '${station.Number}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black)),
+                                Text('${station.Distance.toPrecision(2)}km',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(color: Colors.black)),
+                              ],
+>>>>>>> 17a56efaba688019ffc6bee15f0168d95481b862
                             ),
                           ),
-                        ))),
+                        ),
+                      );
+                    })),
           ));
   }
 }
