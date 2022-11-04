@@ -31,8 +31,12 @@ class _TabSectionState extends State<TabSection>
   void _asyncMethod() async {
     await provider.locationFetch(context).then((value) {
       if (value != null) {
-        Busstations.get_bus_stations();
-        // Busstations.get_Metro_stations();
+        if (Busstations.BusStations.isEmpty) {
+          Busstations.get_bus_stations();
+          Busstations.get_Metro_stations();
+        } else {
+          return;
+        }
       }
     });
   }

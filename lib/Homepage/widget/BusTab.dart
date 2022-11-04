@@ -38,7 +38,7 @@ class _BusTabState extends State<BusTab> {
                     itemCount: Busstations.BusStations.length,
                     itemBuilder: ((context, index) {
                       final station = Busstations.BusStations[index];
-                      final distance = Busstations.BusdistanceList[index];
+
                       return InkWell(
                         child: Container(
                           padding: const EdgeInsets.all(8),
@@ -63,8 +63,7 @@ class _BusTabState extends State<BusTab> {
                                         .copyWith(
                                             fontWeight: FontWeight.normal,
                                             color: Colors.black)),
-                                Text(
-                                    '${Busstations.BusdistanceList[index].toPrecision(2)}km',
+                                Text('${station.Distance.toPrecision(2)}km',
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
