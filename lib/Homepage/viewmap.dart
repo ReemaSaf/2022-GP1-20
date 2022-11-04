@@ -24,12 +24,16 @@ class ViewMap extends StatefulWidget {
 class _ViewMap extends State<ViewMap> {
   final panelController = PanelController();
 
-  // ignore: unused_field
   late GoogleMapController _mapController;
   MapStationsController controller = Get.put(MapStationsController());
+  BitmapDescriptor? icon;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await setUserMarker();
+    });
   }
 
   RxBool showMetro = true.obs;
@@ -48,6 +52,14 @@ class _ViewMap extends State<ViewMap> {
     } else if (!showMetro.value && !showBus.value) {
       markersType.value = MarkersToShow.none;
     }
+  }
+
+  Future<void> setUserMarker() async {
+    await BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(), 'assets/images/icons.png')
+        .then((value) {
+      icon = value;
+    });
   }
 
   @override
@@ -149,6 +161,7 @@ class _ViewMap extends State<ViewMap> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: SlidingUpPanel(
+        isDraggable: false,
         color: Colors.grey.shade100,
         controller: panelController,
         maxHeight: panelHeightOpen,
@@ -201,8 +214,7 @@ class _ViewMap extends State<ViewMap> {
                                           Marker(
                                               markerId:
                                                   const MarkerId('UserId'),
-                                              icon: BitmapDescriptor
-                                                  .defaultMarker,
+                                              icon: icon!,
                                               position: LatLng(
                                                   location!.latitude!,
                                                   location.longitude!)),

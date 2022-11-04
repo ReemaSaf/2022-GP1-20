@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import '../../helpers/station_controller.dart';
 
 class BusTab extends StatefulWidget {
-  const BusTab({super.key});
+  const BusTab({
+    super.key,
+  });
 
   @override
   State<BusTab> createState() => _BusTabState();

@@ -8,7 +8,9 @@ import 'BusTab.dart';
 import 'MetroTab.dart';
 
 class TabSection extends StatefulWidget {
-  const TabSection({super.key});
+  const TabSection({
+    super.key,
+  });
 
   @override
   State<TabSection> createState() => _TabSectionState();

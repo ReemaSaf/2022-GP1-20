@@ -15,6 +15,7 @@ class PanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
+        physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         controller: controller,
         children: <Widget>[
@@ -26,31 +27,28 @@ class PanelWidget extends StatelessWidget {
         ],
       );
 
-
-
-Widget buildAboutText()=> Container(
-padding: const EdgeInsets.symmetric(horizontal: 24),
-child: Column(
-crossAxisAlignment:CrossAxisAlignment.start,
-children: const <Widget>[
-  SizedBox(height: 9),
-  Text(
-    'Nearby Stations',
-    style: TextStyle(fontWeight: FontWeight.w600 ,fontSize: 30, color: blueColor),
-  ),
-  SizedBox(height: 12),
-  
-],
-),
-
-);
+  Widget buildAboutText() => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const <Widget>[
+            SizedBox(height: 9),
+            Text(
+              'Nearby Stations',
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: 30, color: blueColor),
+            ),
+            SizedBox(height: 12),
+          ],
+        ),
+      );
 
   Widget buildDragHandle() => GestureDetector(
         // ignore: sort_child_properties_last
         child: Center(
           child: Container(
-            width: 30,
-            height: 5,
+            width: 50,
+            height: 10,
             decoration: BoxDecoration(
               color: Colors.grey[300],
               borderRadius: BorderRadius.circular(12),
