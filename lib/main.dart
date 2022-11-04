@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sekkah_app/Welcome/welcome_screen.dart';
-import 'Homepage/components/user_nav.dart';
+import 'Welcome/components/state_checker.dart';
 import 'helpers/firebase_options.dart';
 import 'others/constants.dart';
 
@@ -51,10 +51,10 @@ class MyApp extends StatelessWidget {
             )),
         home: AnimatedSplashScreen(
             splash: "assets/images/splash.png",
-            duration: 2500,
+            duration: 3000,
             splashTransition: SplashTransition.scaleTransition,
             backgroundColor: Colors.white,
-            splashIconSize: 230,
+            splashIconSize: 145,
             centered: true,
             nextScreen: const MainPage()),
       );
@@ -79,7 +79,9 @@ class _MainpageState extends State<MainPage> {
                 child: CircularProgressIndicator(),
               );
             }
-            return snapshot.hasData ? const NavScreen() : const WelcomeScreen();
+            return snapshot.hasData
+                ? UserStateChecker()
+                : const WelcomeScreen();
           },
         ),
       );

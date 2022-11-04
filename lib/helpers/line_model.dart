@@ -1,25 +1,26 @@
 import 'dart:convert';
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
+
 class LineModel {
+  String Color;
   double Distance;
-  String Name;
+
   LineModel({
+    required this.Color,
     required this.Distance,
-    required this.Name,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'Color': Color,
       'Distance': Distance,
-      'Name': Name,
     };
   }
 
   factory LineModel.fromMap(Map<String, dynamic> map) {
     return LineModel(
+      Color: map['Color'],
       Distance: double.parse((map['Distance'].toString())),
-      Name: map['Name'],
     );
   }
 

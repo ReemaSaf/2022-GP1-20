@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/helpers/contains_model.dart';
 import 'package:sekkah_app/helpers/line_model.dart';
-import '../helpers/bus_ model.dart';
-import '../helpers/stations_model.dart';
+import '../helpers/bus_station_model.dart';
+import '../helpers/metro_station_model.dart';
 
 class MapStationsController extends GetxController {
   Rx<Map<MarkerId, Marker>> _allMarkers = Rx<Map<MarkerId, Marker>>({});
@@ -19,29 +19,30 @@ class MapStationsController extends GetxController {
   Rx<Map<MarkerId, Marker>> _busMarkers = Rx<Map<MarkerId, Marker>>({});
   Map<MarkerId, Marker> get busMarkers => _busMarkers.value;
   Map<MarkerId, Marker> emptyMarkers = {};
-  Rx<List<Stations>> _allStations = Rx<List<Stations>>([]);
-  List<Stations> get allStations => _allStations.value;
-  Rx<List<BusModel>> _allBuses = Rx<List<BusModel>>([]);
-  List<BusModel> get allBuses => _allBuses.value;
+  Rx<List<MetroStationModel>> _allStations = Rx<List<MetroStationModel>>([]);
+  List<MetroStationModel> get allStations => _allStations.value;
+  Rx<List<BusStationModel>> _allBuses = Rx<List<BusStationModel>>([]);
+  List<BusStationModel> get allBuses => _allBuses.value;
   Rx<List<LineModel>> _allLines = Rx<List<LineModel>>([]);
   List<LineModel> get allLines => _allLines.value;
-  set setAllBuses(List<BusModel> value) => _allBuses.value = value;
-  set setAllStations(List<Stations> value) => _allStations.value = value;
+  set setAllBuses(List<BusStationModel> value) => _allBuses.value = value;
+  set setAllStations(List<MetroStationModel> value) =>
+      _allStations.value = value;
   Rx<Set<Polyline>> _polyline = Rx<Set<Polyline>>({});
   Set<Polyline> get polyline => _polyline.value;
   Rx<List<ContainsModel>> _allContains = Rx<List<ContainsModel>>([]);
   List<ContainsModel> get allContains => _allContains.value;
 
-  List<Stations> route1Stations = [];
-  List<Stations> route2Stations = [];
-  List<Stations> route3Stations = [];
-  List<Stations> route4Stations = [];
-  List<Stations> route5Stations = [];
-  List<Stations> route6Stations = [];
+  List<MetroStationModel> route1Stations = [];
+  List<MetroStationModel> route2Stations = [];
+  List<MetroStationModel> route3Stations = [];
+  List<MetroStationModel> route4Stations = [];
+  List<MetroStationModel> route5Stations = [];
+  List<MetroStationModel> route6Stations = [];
 
   Future<List<LineModel>> getAllLines() async {
     return await FirebaseFirestore.instance
-        .collection('Lines')
+        .collection('Line')
         .get()
         .then((QuerySnapshot querySnapshot) {
       for (var doc in querySnapshot.docs) {
@@ -65,25 +66,25 @@ class MapStationsController extends GetxController {
     });
   }
 
-  Stream<List<Stations>> getAllStations() {
+  Stream<List<MetroStationModel>> getAllStations() {
     return FirebaseFirestore.instance
-        .collection('Stations')
+        .collection('Metro_Station')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
-              return Stations.fromMap(doc.data());
+              return MetroStationModel.fromMap(doc.data(), doc.id);
             }).toList());
   }
 
-  Stream<List<BusModel>> getAllBuses() {
+  Stream<List<BusStationModel>> getAllBuses() {
     return FirebaseFirestore.instance
-        .collection("Bus")
+        .collection("Bus_Station")
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
-              return BusModel.fromMap(doc.data());
+              return BusStationModel.fromMap(doc.data());
             }).toList());
   }
 
-  void initStationMarkers(Stations specify, String specifyId) async {
+  void initStationMarkers(MetroStationModel specify, String specifyId) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
       'assets/images/metro.png',
@@ -99,7 +100,7 @@ class MapStationsController extends GetxController {
     _stationMarkers.value[markerId] = marker;
   }
 
-  void initBusMarkers(BusModel specify, String specifyId) async {
+  void initBusMarkers(BusStationModel specify, String specifyId) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
       'assets/images/bus.png',
@@ -132,41 +133,42 @@ class MapStationsController extends GetxController {
         line6 = [];
     //ALL lines references
     DocumentReference line1Ref =
-        FirebaseFirestore.instance.collection('Lines').doc('Line_1');
+        FirebaseFirestore.instance.collection('Line').doc('Line_1');
     DocumentReference line2Ref =
-        FirebaseFirestore.instance.collection('Lines').doc('Line_2');
+        FirebaseFirestore.instance.collection('Line').doc('Line_2');
     DocumentReference line3Ref =
-        FirebaseFirestore.instance.collection('Lines').doc('Line_3');
+        FirebaseFirestore.instance.collection('Line').doc('Line_3');
     DocumentReference line4Ref =
-        FirebaseFirestore.instance.collection('Lines').doc('Line_4');
+        FirebaseFirestore.instance.collection('Line').doc('Line_4');
     DocumentReference line5Ref =
-        FirebaseFirestore.instance.collection('Lines').doc('Line_5');
+        FirebaseFirestore.instance.collection('Line').doc('Line_5');
     DocumentReference line6Ref = FirebaseFirestore.instance
-        .collection('Lines')
+        .collection('Line')
         .doc('Line_6'); // /Lines/Line_6
+
     //Filtering according to order number and assigning to each line
     for (var element in allContains) {
-      if (element.LineName == line1Ref) {
+      if (element.Line_ID == line1Ref) {
         if (!line1.any((e) => e.Order == element.Order)) {
           line1.add(element);
         }
-      } else if (element.LineName == line2Ref) {
+      } else if (element.Line_ID == line2Ref) {
         if (!line2.any((e) => e.Order == element.Order)) {
           line2.add(element);
         }
-      } else if (element.LineName == line3Ref) {
+      } else if (element.Line_ID == line3Ref) {
         if (!line3.any((e) => e.Order == element.Order)) {
           line3.add(element);
         }
-      } else if (element.LineName == line4Ref) {
+      } else if (element.Line_ID == line4Ref) {
         if (!line4.any((e) => e.Order == element.Order)) {
           line4.add(element);
         }
-      } else if (element.LineName == line5Ref) {
+      } else if (element.Line_ID == line5Ref) {
         if (!line5.any((e) => e.Order == element.Order)) {
           line5.add(element);
         }
-      } else if (element.LineName == line6Ref) {
+      } else if (element.Line_ID == line6Ref) {
         if (!line6.any((e) => e.Order == element.Order)) {
           line6.add(element);
         }
@@ -180,7 +182,7 @@ class MapStationsController extends GetxController {
     line4.sort((a, b) => a.Order.compareTo(b.Order));
     line5.sort((a, b) => a.Order.compareTo(b.Order));
     line6.sort((a, b) => a.Order.compareTo(b.Order));
-    //making sure there are no duplicates when we assing values to routes
+    //making sure there are no duplicates when we assign values to routes
 
     route1Stations.clear();
     route2Stations.clear();
@@ -193,70 +195,64 @@ class MapStationsController extends GetxController {
     for (var element in line1) {
       //in line all station 1 are saved but with this
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
 
               ///Stations/Stations_5
-              .ID
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route1Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route1Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
     }
     for (var element in line2) {
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
-              .ID
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route2Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route2Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
-    }
+    } //Stations/Station_40
     for (var element in line3) {
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
-              .ID
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route3Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route3Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
     }
     for (var element in line4) {
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
-              .ID
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route4Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route4Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
     }
     for (var element in line5) {
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
-              .ID
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route5Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route5Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
     }
     for (var element in line6) {
       if (allStations
-              .firstWhere((e) =>
-                  e.ID.toString() == element.StationName.id.split("_").last)
-              .ID
+              .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
+              .id
               .toString() ==
-          element.StationName.id.split("_").last) {
-        route6Stations.add(allStations.firstWhere(
-            (e) => e.ID.toString() == element.StationName.id.split("_").last));
+          element.MStation_ID.id) {
+        route6Stations.add(allStations
+            .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
     }
 

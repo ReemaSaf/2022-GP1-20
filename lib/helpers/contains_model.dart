@@ -1,35 +1,35 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContainsModel {
+  DocumentReference Line_ID;
+  DocumentReference MStation_ID;
   String Name;
   String Order;
-  DocumentReference LineName;
-  DocumentReference StationName;
+
   ContainsModel({
+    required this.Line_ID,
+    required this.MStation_ID,
     required this.Name,
     required this.Order,
-    required this.LineName,
-    required this.StationName,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'Line_ID': Line_ID,
+      'MStation_ID': MStation_ID,
       'Name': Name,
       'Order': Order,
-      'Line Name': LineName,
-      'Station Name': StationName,
     };
   }
 
   factory ContainsModel.fromMap(Map<String, dynamic> map) {
     return ContainsModel(
+      Line_ID: map['Line_ID'],
+      MStation_ID: map['MStation_ID'],
       Name: map['Name'],
       Order: map['Order'],
-      LineName: map['Line Name'],
-      StationName: map['Station Name'],
     );
   }
 

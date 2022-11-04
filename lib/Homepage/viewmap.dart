@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
-import 'package:sekkah_app/helpers/bus_%20model.dart';
+import 'package:sekkah_app/helpers/bus_station_model.dart';
 import 'package:sekkah_app/others/map_controller.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:sekkah_app/Homepage/widget/panel_widget.dart';
 import 'package:sekkah_app/others/constants.dart';
-import '../helpers/stations_model.dart';
+import '../helpers/metro_station_model.dart';
 import '../others/auth_controller.dart';
 
 class ViewMap extends StatefulWidget {
@@ -55,94 +55,100 @@ class _ViewMap extends State<ViewMap> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FloatingActionButton(
-            onPressed: () async {
-              await AuthController().signOut();
-            },
-            backgroundColor: blueColor,
-            child: FirebaseAuth
-                    .instance.currentUser!.isAnonymous // guest = anonymous
-                ? const Icon(
-                    Icons.person_add_alt,
-                    size: 26.0,
-                  )
-                : const Icon(Icons.logout_rounded),
-          ),
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(12),
-              // ignore: prefer_const_literals_to_create_immutables
-              boxShadow: [
-                const BoxShadow(
-                    color: greyColor,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: Offset(4, 4)),
-              ],
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {
-                    showMetro.value = !showMetro.value;
-                    setMarkersToShow();
+          FirebaseAuth.instance.currentUser!.isAnonymous
+              ? const SizedBox()
+              : FloatingActionButton(
+                  onPressed: () async {
+                    await AuthController().signOut();
                   },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 27,
-                        width: 27,
-                        child: Image.asset("assets/images/metro.png"),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      const Text("Metro\n Station",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: blueColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.5)),
-                    ],
-                  ),
+                  backgroundColor: blueColor,
+                  child: const Icon(Icons.logout_rounded),
                 ),
-                const SizedBox(
-                  width: 12,
+          Obx(() => Container(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(12),
+                  // ignore: prefer_const_literals_to_create_immutables
+                  boxShadow: [
+                    const BoxShadow(
+                        color: greyColor,
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        offset: Offset(4, 4)),
+                  ],
                 ),
-                InkWell(
-                  onTap: () {
-                    showBus.value = !showBus.value;
-                    setMarkersToShow();
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 27,
-                        width: 27,
-                        child: Image.asset("assets/images/bus.png"),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      color: showMetro.value
+                          ? Colors.grey.withOpacity(0.3)
+                          : Colors.white,
+                      child: InkWell(
+                        onTap: () {
+                          showMetro.value = !showMetro.value;
+                          setMarkersToShow();
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 27,
+                              width: 27,
+                              child: Image.asset("assets/images/metro.png"),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Text("Metro\n Station",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: blueColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.5)),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 4,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                      color: showBus.value
+                          ? Colors.grey.withOpacity(0.3)
+                          : Colors.white,
+                      child: InkWell(
+                        onTap: () {
+                          showBus.value = !showBus.value;
+                          setMarkersToShow();
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 27,
+                              width: 27,
+                              child: Image.asset("assets/images/bus.png"),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Text("Bus\n Station",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: greenColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.5)),
+                          ],
+                        ),
                       ),
-                      const Text("Bus\n Station",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: greenColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.5)),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      width: 18,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 18,
-                ),
-              ],
-            ),
-          ),
+              )),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
@@ -156,7 +162,8 @@ class _ViewMap extends State<ViewMap> {
         body: Column(
           children: [
             Expanded(
-              child: StreamBuilder2<List<Stations>?, List<BusModel>?>(
+              child: StreamBuilder2<List<MetroStationModel>?,
+                      List<BusStationModel>?>(
                   // initialData: InitialDataTuple2<controller.allStations, controller.allBuses>,
                   streams: StreamTuple2(
                       controller.getAllStations(), controller.getAllBuses()),
@@ -245,7 +252,7 @@ class _ViewMap extends State<ViewMap> {
     await controller.getAllLines();
     controller.setPolyLineData();
     for (var element in controller.allStations) {
-      controller.initStationMarkers(element, "Station_${element.ID}");
+      controller.initStationMarkers(element, "Station_${element.Name}");
     }
     for (var element in controller.allBuses) {
       controller.initBusMarkers(element, "Bus_${element.Number}");

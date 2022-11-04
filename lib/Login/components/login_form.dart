@@ -33,6 +33,9 @@ class LoginForm extends StatelessWidget {
               if (value!.isEmpty) {
                 return 'Please Enter your Email.';
               }
+              if (value == "admin@sekkah.com") {
+                return "This email is related to admin";
+              }
               if (!value.isEmail) {
                 return 'Please Enter a valid Email.';
               }

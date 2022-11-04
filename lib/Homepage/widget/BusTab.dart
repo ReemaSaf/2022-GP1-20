@@ -62,12 +62,12 @@ class _BusTabState extends State<BusTab> {
                                           .copyWith(
                                               fontWeight: FontWeight.normal,
                                               color: Colors.black45)),
-                                  Text(
-                                      '${Busstations.BusStations[index]['Type']}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .copyWith(color: Colors.black45)),
+                                  // Text(
+                                  //     '${Busstations.BusStations[index]['Type']}',
+                                  //     style: Theme.of(context)
+                                  //         .textTheme
+                                  //         .subtitle1!
+                                  //         .copyWith(color: Colors.black45)),
                                 ],
                               ),
                             ),

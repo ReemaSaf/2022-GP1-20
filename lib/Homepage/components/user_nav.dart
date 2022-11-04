@@ -1,7 +1,11 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sekkah_app/Homepage/viewmap.dart';
+import 'package:sekkah_app/helpers/dialog_alert.dart';
+import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
 
 class NavScreen extends StatefulWidget {
@@ -17,9 +21,9 @@ class _NavScreenState extends State<NavScreen> {
 
   final screens = [
     const ViewMap(),
-    const Center(child: Text('plan a route', style: (TextStyle(fontSize: 72)))),
-    const Center(child: Text('digital card', style: (TextStyle(fontSize: 72)))),
-    const Center(child: Text('profile', style: (TextStyle(fontSize: 72)))),
+    const Center(child: Text('Plan Route', style: (TextStyle(fontSize: 72)))),
+    const Center(child: Text('Digital Card', style: (TextStyle(fontSize: 72)))),
+    const Center(child: Text('Profile', style: (TextStyle(fontSize: 72)))),
   ];
 
   @override
@@ -37,8 +41,28 @@ class _NavScreenState extends State<NavScreen> {
           child: NavigationBar(
               height: 60,
               selectedIndex: index,
-              onDestinationSelected: (index) =>
-                  setState(() => this.index = index),
+              onDestinationSelected: (currentIndex) {
+                setState(() => index = currentIndex);
+                if (FirebaseAuth.instance.currentUser!.isAnonymous &&
+                    (index == 2 || index == 3)) {
+                  showConfirmationDialog(
+                      heading: "Alert",
+                      message: "you must register to access your profile.",
+                      okText: "Register",
+                      onPressedOk: () {
+                        Get.back();
+                        AuthController().signOut();
+                      },
+                      cancel: () {
+                        Get.back();
+                        1.seconds.delay().then((value) {
+                          setState(() {
+                            index = 0;
+                          });
+                        });
+                      });
+                }
+              },
               backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               // ignore: prefer_const_literals_to_create_immutables
               destinations: [
@@ -48,7 +72,7 @@ class _NavScreenState extends State<NavScreen> {
                 ),
                 const NavigationDestination(
                   icon: Icon(Icons.train_outlined),
-                  label: 'Plan a route',
+                  label: 'Plan Route',
                 ),
                 const NavigationDestination(
                   icon: Icon(Icons.account_balance_wallet_outlined),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sekkah_app/Admin/admin_login.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import '../../Login/login_screen.dart';
 import '../../Register/signup_screen.dart';
@@ -41,7 +42,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             ),
           ),
         ),
-        // const SizedBox(height: 0.5),
+        const SizedBox(height: 10),
         TextButton(
             onPressed: () async {
               await AuthController().signUpAsGuest();
