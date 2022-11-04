@@ -64,7 +64,7 @@ class MobileWelcomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

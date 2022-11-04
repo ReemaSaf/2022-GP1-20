@@ -35,6 +35,7 @@ class PanelWidget extends StatelessWidget {
             SizedBox(height: 9),
             Text(
               'Nearby Stations',
+              // textAlign: TextAlign.right,
               style: TextStyle(
                   fontWeight: FontWeight.w600, fontSize: 30, color: blueColor),
             ),

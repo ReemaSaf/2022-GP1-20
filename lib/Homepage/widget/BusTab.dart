@@ -38,42 +38,6 @@ class _BusTabState extends State<BusTab> {
                   )
                 : ListView.builder(
                     itemCount: Busstations.BusStations.length,
-<<<<<<< HEAD
-                    itemBuilder: ((context, index) => InkWell(
-                          onTap: () {
-                            Busstations.get_bus_stations();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            margin: const EdgeInsets.all(8),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      '${Busstations.BusStations[index]['Name']}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .copyWith(
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.black45)),
-                                  // Text(
-                                  //     '${Busstations.BusStations[index]['Type']}',
-                                  //     style: Theme.of(context)
-                                  //         .textTheme
-                                  //         .subtitle1!
-                                  //         .copyWith(color: Colors.black45)),
-                                ],
-                              ),
-=======
                     itemBuilder: ((context, index) {
                       final station = Busstations.BusStations[index];
 
@@ -107,7 +71,6 @@ class _BusTabState extends State<BusTab> {
                                         .subtitle1!
                                         .copyWith(color: Colors.black)),
                               ],
->>>>>>> 17a56efaba688019ffc6bee15f0168d95481b862
                             ),
                           ),
                         ),

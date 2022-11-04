@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sekkah_app/Admin/admin_login.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import '../../Login/login_screen.dart';
 import '../../Register/signup_screen.dart';

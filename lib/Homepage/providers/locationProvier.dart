@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:async';
 import 'dart:math';
