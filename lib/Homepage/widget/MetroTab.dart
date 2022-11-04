@@ -19,38 +19,53 @@ class _MetroTabState extends State<MetroTab> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.grey.shade100,
-            body: ListView.builder(
-                itemCount: Busstations.MetroStations.length,
-                itemBuilder: ((context, index) => Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: const EdgeInsets.all(8),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('${Busstations.MetroStations[index]['Name']}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black)),
-                            Text(
-                                '${Busstations.MetroStations[index]['Available']}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(color: Colors.black)),
-                          ],
+            body: Busstations.MetroStations.isEmpty
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Center(
+                        child: Text(
+                          "No Bus Station Found",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
                         ),
-                      ),
-                    ))),
+                      )
+                    ],
+                  )
+                : ListView.builder(
+                    itemCount: Busstations.MetroStations.length,
+                    itemBuilder: ((context, index) => Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    '${Busstations.MetroStations[index]['Name']}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black)),
+                                Text(
+                                    '${Busstations.MetrodistanceList[index].toPrecision(2)}km',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(color: Colors.black)),
+                              ],
+                            ),
+                          ),
+                        ))),
           ));
   }
 }

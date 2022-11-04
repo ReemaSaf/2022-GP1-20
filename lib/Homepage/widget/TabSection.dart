@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/station_controller.dart';
+import '../providers/locationProvier.dart';
 import 'BusTab.dart';
 import 'MetroTab.dart';
 
@@ -17,12 +18,23 @@ class _TabSectionState extends State<TabSection>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   var Busstations = Get.put(StationsController());
+  final provider = Get.put(LocationProvider());
   @override
   void initState() {
-    Busstations.get_bus_stations();
-    Busstations.get_Metro_stations();
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+  }
+
+  void _asyncMethod() async {
+    await provider.locationFetch(context).then((value) {
+      if (value != null) {
+        Busstations.get_bus_stations();
+        // Busstations.get_Metro_stations();
+      }
+    });
   }
 
   @override

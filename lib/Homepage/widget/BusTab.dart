@@ -20,7 +20,7 @@ class _BusTabState extends State<BusTab> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.grey.shade100,
-            body: Busstations.BusStations.length == 0
+            body: Busstations.BusStations.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,42 +36,45 @@ class _BusTabState extends State<BusTab> {
                   )
                 : ListView.builder(
                     itemCount: Busstations.BusStations.length,
-                    itemBuilder: ((context, index) => InkWell(
-                          
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            margin: const EdgeInsets.all(8),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      '${Busstations.BusStations[index]['Name']}'
-                                      ' ' '${Busstations.BusStations[index]['Number']}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .copyWith(
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.black)),
-                                  Text(
-                                      '${Busstations.BusStations[index]['Number']}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .copyWith(color: Colors.black)),
-                                ],
-                              ),
+                    itemBuilder: ((context, index) {
+                      final station = Busstations.BusStations[index];
+                      final distance = Busstations.BusdistanceList[index];
+                      return InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    '${station.Name}'
+                                    ' '
+                                    '${station.Number}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black)),
+                                Text(
+                                    '${Busstations.BusdistanceList[index].toPrecision(2)}km',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(color: Colors.black)),
+                              ],
                             ),
                           ),
-                        ))),
+                        ),
+                      );
+                    })),
           ));
   }
 }
