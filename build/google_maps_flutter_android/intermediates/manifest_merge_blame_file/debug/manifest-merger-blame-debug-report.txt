@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="20"
-6-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.2/android/src/main/AndroidManifest.xml
+6-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.2/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="20" />
-7-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.2/android/src/main/AndroidManifest.xml
+7-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.2/android/src/main/AndroidManifest.xml
 8
 9</manifest>

@@ -76,7 +76,7 @@ class MapStationsController extends GetxController {
 
   Stream<List<BusModel>> getAllBuses() {
     return FirebaseFirestore.instance
-        .collection("Bus")
+        .collection("Bus_Station")
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
               return BusModel.fromMap(doc.data());

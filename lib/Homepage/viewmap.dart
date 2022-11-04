@@ -32,7 +32,7 @@ class _ViewMap extends State<ViewMap> {
 
   RxBool showMetro = true.obs;
   RxBool showBus = true.obs;
-  final panelHeightClosed = Get.height * 0.1;
+  final panelHeightClosed = Get.height * 0.11;
   final panelHeightOpen = Get.height * 0.7;
   Rx<MarkersToShow> markersType = MarkersToShow.both.obs;
 
@@ -188,6 +188,7 @@ class _ViewMap extends State<ViewMap> {
                           return Obx(() {
                             return GoogleMap(
                                 polylines: controller.polyline,
+                                //myLocationEnabled: true,
                                 markers: markersType.value == MarkersToShow.both
                                     ? Set<Marker>.of(
                                         controller.allMarkers.values)

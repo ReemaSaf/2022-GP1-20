@@ -37,9 +37,7 @@ class _BusTabState extends State<BusTab> {
                 : ListView.builder(
                     itemCount: Busstations.BusStations.length,
                     itemBuilder: ((context, index) => InkWell(
-                          onTap: () {
-                            Busstations.get_bus_stations();
-                          },
+                          
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             margin: const EdgeInsets.all(8),
@@ -55,19 +53,20 @@ class _BusTabState extends State<BusTab> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                      '${Busstations.BusStations[index]['Name']}',
+                                      '${Busstations.BusStations[index]['Name']}'
+                                      ' ' '${Busstations.BusStations[index]['Number']}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle1!
                                           .copyWith(
                                               fontWeight: FontWeight.normal,
-                                              color: Colors.black45)),
+                                              color: Colors.black)),
                                   Text(
-                                      '${Busstations.BusStations[index]['Type']}',
+                                      '${Busstations.BusStations[index]['Number']}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle1!
-                                          .copyWith(color: Colors.black45)),
+                                          .copyWith(color: Colors.black)),
                                 ],
                               ),
                             ),

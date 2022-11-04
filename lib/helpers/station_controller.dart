@@ -11,8 +11,7 @@ class StationsController extends GetxController {
   get_bus_stations() async {
     stations_loading(true);
     var result = await FirebaseFirestore.instance
-        .collection("Stations")
-        .where("type", isEqualTo: "Bus")
+        .collection("Bus_Station")
         .get();
     print("here is result data ${result.docs.length}");
     BusStations.addAll(result.docs);
@@ -24,8 +23,7 @@ class StationsController extends GetxController {
     stations_loading(true);
     update();
     var result = await FirebaseFirestore.instance
-        .collection("Stations")
-        .where("Type", isEqualTo: "Metro")
+        .collection("Metro_Station")
         .get();
     print("here is result data ${result.docs.length}");
     MetroStations.addAll(result.docs);

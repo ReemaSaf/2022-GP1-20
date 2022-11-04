@@ -4,29 +4,29 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml
+6-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml
+7-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml
 8
 9    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-9-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:3:5-81
-9-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:3:22-78
+9-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:3:5-81
+9-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:3:22-78
 10    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-10-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:4:5-79
-10-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:4:22-76
+10-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:4:5-79
+10-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:4:22-76
 11
 12    <application>
-12-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:6:5-12:19
+12-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:6:5-12:19
 13        <service
-13-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:7:9-11:53
+13-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:7:9-11:53
 14            android:name="com.lyokone.location.FlutterLocationService"
-14-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:11:13-51
+14-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:11:13-51
 15            android:enabled="true"
-15-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:8:13-35
+15-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:8:13-35
 16            android:exported="false"
-16-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:9:13-37
+16-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:9:13-37
 17            android:foregroundServiceType="location" />
-17-->/Users/yara/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:10:13-53
+17-->/Users/najdalnasrallah/development/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/android/src/main/AndroidManifest.xml:10:13-53
 18    </application>
 19
 20</manifest>

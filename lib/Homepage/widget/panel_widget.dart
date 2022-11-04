@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sekkah_app/Homepage/widget/TabSection.dart';
+import 'package:sekkah_app/others/constants.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatelessWidget {
@@ -20,9 +21,29 @@ class PanelWidget extends StatelessWidget {
           const SizedBox(height: 12),
           buildDragHandle(),
           const SizedBox(height: 5),
+          buildAboutText(),
           builTabSection(context),
         ],
       );
+
+
+
+Widget buildAboutText()=> Container(
+padding: const EdgeInsets.symmetric(horizontal: 24),
+child: Column(
+crossAxisAlignment:CrossAxisAlignment.start,
+children: const <Widget>[
+  SizedBox(height: 9),
+  Text(
+    'Nearby Stations',
+    style: TextStyle(fontWeight: FontWeight.w600 ,fontSize: 30, color: blueColor),
+  ),
+  SizedBox(height: 12),
+  
+],
+),
+
+);
 
   Widget buildDragHandle() => GestureDetector(
         // ignore: sort_child_properties_last

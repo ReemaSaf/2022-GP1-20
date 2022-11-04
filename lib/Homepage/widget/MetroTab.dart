@@ -40,13 +40,13 @@ class _MetroTabState extends State<MetroTab> {
                                     .subtitle1!
                                     .copyWith(
                                         fontWeight: FontWeight.normal,
-                                        color: Colors.black45)),
+                                        color: Colors.black)),
                             Text(
                                 '${Busstations.MetroStations[index]['Available']}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
-                                    .copyWith(color: Colors.black45)),
+                                    .copyWith(color: Colors.black)),
                           ],
                         ),
                       ),
