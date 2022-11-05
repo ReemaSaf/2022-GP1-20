@@ -29,7 +29,7 @@ class DistanceModel {
      return DistanceModel(
          Location: metroModel.Location,
          Name:  metroModel.Name,
-         // Number: 0,
+         Number: 0,
          Distance: distance);
    }
 }
