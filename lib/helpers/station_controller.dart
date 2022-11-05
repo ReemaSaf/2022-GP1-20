@@ -18,7 +18,8 @@ class StationsController extends GetxController {
   RxList<DistanceModel> MetroStations = <DistanceModel>[].obs;
 
   var stations_loading = false.obs;
-
+  var mstations_loading= false.obs;
+  
   get_bus_stations() async {
     stations_loading(true);
 
@@ -47,7 +48,7 @@ class StationsController extends GetxController {
   }
 
   get_Metro_stations() async {
-    stations_loading(true);
+    mstations_loading(true);
     final position = provider.currentLatLang;
     var result =
         await FirebaseFirestore.instance.collection("Metro_Station").get();
@@ -71,7 +72,7 @@ class StationsController extends GetxController {
     );
 
     print("here is result data ${result.docs.length}");
-    stations_loading(false);
+    mstations_loading(false);
     update();
   }
 }

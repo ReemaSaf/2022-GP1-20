@@ -18,7 +18,7 @@ class _BusTabState extends State<BusTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Busstations.stations_loading.isTrue
+    return Obx(() => Busstations.mstations_loading.isTrue
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.grey.shade100,

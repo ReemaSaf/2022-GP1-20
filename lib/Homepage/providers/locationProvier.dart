@@ -57,14 +57,12 @@ class LocationProvider extends ChangeNotifier {
 
   double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
-    var a = 0.5 -
-        cos((lat2 - lat1) * p) / 2 +
-        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    var a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
 
-  Future<double> getRoutDistance(
-      GeoPoint endLocation, LatLng? currentPosition) async {
+  Future<double> getRoutDistance( 
+    GeoPoint endLocation, LatLng? currentPosition) async {
     double distance = 0.0;
     PolylinePoints polylinePoints = PolylinePoints();
     List<LatLng> polylineCoordinates = [];
