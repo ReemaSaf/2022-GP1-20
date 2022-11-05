@@ -30,13 +30,12 @@ class PanelWidget extends StatelessWidget {
   Widget buildAboutText() => Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: const <Widget>[
             SizedBox(height: 9),
             Text(
               'Nearby Stations',
-               textAlign: TextAlign.right,
-              style: TextStyle( 
+              style: TextStyle(
                   fontWeight: FontWeight.w600, fontSize: 30, color: blueColor),
             ),
             SizedBox(height: 12),
