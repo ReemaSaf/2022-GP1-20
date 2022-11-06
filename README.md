@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/Users/razan/Desktop/Sekkah | سكّة/Sekkah/logo sekkah">
+  <img width="765" alt="logo sekkah" src="https://user-images.githubusercontent.com/98522684/200179526-b73ca9f7-7ded-4471-8b99-a56b6bec6e5e.png">
 </p>
 
 
@@ -15,6 +15,7 @@
 # TECHNOLOGY :
 [![My Skills](https://skillicons.dev/icons?i=flutter,dart&theme=light)](https://skillicons.dev)
 [![My Skills](https://skillicons.dev/icons?i=firebase&theme=light)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=figmae&theme=light)](https://skillicons.dev)
 
 
 
