@@ -1,4 +1,6 @@
-<p align="center"><img align="center" width="280" src=/></p>
+<p align="center">
+  <img src="/Users/razan/Desktop/Sekkah | سكّة/Sekkah/logo sekkah">
+</p>
 
 
 <h1> PROJECT TITLE : </h1> 
