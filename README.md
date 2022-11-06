@@ -1,5 +1,9 @@
+<p align="center"><img align="center" width="280" src="./.github/text-logo.svg#gh-dark-mode-only"/></p>
+<p align="center"><img align="center" width="280" src="./.github/text-logo-light.svg#gh-light-mode-only"/></p>
+<h3 align="center"></h3>
+<hr>
 
-PROJECT TITLE :  
+#PROJECT TITLE :  
 
 ## SEKKAH - سِكّة 
 
