@@ -22,11 +22,11 @@
 </details>
 
 ## ABOUT THE PROJECT
-## Project Title:
+## Project Title
 <h3> SEKKAH - سِكّة </h3>
 
 
-## Introduction: 
+## Introduction 
 
  The Riyadh Metro is a rapid transit system that would serve as Riyadh's public transportation backbone. In the near future, Riyadh's metro will launch officially. Yet, people have no clear guidance on the lines and routes of Riyadh's buses and metro stations, nor their departure information. For that reason, a technological solution is an utmost necessity, as it offers an efficient approach by implementing a mobile-based application that provides people with the services and features of Riyadh's Metro.
 
@@ -39,9 +39,9 @@
 
 
 
-## Launching Instructions: 
+## Launching Instructions
 
- To launch the code using Visual Studio Code, you must do the following : 
+ To launch the code using Visual Studio Code, you must do the following: 
 
  - Navigate to the lib directory
  - Open the main.dart file
