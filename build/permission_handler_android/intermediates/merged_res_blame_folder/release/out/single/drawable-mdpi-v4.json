@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/permission_handler_android/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_low_pressed.9.png",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/permission_handler_android/intermediates/merged_res/release/drawable-mdpi-v4/notify_panel_notification_icon_bg.png",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/permission_handler_android/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_normal.9.png",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/permission_handler_android/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_low_normal.9.png",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/permission_handler_android/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_normal_pressed.9.png",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
+    }
+]

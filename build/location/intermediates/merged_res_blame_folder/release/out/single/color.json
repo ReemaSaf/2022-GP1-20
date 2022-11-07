@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/040a401a36a15d1fcdf368df79cc5531/transformed/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/040a401a36a15d1fcdf368df79cc5531/transformed/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/040a401a36a15d1fcdf368df79cc5531/transformed/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_tint.xml"
+    }
+]

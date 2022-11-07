@@ -33,7 +33,7 @@ class AuthController {
         UserModel user =
             UserModel(email: email, firstName: firstName, lastName: lastName);
         _firestore
-            .collection('Passengers')
+            .collection('Passenger')
             .doc(credentials.user!.uid)
             .set(user.toMap());
       }

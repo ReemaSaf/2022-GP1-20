@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/notification_template_part_time.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/notification_template_icon_group.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/notification_action.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/custom_dialog.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/notification_action_tombstone.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
+    }
+]

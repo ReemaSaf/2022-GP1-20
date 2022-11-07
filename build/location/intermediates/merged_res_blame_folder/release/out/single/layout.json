@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_action_tombstone.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_big_media_custom.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_big_media_custom.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_part_time.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/custom_dialog.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_action.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_media_cancel_action.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_big_media_narrow.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_icon_group.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/32e4f7193eafbc4024959b7a4cf83f07/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_media_custom.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_media_custom.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_lines_media.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_lines_media.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_big_media.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_big_media.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_media.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_media.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_template_big_media_narrow_custom.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "/Users/yara/Desktop/SEKKAH/Sekkah/build/location/intermediates/merged_res/release/layout/notification_media_action.xml",
+        "source": "/Users/yara/.gradle/caches/transforms-3/864f45f5886d3b3ab32717406a9416eb/transformed/media-1.0.0/res/layout/notification_media_action.xml"
+    }
+]
