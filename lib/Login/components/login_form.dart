@@ -33,11 +33,11 @@ class LoginForm extends StatelessWidget {
               if (value!.isEmpty) {
                 return 'Please Enter your Email.';
               }
-              if (value == "admin@sekkah.com") {
-                return "This email is related to admin";
+              if (value == "Sekkahgp@gmail.com") {
+                return "Please Enter a valid Passenger Email.";
               }
               if (!value.isEmail) {
-                return 'Please Enter a valid Email.';
+                return 'Please Enter a valid Email format.';
               }
               return null;
             },

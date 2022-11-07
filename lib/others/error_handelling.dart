@@ -27,6 +27,8 @@ class ErrorHandelling {
         return "Email address is invalid.";
       case "invalid-email":
         return "Email address is invalid.";
+      case "location":
+        return "Please enable access to your location.";
       default:
         return "Login failed. Please try again.";
     }

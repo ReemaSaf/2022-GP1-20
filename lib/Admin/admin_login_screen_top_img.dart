@@ -39,7 +39,6 @@ class AdminLoginScreenTopImage extends StatelessWidget {
           children: [
             const Spacer(),
             Expanded(
-              //flex: 2,
               child: SvgPicture.asset("assets/icons/admin.svg",
                   width: 140, height: 180),
             ),

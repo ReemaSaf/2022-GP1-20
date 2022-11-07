@@ -29,13 +29,13 @@ class AdminForm extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please Enter Admin Email.';
-              }
-              if (value != "admin@sekkah.com") {
-                return "Wrong Admin Email";
+                return 'Please Enter an Admin Email.';
               }
               if (!value.isEmail) {
-                return 'Please Enter a valid Email.';
+                return 'Please Enter a valid Email format.';
+              }
+              if (value != "Sekkahgp@gmail.com") {
+                return "Invalid Admin Email";
               }
               return null;
             },

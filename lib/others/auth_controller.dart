@@ -16,7 +16,6 @@ class AuthController {
     } on FirebaseAuthException catch (err) {
       String errorMessage =
           ErrorHandelling.getMessageFromErrorCode(errorCode: err.code);
-      // Get.snackbar("error", errorMessage.toString());
       showErrorDialog(errorMessage);
     }
   }
@@ -43,7 +42,6 @@ class AuthController {
     } on FirebaseAuthException catch (err) {
       String errorMessage =
           ErrorHandelling.getMessageFromErrorCode(errorCode: err.code);
-      // Get.snackbar("error", errorMessage.toString());
       showErrorDialog(errorMessage);
       return false;
     }
@@ -52,12 +50,10 @@ class AuthController {
   Future<bool> sendPasswordResetEmail({required String email}) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      // Get.snackbar("Success", "Password link is sent."); // might delete it
       return true;
     } on FirebaseAuthException catch (err) {
       String errorMessage =
           ErrorHandelling.getMessageFromErrorCode(errorCode: err.code);
-      // Get.snackbar("error", errorMessage.toString());
       showErrorDialog(errorMessage);
       return false;
     }
@@ -66,12 +62,6 @@ class AuthController {
   Future<void> signUpAsGuest() async {
     try {
       await _auth.signInAnonymously(); // continue as guest
-      // UserModel user =
-      //     UserModel(email: 'guest', firstName: "guest", lastName: 'guest');
-      // _firestore
-      //     .collection('Passengers')
-      //     .doc(_auth.currentUser!.uid)
-      //     .set(user.toMap());
     } on Exception catch (err) {
       Get.snackbar("error", err.toString());
     }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/station_controller.dart';
-import '../providers/locationProvier.dart';
+import '../providers/locationProvider.dart';
 import 'BusTab.dart';
 import 'MetroTab.dart';
 

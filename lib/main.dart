@@ -70,8 +70,7 @@ class MainPage extends StatefulWidget {
 class _MainpageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: //screens[index],
-            StreamBuilder<User?>(
+        body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

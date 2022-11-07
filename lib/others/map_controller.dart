@@ -28,7 +28,7 @@ class MapStationsController extends GetxController {
   set setAllBuses(List<BusStationModel> value) => _allBuses.value = value;
   set setAllStations(List<MetroStationModel> value) =>
       _allStations.value = value;
-  Rx<Set<Polyline>> _polyline = Rx<Set<Polyline>>({});
+  Rx<Set<Polyline>> _polyline = Rx<Set<Polyline>>({}); // test it
   Set<Polyline> get polyline => _polyline.value;
   Rx<List<ContainsModel>> _allContains = Rx<List<ContainsModel>>([]);
   List<ContainsModel> get allContains => _allContains.value;
@@ -124,14 +124,15 @@ class MapStationsController extends GetxController {
   }
 
   void setPolyLineData() {
-    //Store all contains models according to line number
+    //Store all contains models according to the line number
     List<ContainsModel> line1 = [],
         line2 = [],
         line3 = [],
         line4 = [],
         line5 = [],
         line6 = [];
-    //ALL lines references
+
+    //All lines references
     DocumentReference line1Ref =
         FirebaseFirestore.instance.collection('Line').doc('Line_1');
     DocumentReference line2Ref =
@@ -142,11 +143,10 @@ class MapStationsController extends GetxController {
         FirebaseFirestore.instance.collection('Line').doc('Line_4');
     DocumentReference line5Ref =
         FirebaseFirestore.instance.collection('Line').doc('Line_5');
-    DocumentReference line6Ref = FirebaseFirestore.instance
-        .collection('Line')
-        .doc('Line_6'); // /Lines/Line_6
+    DocumentReference line6Ref =
+        FirebaseFirestore.instance.collection('Line').doc('Line_6');
 
-    //Filtering according to order number and assigning to each line
+    //Filtering according to the order number and assigning it to each line
     for (var element in allContains) {
       if (element.Line_ID == line1Ref) {
         if (!line1.any((e) => e.Order == element.Order)) {
@@ -175,14 +175,14 @@ class MapStationsController extends GetxController {
       }
     }
 
-    //Sorting according to order number
+    //Sorting according to the order number
     line1.sort((a, b) => a.Order.compareTo(b.Order));
     line2.sort((a, b) => a.Order.compareTo(b.Order));
     line3.sort((a, b) => a.Order.compareTo(b.Order));
     line4.sort((a, b) => a.Order.compareTo(b.Order));
     line5.sort((a, b) => a.Order.compareTo(b.Order));
     line6.sort((a, b) => a.Order.compareTo(b.Order));
-    //making sure there are no duplicates when we assign values to routes
+    //making sure there are no duplicates when we assign values to lines
 
     route1Stations.clear();
     route2Stations.clear();
@@ -191,13 +191,11 @@ class MapStationsController extends GetxController {
     route5Stations.clear();
     route6Stations.clear();
 
-    //assinging values to routes [to make polyline] on map
+    //assinging values to lines [to make polyline] on map
     for (var element in line1) {
-      //in line all station 1 are saved but with this
+      // all stations in line1 are saved with this
       if (allStations
               .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
-
-              ///Stations/Stations_5
               .id
               .toString() ==
           element.MStation_ID.id) {
@@ -214,7 +212,7 @@ class MapStationsController extends GetxController {
         route2Stations.add(allStations
             .firstWhere((e) => e.id.toString() == element.MStation_ID.id));
       }
-    } //Stations/Station_40
+    }
     for (var element in line3) {
       if (allStations
               .firstWhere((e) => e.id.toString() == element.MStation_ID.id)
@@ -256,12 +254,7 @@ class MapStationsController extends GetxController {
       }
     }
 
-    //  log(route2Stations.length.toString());
-    //  log(line2.length.toString());
-    //  for (var element in route2Stations) {
-    //   log(element.Name);
-    //   log(element.ID.toString());
-    //   }
+    _polyline.value.clear();
 
     //adding polylines to map
     _polyline.value.add(
@@ -290,7 +283,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
-          width: 6,
+          width: 5,
           polylineId: const PolylineId('4'),
           points:
               geoPointToLatLng(route4Stations.map((e) => e.Location).toList()),
@@ -306,7 +299,7 @@ class MapStationsController extends GetxController {
     );
     _polyline.value.add(
       Polyline(
-          width: 4,
+          width: 2,
           polylineId: const PolylineId('6'),
           points:
               geoPointToLatLng(route6Stations.map((e) => e.Location).toList()),
@@ -314,7 +307,7 @@ class MapStationsController extends GetxController {
     );
   }
 
-  //converting geoPoint to LatLng to use in Map
+  //converting geoPoint to LatLng to use it in the Map
   List<LatLng> geoPointToLatLng(List<GeoPoint> geoPoints) {
     return geoPoints.map((e) => LatLng(e.latitude, e.longitude)).toList();
   }

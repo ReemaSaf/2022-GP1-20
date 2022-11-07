@@ -44,10 +44,30 @@ class _NavScreenState extends State<NavScreen> {
               onDestinationSelected: (currentIndex) {
                 setState(() => index = currentIndex);
                 if (FirebaseAuth.instance.currentUser!.isAnonymous &&
-                    (index == 2 || index == 3)) {
+                    (index == 2)) {
                   showConfirmationDialog(
                       heading: "Alert",
-                      message: "you must register to access your profile.",
+                      message:
+                          "You must register to have a digital metro card.",
+                      okText: "Register",
+                      onPressedOk: () {
+                        Get.back();
+                        AuthController().signOut();
+                      },
+                      cancel: () {
+                        Get.back();
+                        1.seconds.delay().then((value) {
+                          setState(() {
+                            index = 0;
+                          });
+                        });
+                      });
+                }
+                if (FirebaseAuth.instance.currentUser!.isAnonymous &&
+                    (index == 3)) {
+                  showConfirmationDialog(
+                      heading: "Alert",
+                      message: "You must register to access your profile.",
                       okText: "Register",
                       onPressedOk: () {
                         Get.back();

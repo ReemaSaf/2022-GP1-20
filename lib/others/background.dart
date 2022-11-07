@@ -9,7 +9,6 @@ class Background extends StatelessWidget {
   }) : super(key: key);
 
   final String backGroundImage = "assets/images/sekkah-Bg.png";
-// show me what you removed from the database?
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,21 +21,6 @@ class Background extends StatelessWidget {
                 image: AssetImage(backGroundImage), fit: BoxFit.cover),
           ),
           child: SafeArea(child: child),
-        )
-        // body: SizedBox(
-        //   width: double.infinity,
-        //   height: Get.height,
-        //   child: Stack(
-        //     alignment: Alignment.center,
-        //     children: <Widget>[
-        //       Image.asset(
-        //         backGroundImage,
-        //         width: 120,
-        //       ),
-        //       ,
-        //     ],
-        //   ),
-        // ),
-        );
+        ));
   }
 }

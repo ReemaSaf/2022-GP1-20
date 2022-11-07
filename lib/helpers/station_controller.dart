@@ -1,15 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/helpers/DistanceModel.dart';
 import 'package:sekkah_app/helpers/bus_station_model.dart';
 import 'package:sekkah_app/helpers/metro_station_model.dart';
-import '../Homepage/providers/locationProvier.dart';
-import '../core/const.dart';
+import '../Homepage/providers/locationProvider.dart';
 
 class StationsController extends GetxController {
   final provider = Get.put(LocationProvider());
@@ -18,15 +13,15 @@ class StationsController extends GetxController {
   RxList<DistanceModel> MetroStations = <DistanceModel>[].obs;
 
   var stations_loading = false.obs;
-  var mstations_loading= false.obs;
-  
+  var mstations_loading = false.obs;
+
   get_bus_stations() async {
     stations_loading(true);
-
     final position = provider.currentLatLang;
     var result =
         await FirebaseFirestore.instance.collection("Bus_Station").get();
-    final data = result.docs.map((e) => BusStationModel.fromMap(e.data())).toList();
+    final data =
+        result.docs.map((e) => BusStationModel.fromMap(e.data())).toList();
     final tempList = <DistanceModel>[];
     for (var item in data) {
       final location = item.Location;
