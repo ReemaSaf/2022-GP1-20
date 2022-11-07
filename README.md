@@ -1,5 +1,8 @@
 <p align="center">
-  <img width="765" alt="logo sekkah" src="https://user-images.githubusercontent.com/98522684/200179526-b73ca9f7-7ded-4471-8b99-a56b6bec6e5e.png">
+
+ <img width="300" alt="logo" src="https://user-images.githubusercontent.com/98522684/200238123-183028f8-0fe6-44f8-90d7-1a14385475f7.PNG">
+
+
 </p>
 
 <!-- TABLE OF CONTENTS -->
