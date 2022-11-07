@@ -10,7 +10,7 @@ class UserStateChecker extends StatelessWidget {
   UserStateChecker({super.key});
   String? currentEmail = FirebaseAuth.instance.currentUser!.email;
   bool isAnnonymous = FirebaseAuth.instance.currentUser!.isAnonymous;
-  String adminEmail = "Sekkahgp@gmail.com";
+  String adminEmail = "sekkahgp@gmail.com";
   bool get isAdminEmail => isAnnonymous ? false : currentEmail == adminEmail;
 
   @override

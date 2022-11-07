@@ -30,7 +30,7 @@ class _ViewMap extends State<ViewMap> {
   MapStationsController controller = Get.put(MapStationsController());
   BitmapDescriptor? icon;
   bool get isAdmin =>
-      FirebaseAuth.instance.currentUser!.email == "Sekkahgp@gmail.com";
+      FirebaseAuth.instance.currentUser!.email == "sekkahgp@gmail.com";
   @override
   void initState() {
     super.initState();
