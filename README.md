@@ -37,7 +37,7 @@
 ## Technology
 
 [![My Skills](https://skillicons.dev/icons?i=flutter,dart&theme=light)](https://skillicons.dev)
-[![My Skills](https://skillicons.dev/icons?i=firebase&theme=light)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=vscode,firebase&theme=light)](https://skillicons.dev)
 [![My Skills](https://skillicons.dev/icons?i=figma&theme=light)](https://skillicons.dev)
 
 
