@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>423820409744-7upttube33ma2o5sqnt31s8cnelrgars.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.423820409744-7upttube33ma2o5sqnt31s8cnelrgars</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB3CI2nl6dWeIWxsYvmND7NlLW0zGye-oU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>423820409744</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.sekkahApp</string>
+	<key>PROJECT_ID</key>
+	<string>sekkahgp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sekkahgp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:423820409744:ios:6ccc7db2538fc1deb29115</string>
+</dict>
+</plist>
