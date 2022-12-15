@@ -6,11 +6,10 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sekkah_app/Homepage/services/locationServices.dart';
-
-import '../../core/const.dart';
 import '../../helpers/helper_fucntions.dart';
 
 class LocationProvider extends ChangeNotifier {
@@ -54,7 +53,20 @@ class LocationProvider extends ChangeNotifier {
             bearing: 192.8334901395799, target: location, zoom: 14)));
   }
 
-  double calculateDistance(lat1, lon1, lat2, lon2) {
+
+  Future<double> distanceBetween(
+      GeoPoint endLocation, LatLng? currentPosition) async {
+   
+   final  double distance = Geolocator.distanceBetween(endLocation.latitude, endLocation.longitude, 
+           currentPosition!.latitude, currentPosition.longitude)  / 1000 ; 
+
+   print(distance);
+
+return distance;
+
+
+
+  /*double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
     var a = 0.5 -
         cos((lat2 - lat1) * p) / 2 +
@@ -95,6 +107,8 @@ class LocationProvider extends ChangeNotifier {
     print('distance : $totalDistance');
 
     distance = totalDistance;
-    return distance;
+    return distance;*/
+
+
   }
 }

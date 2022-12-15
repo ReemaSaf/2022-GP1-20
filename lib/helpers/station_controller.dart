@@ -25,7 +25,7 @@ class StationsController extends GetxController {
     final tempList = <DistanceModel>[];
     for (var item in data) {
       final location = item.Location;
-      await provider.getRoutDistance(location, position).then((distance) {
+      await provider.distanceBetween(location, position).then((distance) {
         tempList.add(DistanceModel.mapToBusModel(item, distance));
       });
     }
@@ -55,7 +55,7 @@ class StationsController extends GetxController {
     final tempList = <DistanceModel>[];
     for (var item in data) {
       final location = item.Location;
-      await provider.getRoutDistance(location, position).then((distance) {
+      await provider.distanceBetween(location, position).then((distance) {
         tempList.add(DistanceModel.mapToMetroModel(item, distance));
       });
     }
