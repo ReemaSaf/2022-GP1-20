@@ -1,6 +1,8 @@
 //import 'dart:developer';
 // ignore_for_file: unused_field
 
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,10 +61,11 @@ class _ViewMap extends State<ViewMap> {
 
   Future<void> setUserMarker() async {
     await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/images/icons.png')
-        .then((value) {
-      icon = value;
-    });
+      
+      const ImageConfiguration(), 'assets/images/rec8.png'  )
+      .then((value) {
+        icon = value;
+        });
   }
 
   @override
