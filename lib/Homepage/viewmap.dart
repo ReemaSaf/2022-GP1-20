@@ -173,7 +173,7 @@ class _ViewMap extends State<ViewMap> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: !isAdmin
           ? SlidingUpPanel(
-              isDraggable: true,
+              isDraggable: false,
               color: Colors.grey.shade100,
               controller: panelController,
               maxHeight: panelHeightOpen,
@@ -267,7 +267,7 @@ class _ViewMap extends State<ViewMap> {
                                     initialCameraPosition: const CameraPosition(
                                       target: LatLng(
                                           24.71619956670347, 46.68385748947401),
-                                      zoom: 25,
+                                      zoom: 11,
                                     ),
                                     zoomControlsEnabled: false,
                                     zoomGesturesEnabled: true,
