@@ -2,14 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sekkah_app/helpers/DistanceModel.dart';
 import '../../helpers/station_controller.dart';
 import '../providers/locationProvider.dart';
 import 'BusTab.dart';
 import 'MetroTab.dart';
 
 class TabSection extends StatefulWidget {
-  const TabSection({
+  Function(DistanceModel, String) onStationClicked;
+  TabSection({
     super.key,
+    required this.onStationClicked,
   });
 
   @override
@@ -83,7 +86,14 @@ class _TabSectionState extends State<TabSection>
             Expanded(
                 child: TabBarView(
               controller: tabController,
-              children: const [BusTab(), MetroTab()],
+              children: [
+                BusTab(
+                  onStationClicked: widget.onStationClicked,
+                ),
+                MetroTab(
+                  onStationClicked: widget.onStationClicked,
+                ),
+              ],
             )),
           ],
         ));

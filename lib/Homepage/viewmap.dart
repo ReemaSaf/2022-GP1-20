@@ -61,11 +61,10 @@ class _ViewMap extends State<ViewMap> {
 
   Future<void> setUserMarker() async {
     await BitmapDescriptor.fromAssetImage(
-      
-      const ImageConfiguration(), 'assets/images/rec8.png'  )
-      .then((value) {
-        icon = value;
-        });
+            const ImageConfiguration(), 'assets/images/rec8.png')
+        .then((value) {
+      icon = value;
+    });
   }
 
   @override
@@ -174,7 +173,7 @@ class _ViewMap extends State<ViewMap> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       body: !isAdmin
           ? SlidingUpPanel(
-              isDraggable: false,
+              isDraggable: true,
               color: Colors.grey.shade100,
               controller: panelController,
               maxHeight: panelHeightOpen,
@@ -183,9 +182,22 @@ class _ViewMap extends State<ViewMap> {
               parallaxOffset: .5,
               body: mapWidget(),
               panelBuilder: (controller) => PanelWidget(
-                controller: controller,
-                panelController: panelController,
-              ),
+                  controller: controller,
+                  panelController: panelController,
+                  onStationClicked: (station, type) {
+
+                    _mapController.showMarkerInfoWindow(MarkerId('${type}_${type == 'Bus' ? station.Number : station.Name}'));
+                    _mapController.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          target: LatLng(station.Location.latitude,
+                              station.Location.longitude),
+                          zoom: 14,
+                        ),
+                      ),
+                    );
+                    panelController.close();
+                  }),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(18)),
             )
@@ -255,7 +267,7 @@ class _ViewMap extends State<ViewMap> {
                                     initialCameraPosition: const CameraPosition(
                                       target: LatLng(
                                           24.71619956670347, 46.68385748947401),
-                                      zoom: 11,
+                                      zoom: 25,
                                     ),
                                     zoomControlsEnabled: false,
                                     zoomGesturesEnabled: true,
