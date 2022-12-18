@@ -49,7 +49,7 @@ class LocationProvider extends ChangeNotifier {
 
   Future<void> animateToLocation(LatLng location) async {
     dp(msg: "Camera animate");
-    await googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
+    await googleMapController?.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
             bearing: 192.8334901395799, target: location, zoom: 14)));
   }

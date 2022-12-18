@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sekkah_app/Homepage/viewmap.dart';
+import 'package:sekkah_app/Planning/plan_route.dart';
 import 'package:sekkah_app/helpers/dialog_alert.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
@@ -21,7 +22,7 @@ class _NavScreenState extends State<NavScreen> {
 
   final screens = [
     const ViewMap(),
-    const Center(child: Text('Plan Route', style: (TextStyle(fontSize: 72)))),
+    const PlanARoute(),
     const Center(child: Text('Digital Card', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('Profile', style: (TextStyle(fontSize: 72)))),
   ];
