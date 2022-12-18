@@ -1,6 +1,8 @@
 //import 'dart:developer';
 // ignore_for_file: unused_field
 
+//import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,7 +61,7 @@ class _ViewMap extends State<ViewMap> {
 
   Future<void> setUserMarker() async {
     await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/images/icons.png')
+            const ImageConfiguration(), 'assets/images/rec8.png')
         .then((value) {
       icon = value;
     });
@@ -180,9 +182,22 @@ class _ViewMap extends State<ViewMap> {
               parallaxOffset: .5,
               body: mapWidget(),
               panelBuilder: (controller) => PanelWidget(
-                controller: controller,
-                panelController: panelController,
-              ),
+                  controller: controller,
+                  panelController: panelController,
+                  onStationClicked: (station, type) {
+
+                    _mapController.showMarkerInfoWindow(MarkerId('${type}_${type == 'Bus' ? station.Number : station.Name}'));
+                    _mapController.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          target: LatLng(station.Location.latitude,
+                              station.Location.longitude),
+                          zoom: 14,
+                        ),
+                      ),
+                    );
+                    panelController.close();
+                  }),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(18)),
             )

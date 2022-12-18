@@ -23,6 +23,7 @@ class _NavScreenState extends State<NavScreen> {
   final screens = [
     const ViewMap(),
     const PlanARoute(),
+    const PlanARoute(),
     const Center(child: Text('Digital Card', style: (TextStyle(fontSize: 72)))),
     const Center(child: Text('Profile', style: (TextStyle(fontSize: 72)))),
   ];
@@ -88,19 +89,31 @@ class _NavScreenState extends State<NavScreen> {
               // ignore: prefer_const_literals_to_create_immutables
               destinations: [
                 const NavigationDestination(
-                  icon: Icon(Icons.map_outlined),
+                  icon: Icon(
+                    Icons.map_outlined,
+                    color: Color(0xFF273B68),
+                  ),
                   label: 'Map',
                 ),
                 const NavigationDestination(
-                  icon: Icon(Icons.train_outlined),
+                  icon: Icon(
+                    Icons.train_outlined,
+                    color: Color(0xFF273B68),
+                  ),
                   label: 'Plan Route',
                 ),
                 const NavigationDestination(
-                  icon: Icon(Icons.account_balance_wallet_outlined),
+                  icon: Icon(
+                    Icons.account_balance_wallet_outlined,
+                    color: Color(0xFF273B68),
+                  ),
                   label: 'Digital Card',
                 ),
                 const NavigationDestination(
-                  icon: Icon(Icons.person),
+                  icon: Icon(
+                    Icons.person,
+                    color: Color(0xFF273B68),
+                  ),
                   label: 'Profile',
                 ),
               ]),

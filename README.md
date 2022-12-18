@@ -49,8 +49,10 @@
  - Navigate to the lib directory
  - Open the main.dart file
  - Make sure the emulator is turned on from the bottom status bar
+ - Make sure the emulator has enabled a location point in Riyadh from settings
  - Click on the run tab , then choose "Start Debugging"
  - The application will start running in a few moments, just wait..
+ - Accept the request to access you location to use the App!
   
 
 

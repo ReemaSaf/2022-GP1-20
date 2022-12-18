@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sekkah_app/Homepage/widget/TabSection.dart';
+import 'package:sekkah_app/helpers/DistanceModel.dart';
 import 'package:sekkah_app/others/constants.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatelessWidget {
   final ScrollController controller;
   final PanelController panelController;
+  final Function(DistanceModel, String) onStationClicked;
 
   const PanelWidget({
     Key? key,
     required this.controller,
     required this.panelController,
+    required this.onStationClicked,
   }) : super(key: key);
 
   @override
@@ -67,7 +70,9 @@ class PanelWidget extends StatelessWidget {
   builTabSection(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.7,
-      child: const TabSection(),
+      child: TabSection(
+        onStationClicked: onStationClicked,
+      ),
     );
   }
 }
