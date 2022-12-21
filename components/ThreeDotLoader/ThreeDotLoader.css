@@ -1,0 +1,14 @@
+.three-dots-loading {
+    padding: 10px !important;
+    margin: 0 auto;
+    width: 30%;
+    background: #50B2CC;
+    padding: 8px 20px 8px 20px;
+    border-radius: 5px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgb(0 0 0 / 12%);
+    font: normal 30px 'Bitter', serif;
+    box-shadow: inset 0px 2px 2px 0px rgb(255 255 255 / 17%);
+    border: 1px solid #257C9E;
+    font-size: 15px;
+}
