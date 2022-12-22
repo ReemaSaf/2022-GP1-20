@@ -58,7 +58,8 @@
  - Accept the request to access you location to use the App!
  
  ## Admin Websit
-<h3> TheAdministrator Websit is in new branch in the repostry, Also, I added it in new repostry, the link:https://github.com/ReemaSaf/Admin_Website.git </h3>
+The Administrator Websit is in new branch in the repostry, Also, I added it in new repostry
+The link : https://github.com/ReemaSaf/Admin_Website.git 
   
 
 
