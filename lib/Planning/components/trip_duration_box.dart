@@ -1,161 +1,149 @@
-import 'package:dotted_line/dotted_line.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sekkah_app/Planning/components/ticket_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:sekkah_app/Planning/components/ticket_widget.dart';
+import 'package:sekkah_app/constants/app_icons.dart';
+
+import '../../RoutMap.dart';
 import '../../constants/app_colors.dart';
-import '../../constants/app_icons.dart';
 import '../../constants/app_sizes.dart';
 import '../../constants/app_text_styles.dart';
+import '../../helpers/route_model.dart';
 
 class TripDurationBox extends StatefulWidget {
-  const TripDurationBox({Key? key}) : super(key: key);
+  const TripDurationBox({
+    Key? key,
+    required this.duration,
+    required this.distance,
+    this.exproute,
+    this.index,
+    required this.selectedindex,
+  }) : super(key: key);
+
+  final String duration;
+  final String distance;
+  final List<RouteModel>? exproute;
+  final int? index;
+  final int selectedindex;
 
   @override
   State<TripDurationBox> createState() => _TripDurationBoxState();
 }
 
 class _TripDurationBoxState extends State<TripDurationBox> {
-
-  bool isClick = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: height(context) * 0.02),
-      child: Bounceable(
-        onTap: (){
-          setState(() {
-            isClick = !isClick;
-          });
+      child: TicketWidget(
+        width: width(context),
+        height: 168.h,
+        isCornerRounded: true,
+        padding: EdgeInsets.all(10.h),
+        color: AppColors.whiteColor,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RouteMap(route: widget.exproute!)));
         },
-        child: TicketWidget(
-          width: width(context),
-          height: height(context) * 0.17,
-          isCornerRounded: true,
-          padding: const EdgeInsets.all(10),
-          color: isClick == true ?  AppColors.skyColor : AppColors.whiteColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    '25',
-                    style: poppinsMedium.copyWith(
-                      fontSize: 24.0,
-                      color: isClick == true ?  AppColors.whiteColor : AppColors.skyColor,
-                    ),
-                  ),
-                  const SizedBox(width: 3.0),
-                  Text(
-                    'Min',
-                    style: poppinsMedium.copyWith(
-                      fontSize: 14.0,
-                      color: isClick == true ?  AppColors.whiteColor : AppColors.blueDarkColor,
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: height(context) *0.02),
-                        child: Row(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppIcons.departureIcon),
-                            const Expanded(
-                              child: DottedLine(
-                                direction: Axis.horizontal,
-                                lineLength: double.infinity,
-                                lineThickness: 1.0,
-                                dashLength: 4.0,
-                                dashColor: AppColors.greyColor,
-                                dashRadius: 0.0,
-                                dashGapLength: 4.0,
-                                dashGapColor: Colors.transparent,
-                                dashGapRadius: 0.0,
-                              ),
-                            ),
-                            SvgPicture.asset(AppIcons.arrivalIcon),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Text('13.10pm',
-                              style: poppinsRegular.copyWith(
-                                fontSize: 12.0,
-                                color: isClick == true ?  AppColors.whiteColor : AppColors.blueDarkColor,
-                              ),
-                            ),
-                          ),
-                          Text('13.35pm',
-                            style: poppinsRegular.copyWith(
-                              fontSize: 12.0,
-                              color: isClick == true ?  AppColors.whiteColor : AppColors.skyColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: height(context) * 0.04),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text('departure',
-                                style: poppinsRegular.copyWith(
-                                  fontSize: 12.0,
-                                  color: isClick == true ?  AppColors.whiteColor : AppColors.greyDarkColor,
-                                ),
-                              ),
-                            ),
-                            Text('arrival',
-                              style: poppinsRegular.copyWith(
-                                fontSize: 12.0,
-                                color: isClick == true ?  AppColors.whiteColor : AppColors.greyDarkColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: SvgPicture.asset(AppIcons.vanIcon, color: isClick == true ?  AppColors.whiteColor : AppColors.greyDarkColor,),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Center(
-                child: Text(
-                  'Details',
-                  style: poppinsSemiBold.copyWith(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.duration.toString(),
+                  style: poppinsMedium.copyWith(
                     fontSize: 14.0,
-                    color: isClick == true ?  AppColors.whiteColor : AppColors.skyColor,
+                    color: Colors.green[900],
                   ),
                 ),
+                SizedBox(width: 3.h),
+                Text(
+                  widget.distance.toString(),
+                  style: poppinsMedium.copyWith(
+                    fontSize: 24.0,
+                    color: AppColors.blueDarkColor,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 12.h,
+            ),
+            SizedBox(
+              height: 24.h,
+              width: 320.w,
+              child: Image.asset(
+                AppIcons.ticketcomponet,
+                fit: BoxFit.fitWidth,
               ),
-            ],
-          ),
+            )
+            // Row(
+            //   children:[
+            //     Container(
+            //       width: 30,
+            //       height: 30,
+            //       margin:const  EdgeInsets.only(right: 6),
+            //       padding:const EdgeInsets.all(6),
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+            //       child: Image.asset("assets/icons/walk.png"),
+            //     ),
+            //     widget.index==1?Container(
+            //       width: 30,
+            //       height: 30,
+            //       margin:const  EdgeInsets.only(right: 6),
+            //       padding:const EdgeInsets.all(6),
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+            //       child: Image.asset("assets/icons/bus.png"),
+            //     ):SizedBox(),
+            //     Container(
+            //       width: 30,
+            //       height: 30,
+            //       margin:const  EdgeInsets.only(right: 6),
+            //       padding:const EdgeInsets.all(6),
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+            //       child:Image.asset("assets/icons/metro.png"),
+            //     ),
+            //     Container(
+            //       width: 30,
+            //       height: 30,
+            //       margin:const  EdgeInsets.only(right: 6),
+            //       padding:const EdgeInsets.all(6),
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+            //       child:Image.asset("assets/icons/metro.png"),
+            //     ),
+            //     Container(
+            //       width: 30,
+            //       height: 30,
+            //       margin:const  EdgeInsets.only(right: 6),
+            //       padding:const EdgeInsets.all(6),
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+            //       child: Image.asset("assets/icons/walk.png"),
+            //     ),
+            //   ],
+            // )
+            ,
+            SizedBox(
+              height: 30.h,
+            ),
+            Text(
+              'Details',
+              style: poppinsSemiBold.copyWith(
+                fontSize: 14.sp,
+                color: AppColors.skyColor,
+              ),
+            ),
+          ],
         ),
       ),
     );

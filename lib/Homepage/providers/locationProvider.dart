@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sekkah_app/Homepage/services/locationServices.dart';
-import '../../helpers/helper_fucntions.dart';
+import '../../helpers/helper_function.dart';
 
 class LocationProvider extends ChangeNotifier {
   GoogleMapController? googleMapController;

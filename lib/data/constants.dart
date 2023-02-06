@@ -7,7 +7,9 @@ class CustomColor {
   static Color klightblue = const Color(0xFF50B2CC);
   static Color ksemigrey = const Color(0xFF909090);
   static Color klightgrey = const Color(0xFFF2F2F2);
- 
+  static Color kblack = const Color(0xFF000000);
+
+
 
   static Color kgrey900 = const Color(0xFF212121);
   static Color kgrey800 = const Color(0xFF424242);

@@ -1,7 +1,4 @@
-//import 'dart:developer';
-// ignore_for_file: unused_field
-
-//import 'dart:ffi';
+// ignore_for_file: avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +12,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:sekkah_app/Homepage/widget/panel_widget.dart';
 import 'package:sekkah_app/others/constants.dart';
 import '../helpers/metro_station_model.dart';
+// ignore: unused_import
 import '../others/auth_controller.dart';
 import 'providers/locationProvider.dart';
 
@@ -74,15 +72,8 @@ class _ViewMap extends State<ViewMap> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FirebaseAuth.instance.currentUser!.isAnonymous
-              ? const SizedBox()
-              : FloatingActionButton(
-                  onPressed: () async {
-                    await AuthController().signOut();
-                  },
-                  backgroundColor: blueColor,
-                  child: const Icon(Icons.logout_rounded),
-                ),
+         
+         const SizedBox(),
           Obx(() => Container(
                 padding: const EdgeInsets.all(3),
                 decoration: BoxDecoration(
@@ -241,6 +232,7 @@ class _ViewMap extends State<ViewMap> {
                           builder: (context, locations) {
                             if (locations.hasData) {
                               final location = locations.data;
+                              print("============> lat ${location!.latitude} long ${location.longitude}");
                               return Obx(() {
                                 return GoogleMap(
                                     polylines: controller.polyline,
@@ -248,7 +240,7 @@ class _ViewMap extends State<ViewMap> {
                                       Marker(
                                           markerId: const MarkerId('UserId'),
                                           icon: icon!,
-                                          position: LatLng(location!.latitude!,
+                                          position:  LatLng(location.latitude!,
                                               location.longitude!)),
                                       ...markersType.value == MarkersToShow.both
                                           ? Set<Marker>.of(

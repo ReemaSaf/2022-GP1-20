@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:encryptor/encryptor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sekkah_app/Profile/widgets/show_loading_dialoges.dart';
 import 'package:sekkah_app/others/error_dialog.dart';
 import 'package:sekkah_app/others/error_handelling.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
@@ -20,6 +23,26 @@ class AuthController {
     }
   }
 
+  Future<bool> updateUserDetails({required UserModel userModel}) async {
+    try {
+      _firestore
+          .collection('Passenger')
+          .doc(_auth.currentUser!.uid)
+          .set(userModel.toMap());
+
+      Get.back();
+      Get.snackbar("Profile Updated", "Your Profile has been updated succesfully",
+      backgroundColor: const Color(0xff50b2cc)
+      );
+      return true;
+    } on FirebaseAuthException catch (err) {
+      String errorMessage =
+          ErrorHandelling.getMessageFromErrorCode(errorCode: err.code);
+      showErrorDialog(errorMessage);
+      return false;
+    }
+  }
+
   Future<bool> createUserWithEmailAndPassword(
       {required String email,
       required String password,
@@ -28,10 +51,19 @@ class AuthController {
     try {
       UserCredential? credentials = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
+      // Here, We are Encrypting the password so that nobody can see the password from Firebase console,
+      //it takes the password as Text and user id as key to encrypt the password and the return us The encryrted Password which we use to send it to firebase
+      var encryptedPassword =
+          Encryptor.encrypt(_auth.currentUser!.uid, password);
+      //Creating Model
       if (credentials.user != null) {
-        UserModel user =
-            UserModel(email: email, firstName: firstName, lastName: lastName);
+        UserModel user = UserModel(
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          password: encryptedPassword,
+        );
+        //Sending UserModel To firebase
         _firestore
             .collection('Passenger')
             .doc(credentials.user!.uid)
@@ -57,6 +89,41 @@ class AuthController {
       showErrorDialog(errorMessage);
       return false;
     }
+  }
+
+  //Change Password Function , It takes New password and Old Password , This function is used in Change password Screen from Profile Section, please refer to that screen in order to understand how to use this function;
+  Future<void> changePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
+    try {
+      showLoadingDialog(message: "Processing...");//Mainly Show prosseing dialog.
+      final user = FirebaseAuth.instance.currentUser; //Getting firebase auth instance
+      final cred = EmailAuthProvider.credential( //making credential ...
+          email: user!.email!, password: currentPassword);
+      await user.reauthenticateWithCredential(cred).then((value) async { //This is a function that reauthetciate and change password it take email and newpasssword as Credential to update/change the credentials
+        await user.updatePassword(newPassword); //Here Updating new Password
+        // When The password is change new password will also encrpted before updting it to firebase so that the securoty remains 
+        var encryptedPassword =
+            Encryptor.encrypt(_auth.currentUser!.uid, newPassword);
+        //Updating only passwordfeild in firebase with encrpted password
+        await FirebaseFirestore.instance
+            .collection('Passenger')
+            .doc(user.uid)
+            .update({'password': encryptedPassword});
+      });
+      //Clossing Dialog
+      
+      Get.back();
+      hideLoadingDialog();
+      //Profile updated- your profile has been updated successfully
+       Get.snackbar("Password Updated", "Your password has been updated successfully",
+       backgroundColor: const Color(0xff50b2cc)
+       );
+    } on Exception catch (e) {
+       //Clossing Dialog
+      hideLoadingDialog();
+      showErrorDialog(e.toString());    }
   }
 
   Future<void> signUpAsGuest() async {

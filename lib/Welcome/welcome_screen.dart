@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sekkah_app/others/background.dart';
-import '../Admin/admin_login.dart';
-import '../others/constants.dart';
 import 'components/login_signup_btn.dart';
 import 'components/welcome_image.dart';
 
@@ -31,16 +28,18 @@ class MobileWelcomeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+       /* 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 60.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
+            
             children: [
               const Spacer(),
               const SizedBox(
                 width: 32,
               ),
-              Column(
+               Column(
                 children: [
                   IconButton(
                     iconSize: 70,
@@ -63,13 +62,13 @@ class MobileWelcomeScreen extends StatelessWidget {
                     ),
                   )
                 ],
-              ),
+              ), 
               const Spacer(),
-            ],
-          ),
-        ),
+            ], 
+          ), 
+        ), */
         const SizedBox(
-          height: 5,
+          height: 40,
         ),
         const WelcomeImage(),
         Row(

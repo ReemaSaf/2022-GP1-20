@@ -1,12 +1,17 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sekkah_app/Welcome/welcome_screen.dart';
+import 'Services/MetroServices.dart';
 import 'Welcome/components/state_checker.dart';
 import 'helpers/firebase_options.dart';
 import 'others/constants.dart';
+
+MetroService metroService=MetroService();
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,10 +27,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => GetMaterialApp(
+  Widget build(BuildContext context) =>ScreenUtilInit(
+      designSize: const Size(414, 896),
+      minTextAdapt: true,
+      splitScreenMode: true,
+    builder: (context, child) =>  GetMaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          
             primaryColor: blueColor,
             scaffoldBackgroundColor: Colors.white,
             elevatedButtonTheme: ElevatedButtonThemeData(
@@ -57,7 +67,7 @@ class MyApp extends StatelessWidget {
             splashIconSize: 145,
             centered: true,
             nextScreen: const MainPage()),
-      );
+      ));
 }
 
 class MainPage extends StatefulWidget {
