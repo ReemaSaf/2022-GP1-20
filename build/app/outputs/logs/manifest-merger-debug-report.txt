@@ -64,6 +64,7 @@ MERGED from [:google_maps_flutter_android] /Users/najdalnasrallah/Documents/GitH
 MERGED from [:flutter_plugin_android_lifecycle] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:url_launcher_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-16:12
 MERGED from [:path_provider_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:webview_flutter_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/webview_flutter_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:permission_handler_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/permission_handler_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:geocoding] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/geocoding/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:google_api_headers] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/google_api_headers/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
@@ -77,6 +78,7 @@ MERGED from [com.google.firebase:firebase-storage:20.0.2] /Users/najdalnasrallah
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/5ff02c3b2050b4049110c78d1956b552/transformed/jetified-firebase-auth-interop-20.0.0/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/1c0f01aa0d57523bf3963c84e39d4459/transformed/jetified-firebase-appcheck-interop-16.0.2/AndroidManifest.xml:15:1-26:12
 MERGED from [com.google.firebase:firebase-common:20.1.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/48910f66358472946f51e5e2ea913ade/transformed/jetified-firebase-common-20.1.2/AndroidManifest.xml:15:1-40:12
+MERGED from [androidx.webkit:webkit:1.5.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/75bda56e94a88596b5a3e98f1fd2e412/transformed/webkit-1.5.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.3.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/3d271ff337331571202ede067ad93eee/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-maps:18.1.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/9189bd22cab23125dcf032791c702645/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-location:20.0.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/41d48b1796f4835ac5a8ecd28f63c6d8/transformed/jetified-play-services-location-20.0.0/AndroidManifest.xml:2:1-9:12
@@ -162,6 +164,8 @@ MERGED from [:url_launcher_android] /Users/najdalnasrallah/Documents/GitHub/2022
 MERGED from [:url_launcher_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:path_provider_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:path_provider_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:webview_flutter_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/webview_flutter_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:webview_flutter_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/webview_flutter_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:permission_handler_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/permission_handler_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:permission_handler_android] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/permission_handler_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:geocoding] /Users/najdalnasrallah/Documents/GitHub/2022-GP1-20/build/geocoding/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
@@ -188,6 +192,8 @@ MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.2] /Users/najdal
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/1c0f01aa0d57523bf3963c84e39d4459/transformed/jetified-firebase-appcheck-interop-16.0.2/AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-common:20.1.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/48910f66358472946f51e5e2ea913ade/transformed/jetified-firebase-common-20.1.2/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-common:20.1.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/48910f66358472946f51e5e2ea913ade/transformed/jetified-firebase-common-20.1.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.5.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/75bda56e94a88596b5a3e98f1fd2e412/transformed/webkit-1.5.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.webkit:webkit:1.5.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/75bda56e94a88596b5a3e98f1fd2e412/transformed/webkit-1.5.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.3.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/3d271ff337331571202ede067ad93eee/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.core:core-ktx:1.3.2] /Users/najdalnasrallah/.gradle/caches/transforms-3/3d271ff337331571202ede067ad93eee/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.android.gms:play-services-maps:18.1.0] /Users/najdalnasrallah/.gradle/caches/transforms-3/9189bd22cab23125dcf032791c702645/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:20:5-44
