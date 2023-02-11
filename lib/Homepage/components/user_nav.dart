@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sekkah_app/Homepage/viewmap.dart';
+import 'package:sekkah_app/Planning/DigitalCard/DigitalCard.dart';
 import 'package:sekkah_app/Planning/plan_route.dart';
 import 'package:sekkah_app/Profile/profile_screen.dart';
 import 'package:sekkah_app/helpers/dialog_alert.dart';
@@ -24,8 +25,10 @@ class _NavScreenState extends State<NavScreen> {
   final screens = [
     const ViewMap(),
     const PlanARoute(),
-    const Center(child: Text('Digital Card', style: (TextStyle(fontSize: 72)))),
-   ProfileScreen(),
+    const DigitalCard(),
+    const Center(child: Text('tickets', style: (TextStyle(fontSize: 72)))),
+    ProfileScreen(),
+  
   ];
 
   @override
@@ -45,12 +48,12 @@ class _NavScreenState extends State<NavScreen> {
               selectedIndex: index,
               onDestinationSelected: (currentIndex) {
                 setState(() => index = currentIndex);
-                if (FirebaseAuth.instance.currentUser!.isAnonymous &&
-                    (index == 2)) {
+                 if (FirebaseAuth.instance.currentUser!.isAnonymous &&
+                    (index == 3)) {
                   showConfirmationDialog(
                       heading: "Alert",
                       message:
-                          "You must register to have a digital metro card.",
+                          "You must register to view tickets.",
                       okText: "Register",
                       onPressedOk: () {
                         Get.back();
@@ -66,7 +69,7 @@ class _NavScreenState extends State<NavScreen> {
                       });
                 }
                 if (FirebaseAuth.instance.currentUser!.isAnonymous &&
-                    (index == 3)) {
+                    (index == 4)) {
                   showConfirmationDialog(
                       heading: "Alert",
                       message: "You must register to access your profile.",
@@ -95,6 +98,7 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Map',
                 ),
+
                 const NavigationDestination(
                   icon: Icon(
                     Icons.train_outlined,
@@ -102,6 +106,7 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Plan Route',
                 ),
+
                 const NavigationDestination(
                   icon: Icon(
                     Icons.account_balance_wallet_outlined,
@@ -109,6 +114,15 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Digital Card',
                 ),
+                
+                const NavigationDestination(
+                  icon: Icon(
+                    Icons.confirmation_number_outlined,
+                    color: Color(0xFF273B68),
+                  ),
+                  label: 'Tickets',
+                ),
+
                 const NavigationDestination(
                   icon: Icon(
                     Icons.person,
