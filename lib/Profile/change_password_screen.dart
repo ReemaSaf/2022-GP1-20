@@ -24,6 +24,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
   TextEditingController oldPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -120,6 +121,27 @@ class ChangePasswordScreen extends StatelessWidget {
                                                     .contains(RegExp(r'[a-z]')) ==
                                                 false) {
                                           return 'Password must contain at least one upperrcase letter , lowercase letter and a number.';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                   Text("Confirm Password",
+                                      style: CustomTextStyle.klarge.copyWith(
+                                          color: CustomColor.kblack,
+                                          fontWeight:
+                                              CustomFontWeight.kMediumFontWeight)),
+                                  SizedBox(
+                                    child: ProfileTextFeild(
+                                      controller: confirmPassword,
+                                      showHideIcon: true,
+                                      validator: (val) {
+                                        if (val!.isEmpty) {
+                                          return 'Please Enter your Password.';
+                                        }
+                                        if (val != newPassword.text){
+                                          return 'Password does not match';
                                         } else {
                                           return null;
                                         }
