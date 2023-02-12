@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -59,12 +59,13 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     // init();
   }
   @override
   Widget build(BuildContext context) {
-    return isShow==false?Center(child: CircularProgressIndicator()):Padding(
+    return isShow==false?const Center(child: CircularProgressIndicator()):Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
       child: SizedBox(
         height: Get.height * 0.05,
@@ -76,6 +77,7 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
           onPressed: () async {
             {
               exproute=[];
+              // ignore: unnecessary_null_comparison
               if(widget.originAddress!=null&&widget.destinationAddress!=null){
                 setState(() {
                   isShow=false;
@@ -378,3 +380,4 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
     );
   }
 }
+

@@ -1,13 +1,15 @@
+// ignore_for_file: file_names, unused_import, unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:sekkah_app/constants/app_colors.dart';
-import 'package:sekkah_app/constants/app_icons.dart';
-import 'package:sekkah_app/constants/app_text_styles.dart';
-import 'package:sekkah_app/data/constants.dart';
+// ignore: depend_on_referenced_packages
+import 'package:motion_toast/motion_toast.dart';
 import 'package:timelines/timelines.dart';
 import '../Homepage/providers/locationProvider.dart';
 import '../Homepage/viewmap.dart';
@@ -15,9 +17,13 @@ import '../helpers/bus_station_model.dart';
 import '../helpers/metro_station_model.dart';
 import '../helpers/route_model.dart';
 import '../others/map_controller.dart';
+import 'dart:ui' as ui;
+
+import 'data/constants.dart';
 
 class RouteMap extends StatefulWidget {
-  final List route;
+  final List<RouteModel> route;
+
   const RouteMap({super.key, required this.route});
 
   @override
@@ -34,12 +40,104 @@ class _RouteMapState extends State<RouteMap> {
   Rx<MarkersToShow> markersType = MarkersToShow.both.obs;
   late Set<Marker> _marker = {};
   final Set<Polyline> _polyline = {};
+  final Set<Polyline> _polyline1 = {};
+  int num = 1;
   List<LatLng> latlan = [];
-  bool isBottomSheetOpened = false;
+  LocationData? currentLocation;
+  BitmapDescriptor locationIcon = BitmapDescriptor.defaultMarker;
+  bool isShow=false;
+
   // [LatLng(24.69480962821743,46.67990130161707),LatLng(24.696571105638657, 46.6837677588918),LatLng(24.737262838662325,46.66339794924775),LatLng(24.740640121256355,46.67113291220544)];
+  void getCurrentLocation() {
+    Location location = Location();
+    location.getLocation().then((location) {
+      currentLocation = location;
+    });
+    location.onLocationChanged.listen((event) {
+      currentLocation = event;
+      afterLocationLine(lat: event.latitude, lng: event.longitude);
+    });
+  }
+
+  Future<void> afterLocationLine({double? lat, double? lng}) async {
+    var dis = Geolocator.distanceBetween(
+        lat!, lng!, widget.route[num].lat!, widget.route[num].lng!);
+    if (dis < 50) {
+      _polyline.add(Polyline(
+          color:AppColors.blueDarkColor,
+          width: 3,
+          polylineId: PolylineId(num.toString()),
+          points: [
+            LatLng(latlan[num - 1].latitude, latlan[num - 1].longitude),
+            LatLng(latlan[num].latitude, latlan[num].longitude)
+          ]));
+      MotionToast.error(
+          title: const Text("Your Have Reached"),
+          description: Text("${widget.route[num].name}"))
+          .show(context);
+      setState(() {
+        num = num + 1;
+      });
+      if (num == widget.route.length) {
+        showDialog(
+          barrierDismissible: false,
+          builder: (context) {
+            return Container(
+              height: 180,
+              width: 180,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        color: AppColors.blueDarkColor, shape: BoxShape.circle),
+                    child: const Icon(Icons.done, color: Colors.white),
+                  ),
+                  const SizedBox(height: 22),
+                  const Text("You Have Reach At Your Destination",
+                      style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+                ],
+              ),
+            );
+          },
+          context: context,
+        );
+        await const Duration(seconds: 3).delay();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const ViewMap()));
+      }
+    }
+    // for( var i = 0; i<=widget.route.length; i++ ) {
+    //
+    // }
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  void setMarkerIcon() {
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty, 'assets/images/rec8.png')
+        .then((value) {
+      locationIcon = value;
+    });
+  }
+
   @override
-  void initState()  {
+  void initState() {
     super.initState();
+    setMarkerIcon();
     List newRoute = widget.route;
     newRoute.forEach((element) {
       RouteModel e = element;
@@ -48,31 +146,45 @@ class _RouteMapState extends State<RouteMap> {
     for (int i = 0; i < latlan.length; i++) {
       print(
           "====================================================> lat ${latlan[i].latitude}");
-      _marker
-          .add(Marker(markerId: MarkerId(i.toString()),visible: false, position: latlan[i]));
+      _marker.add(Marker(
+          markerId: MarkerId(i.toString()),
+          visible: false,
+          position: latlan[i]));
       if (i == latlan.length) {
         _marker = Set<Marker>.of(controller.allMarkers.values);
       }
       if (i == 0) {
-        _polyline.add(Polyline(color: Color(0xff4CA7C3),width:3 ,polylineId: const PolylineId('1'), patterns: [
-          PatternItem.dash(8),
-          PatternItem.gap(15)
-        ], points: [
-          LatLng(latlan[0].latitude, latlan[0].longitude),
-          LatLng(latlan[1].latitude, latlan[1].longitude)
-        ]));
+        _polyline.add(Polyline(
+            color: const Color(0xff4CA7C3),
+            width: 3,
+            polylineId: const PolylineId('1'),
+            patterns: [
+              PatternItem.dash(8),
+              PatternItem.gap(15)
+            ],
+            points: [
+              LatLng(latlan[0].latitude, latlan[0].longitude),
+              LatLng(latlan[1].latitude, latlan[1].longitude)
+            ]));
       } else if (i == latlan.length - 1) {
-        _polyline.add(Polyline(color: Color(0xff4CA7C3),width:3,polylineId: const PolylineId('1'), patterns: [
-          PatternItem.dash(8),
-          PatternItem.gap(15)
-        ], points: [
-          LatLng(latlan[latlan.length - 2].latitude,
-              latlan[latlan.length - 2].longitude),
-          LatLng(latlan[latlan.length - 1].latitude,
-              latlan[latlan.length - 1].longitude)
-        ]));
+        _polyline.add(Polyline(
+            color: const Color(0xff4CA7C3),
+            width: 3,
+            polylineId: const PolylineId('1'),
+            patterns: [
+              PatternItem.dash(8),
+              PatternItem.gap(15)
+            ],
+            points: [
+              LatLng(latlan[latlan.length - 2].latitude,
+                  latlan[latlan.length - 2].longitude),
+              LatLng(latlan[latlan.length - 1].latitude,
+                  latlan[latlan.length - 1].longitude)
+            ]));
       } else {
-        _polyline.add(Polyline(color: Color(0xff4CA7C3),width:6 ,
+        _polyline.add(Polyline(
+            color: const Color(0xff4CA7C3),
+            width: 6,
             polylineId: const PolylineId('1'),
             points: latlan.getRange(1, latlan.length - 1).toList()));
       }
@@ -82,24 +194,8 @@ class _RouteMapState extends State<RouteMap> {
 
   @override
   Widget build(BuildContext context) {
+    getCurrentLocation();
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Container(
-              height: 36.h,
-              width: 36.h,
-              decoration: BoxDecoration(
-                  color: AppColors.blueDarkColor,
-                  borderRadius: BorderRadius.circular(6.r)),
-              child: const Center(
-                  child: Icon(Icons.arrow_back, color: Colors.white))),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: true,
-        elevation: 0.0,
-      ),
       body: Stack(
         children: [mapWidget(), bottomDetailsSheet()],
       ),
@@ -148,27 +244,15 @@ class _RouteMapState extends State<RouteMap> {
                                     markers: {
                                       ..._marker,
                                       ...Set<Marker>.of(
-                                          controller.allMarkers.values)
+                                          controller.allMarkers.values),
+                                      Marker(
+                                        markerId: const MarkerId('location'),
+                                        position: LatLng(
+                                            currentLocation!.latitude!,
+                                            currentLocation!.longitude!),
+                                        icon: locationIcon,
+                                      )
                                     },
-                                    // {
-                                    //   const Marker(
-                                    //       markerId: MarkerId('start'),
-                                    //       position:  LatLng(24.69480962821743,
-                                    //           46.67990130161707)),
-                                    //   const Marker(
-                                    //     markerId: MarkerId('stop 1'),
-                                    //     position: LatLng(24.696571105638657,46.6837677588918),
-                                    //   ),
-                                    //   const Marker(
-                                    //     markerId: MarkerId('stop 2'),
-                                    //     position: LatLng(24.737262838662325
-                                    //         ,46.66339794924775),
-                                    //   ),
-                                    //   const Marker(
-                                    //       markerId: MarkerId('end'),
-                                    //       position:  LatLng(24.740640121256355,
-                                    //           46.67113291220544)),
-                                    // },
                                     initialCameraPosition: CameraPosition(
                                       target: LatLng(latlan[0].latitude,
                                           latlan[0].longitude),
@@ -240,10 +324,10 @@ class _RouteMapState extends State<RouteMap> {
                 ),
                 const SizedBox(height: 16),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-                  margin: EdgeInsets.only(left: 16, right: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                  margin: const EdgeInsets.only(left: 16, right: 16),
                   decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2),
+                      color: const Color(0xffF2F2F2),
                       borderRadius: BorderRadius.circular(12)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,31 +366,31 @@ class _RouteMapState extends State<RouteMap> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16)),
                           ),
-                          const SizedBox(width:6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            decoration: BoxDecoration(
-                                border: Border.all(color:Color(0xff50B2CC)),
-                                borderRadius: BorderRadius.circular(18)),
-                            child:  Row(
-                              children:const [
-                                Icon(Icons.near_me,color: Color(0xff50B2CC)),
-                                SizedBox(width:6),
-                                Text("Start",
-                                    style: TextStyle(
-                                        color: Color(0xff50B2CC),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                              ],
-                            ),
-                          )
+                          // const SizedBox(width: 6),
+                          // Container(
+                          //   padding: const EdgeInsets.symmetric(
+                          //       horizontal: 12, vertical: 12),
+                          //   decoration: BoxDecoration(
+                          //       border: Border.all(color: Color(0xff50B2CC)),
+                          //       borderRadius: BorderRadius.circular(18)),
+                          //   child: Row(
+                          //     children: const [
+                          //       Icon(Icons.near_me, color: Color(0xff50B2CC)),
+                          //       SizedBox(width: 6),
+                          //       Text("Start",
+                          //           style: TextStyle(
+                          //               color: Color(0xff50B2CC),
+                          //               fontWeight: FontWeight.bold,
+                          //               fontSize: 16)),
+                          //     ],
+                          //   ),
+                          // )
                         ],
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height:16),
+                const SizedBox(height: 16),
                 // Expanded(
                 //   child: SizedBox(
                 //     child: SingleChildScrollView(
@@ -379,47 +463,104 @@ class _RouteMapState extends State<RouteMap> {
                 //         )),
                 //   ),
                 // ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DotIndicator(size: 20),
-                          const SizedBox(width: 8),
-                          Text(widget.route[1].name!,style: TextStyle(color: AppColors.blueDarkColor,fontSize:16,fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              height: 50.0,
-                              child: SolidLineConnector(),
-                            ),
-                            const SizedBox(
-                                width: 16
-                            ),
-                            Row(
+                          Row(
+                            children: [
+                              const DotIndicator(size: 20),
+                              const SizedBox(width: 8),
+                              Text(widget.route[0].name!,
+                                  style: const TextStyle(
+                                      color: AppColors.blueDarkColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Row(
                               children: [
-                                Text("${widget.route.length-4} Stops Before",style: const TextStyle(color: AppColors.skyColor,fontSize: 16)),
-                                const Icon(Icons.arrow_drop_down,color: AppColors.skyColor)
+                                const SizedBox(
+                                  height: 50.0,
+                                  child: SolidLineConnector(),
+                                ),
+                                const SizedBox(width: 16),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      isShow=!isShow;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("${widget.route.length - 4} Stops Before",
+                                          style: const TextStyle(
+                                              color: AppColors.skyColor,
+                                              fontSize: 16)),
+                                      isShow==false?const Icon(Icons.arrow_drop_down,
+                                          color: AppColors.skyColor):const Icon(Icons.arrow_drop_up,
+                                          color: AppColors.skyColor)
+                                    ],
+                                  ),
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          DotIndicator(size:20),
-                          const SizedBox(width: 8),
-                          Text(widget.route[widget.route.length-1].name!,style: TextStyle(color: AppColors.blueDarkColor,fontSize:16,fontWeight: FontWeight.bold))
+                            ),
+                          ),
+                          isShow==true?
+                          SizedBox(
+                            child: Wrap(
+                              children:List.generate(widget.route.length-2, (index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        DotIndicator(size:20),
+                                        const SizedBox(width: 8),
+                                        Text(widget.route[index+1].name!,
+                                            style: const TextStyle(
+                                                color: AppColors.blueDarkColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold))
+                                      ],
+                                    ),
+                                    Row(
+                                      children:const [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8.0),
+                                          child: SizedBox(
+                                            height: 20.0,
+                                            child: SolidLineConnector(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          )
+                              :const SizedBox(),
+                          Row(
+                            children: [
+                              const DotIndicator(size: 20),
+                              const SizedBox(width: 8),
+                              Text(widget.route[widget.route.length - 1].name!,
+                                  style:const TextStyle(
+                                      color: AppColors.blueDarkColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 // SizedBox(

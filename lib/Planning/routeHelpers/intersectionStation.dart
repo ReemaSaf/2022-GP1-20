@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, file_names, duplicate_ignore
 
 import '../../main.dart';
 import 'intersection.dart';

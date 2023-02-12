@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls
+// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls, await_only_futures
 
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ import 'components/ticket_widget.dart';
 
 class PlanRouteScreen extends StatefulWidget {
   final List<List<RouteModel>>? exproute;
-  PlanRouteScreen({this.exproute});
+  const PlanRouteScreen({super.key, this.exproute});
 
   @override
   State<PlanRouteScreen> createState() => _PlanRouteScreenState();
@@ -90,7 +90,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
         });
       });
     });
-    await Duration(seconds: 3);
+    await const Duration(seconds: 3);
     setState(() {
       isShow = true;
     });
@@ -127,7 +127,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
       ),
       /// body
       body: isShow == false
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -307,7 +307,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                         /// boxes
                         Expanded(
                           child: ListView.builder(
-                            itemCount: widget.exproute!.length,
+                            itemCount: 2,
                             padding: const EdgeInsets.only(bottom: 50),
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {

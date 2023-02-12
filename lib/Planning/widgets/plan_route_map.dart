@@ -1,10 +1,9 @@
-import 'dart:ui' as ui;
+
+// ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/constants/app_icons.dart';
 import 'package:sekkah_app/core/const.dart';

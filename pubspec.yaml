@@ -67,6 +67,7 @@ dependencies:
   http: ^0.13.5
   timelines: ^0.1.0
   flutter_paypal: ^0.0.8
+  motion_toast: ^2.6.5
 
 dev_dependencies:
   flutter_test:

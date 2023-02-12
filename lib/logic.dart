@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, empty_statements
+
 import 'package:geolocator/geolocator.dart';
 
 import 'helpers/contains_model.dart';

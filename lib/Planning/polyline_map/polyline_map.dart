@@ -1,18 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print, avoid_function_literals_in_foreach_calls, duplicate_ignore
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../Homepage/providers/locationProvider.dart';
 import '../../helpers/bus_station_model.dart';
 import '../../helpers/metro_station_model.dart';
-import '../../others/auth_controller.dart';
-import '../../others/constants.dart';
 import '../../others/map_controller.dart';
 
 enum MarkersToShow { none, bus, metro, both }

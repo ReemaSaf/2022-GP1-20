@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_function_literals_in_foreach_calls, duplicate_ignore
 // ignore_for_file: unused_import, unnecessary_null_comparison
 
 import 'dart:convert';
@@ -28,6 +28,7 @@ import 'package:sekkah_app/helpers/user_model.dart';
 
 import 'widgets/plan_route_map.dart';
 import 'widgets/search_button.dart';
+
 
 class PlanARoute extends StatefulWidget {
   const PlanARoute({Key? key}) : super(key: key);
@@ -108,6 +109,9 @@ class _PlanARoute extends State<PlanARoute> {
         ? Get.snackbar('Not Found', 'Place Not found please change the keyword')
         : const SizedBox();
     // ignore: avoid_function_literals_in_foreach_calls
+    setState(() {
+      description=[];
+    });
     places.predictions.forEach((pred) {
       setState(() {
         description.add(pred.description);
@@ -288,8 +292,7 @@ class _PlanARoute extends State<PlanARoute> {
                                                       color: CustomColor.kgrey),
                                                 );
                                               });
-                                    }
-                                    ),
+                                    }),
                                 SizedBox(height: 4.h),
                                 isFromFieldFocus || isToFieldFocus
                                     ? const SizedBox()
