@@ -19,6 +19,7 @@ import '../helpers/route_model.dart';
 import '../others/map_controller.dart';
 import 'dart:ui' as ui;
 
+import 'BuyTicket.dart';
 import 'data/constants.dart';
 
 class RouteMap extends StatefulWidget {
@@ -354,7 +355,13 @@ class _RouteMapState extends State<RouteMap> {
                       ),
                       Row(
                         children: [
-                          Container(
+                          
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() =>  BuyTicket());
+                          
+                            },
+                            child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 12),
                             decoration: BoxDecoration(
@@ -365,7 +372,7 @@ class _RouteMapState extends State<RouteMap> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16)),
-                          ),
+                          ),)
                           // const SizedBox(width: 6),
                           // Container(
                           //   padding: const EdgeInsets.symmetric(
@@ -648,3 +655,4 @@ class _RouteMapState extends State<RouteMap> {
     controller.setAllMarkers();
   }
 }
+
