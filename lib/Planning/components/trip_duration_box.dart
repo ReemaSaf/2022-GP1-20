@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,7 +10,6 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_sizes.dart';
 import '../../constants/app_text_styles.dart';
 import '../../helpers/route_model.dart';
-
 class TripDurationBox extends StatefulWidget {
   const TripDurationBox({
     Key? key,
@@ -19,6 +18,7 @@ class TripDurationBox extends StatefulWidget {
     this.exproute,
     this.index,
     required this.selectedindex,
+    this.color,
   }) : super(key: key);
 
   final String duration;
@@ -26,6 +26,7 @@ class TripDurationBox extends StatefulWidget {
   final List<RouteModel>? exproute;
   final int? index;
   final int selectedindex;
+  final Color? color;
 
   @override
   State<TripDurationBox> createState() => _TripDurationBoxState();
@@ -41,12 +42,9 @@ class _TripDurationBoxState extends State<TripDurationBox> {
         height: 168.h,
         isCornerRounded: true,
         padding: EdgeInsets.all(10.h),
-        color: AppColors.whiteColor,
+        color:widget.color!,
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RouteMap(route: widget.exproute!)));
+          print("you tappped it  ");
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,7 +64,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                 Text(
                   widget.distance.toString(),
                   style: poppinsMedium.copyWith(
-                    fontSize: 24.0,
+                    fontSize: 20.0,
                     color: AppColors.blueDarkColor,
                   ),
                 ),
@@ -136,11 +134,19 @@ class _TripDurationBoxState extends State<TripDurationBox> {
             SizedBox(
               height: 30.h,
             ),
-            Text(
-              'Details',
-              style: poppinsSemiBold.copyWith(
-                fontSize: 14.sp,
-                color: AppColors.skyColor,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RouteMap(route: widget.exproute!)));
+              },
+              child: Text(
+                'Details',
+                style: poppinsSemiBold.copyWith(
+                  fontSize: 14.sp,
+                  color: AppColors.skyColor,
+                ),
               ),
             ),
           ],

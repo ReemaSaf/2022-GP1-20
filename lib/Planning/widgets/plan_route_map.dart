@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sekkah_app/constants/app_icons.dart';
 import 'package:sekkah_app/core/const.dart';
 
 class PlanRouteMap extends StatefulWidget {
@@ -77,13 +76,13 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
 
   void setMapPins() async  {
     _markers.add(Marker(
-        icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(150.h, 150.h)), AppIcons.myloc),
+        icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(150.h, 150.h)), 'assets/images/start.png'),
         markerId: const MarkerId('sourcePin'),
         position: LatLng(widget.originLatLong[0], widget.originLatLong[1]),
       ));
       // destination pin
       _markers.add(Marker(
-        icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(280.h, 280.h)), AppIcons.des),
+        icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(280.h, 280.h)), 'assets/images/end.png'),
         markerId: const MarkerId('destPin'),
        
         position:
@@ -108,6 +107,15 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
       zoomGesturesEnabled: true,
       polylines: Set<Polyline>.of(polylines.values),
       markers: Set<Marker>.of(_markers),
+        onMapCreated:
+            (GoogleMapController controller) async {
+          String style =
+          await DefaultAssetBundle.of(context)
+              .loadString(
+              'assets/mapstyle.json');
+          //customize your map style at: https://mapstyle.withgoogle.com/
+          controller.setMapStyle(style);
+        }
     );
   }
 }

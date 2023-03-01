@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:sekkah_app/data/constants.dart';
 import 'package:sekkah_app/data/typography.dart';
 
+
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType textInputType;

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_function_literals_in_foreach_calls, duplicate_ignore
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_function_literals_in_foreach_calls, duplicate_ignore, avoid_print
 // ignore_for_file: unused_import, unnecessary_null_comparison
 
 import 'dart:convert';
@@ -26,9 +26,9 @@ import 'package:sekkah_app/data/constants.dart';
 import 'package:sekkah_app/data/typography.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 
+import 'routeHelpers/currentLocation.dart';
 import 'widgets/plan_route_map.dart';
 import 'widgets/search_button.dart';
-
 
 class PlanARoute extends StatefulWidget {
   const PlanARoute({Key? key}) : super(key: key);
@@ -49,6 +49,8 @@ class _PlanARoute extends State<PlanARoute> {
   List<dynamic> placeId = [];
   List originLatLong = [];
   List destinationLatLong = [];
+  double currentLocationLat=0;
+  double currentLocationLng=0;
 
   @override
   void initState() {
@@ -111,6 +113,7 @@ class _PlanARoute extends State<PlanARoute> {
     // ignore: avoid_function_literals_in_foreach_calls
     setState(() {
       description=[];
+      placeId=[];
     });
     places.predictions.forEach((pred) {
       setState(() {
@@ -132,16 +135,36 @@ class _PlanARoute extends State<PlanARoute> {
     setState(() {
       if (isFromFieldFocus && isToFieldFocus == false) {
         fromController.text = description[index];
+        originLatLong=[];
         originLatLong.add(lat);
         originLatLong.add(lang);
       } else if (isToFieldFocus && isFromFieldFocus == false) {
         toController.text = description[index];
+        destinationLatLong=[];
         destinationLatLong.add(lat);
         destinationLatLong.add(lang);
       }
       isFromFieldFocus = false;
       isToFieldFocus = false;
     });
+  }
+  Future<void> getCurrentLocation() async {
+    await CurrentLocationLng().then((value) {
+      currentLocationLng=value;
+      setState(() {
+
+      });
+    });
+    await CurrentLocationLat().then((value) {
+      currentLocationLat=value;
+      setState(() {
+      });
+    });
+    fromController.text ="Your Current Location";
+    print("lakdskjsjhfkfhlkjf $currentLocationLat  $currentLocationLng");
+    originLatLong=[];
+    originLatLong.add(currentLocationLat);
+    originLatLong.add(currentLocationLng);
   }
 
   @override
@@ -285,7 +308,7 @@ class _PlanARoute extends State<PlanARoute> {
                                                 return Text(
                                                   'Hi $username',
                                                   style: TextStyle(
-                                                      fontSize: 12.sp,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
                                                           CustomFontWeight
                                                               .kLightFontWeight,
@@ -314,28 +337,35 @@ class _PlanARoute extends State<PlanARoute> {
                                       color: CustomColor.ksemigrey),
                                 ),
                                 SizedBox(height: 3.h),
-                                FocusScope(
-                                  child: Focus(
-                                    onFocusChange: (focus) => setState(() {
-                                      isFromFieldFocus = focus;
-                                    }),
-                                    child: SizedBox(
-                                      height: Get.height * 0.05,
-                                      width: Get.width * 0.8,
-                                      child: CustomTextField(
-                                        controller: fromController,
-                                        textInputType: TextInputType.text,
-                                        hintText: '',
-                                        showCalenderIcon: false,
-                                        oncross: () {
-                                          fromController.clear();
-                                        },
-                                        onChanged: (String value) {
-                                          getSuggestion(value);
-                                        },
+                                Row(
+                                  children: [
+                                    FocusScope(
+                                      child: Focus(
+                                        onFocusChange: (focus) => setState(() {
+                                          isFromFieldFocus = focus;
+                                        }),
+                                        child: SizedBox(
+                                          height: Get.height * 0.05,
+                                          width: Get.width * 0.8,
+                                          child: CustomTextField(
+                                            controller: fromController,
+                                            textInputType: TextInputType.text,
+                                            hintText: '',
+                                            showCalenderIcon: false,
+                                            oncross: () {
+                                              fromController.clear();
+                                            },
+                                            onChanged: (String value) {
+                                              getSuggestion(value);
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    InkWell(onTap:() {
+                                      getCurrentLocation();
+                                    },child: Image.asset('assets/images/currentLocation.png',height: 34,width: 34))
+                                  ],
                                 ),
                                SizedBox(height: 8.h),
                                 Text(

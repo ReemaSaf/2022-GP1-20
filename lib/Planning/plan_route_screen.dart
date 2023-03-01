@@ -17,6 +17,7 @@ import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/Planning/components/trip_duration_box.dart';
 import 'package:sekkah_app/core/const.dart';
 
+import '../RoutMap.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_sizes.dart';
 import '../helpers/route_model.dart';
@@ -41,6 +42,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
   String specificRoutePolyline = '';
   bool isShow = false;
   int selectedIndex = 0;
+  int? selectdIndexColor;
   @override
   void initState() {
     getAllPossibleRoutes();
@@ -307,24 +309,136 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                         /// boxes
                         Expanded(
                           child: ListView.builder(
-                            itemCount: 2,
+                            itemCount: widget.exproute!.length,
                             padding: const EdgeInsets.only(bottom: 50),
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
                                   setState(() {
-                                 
                                     specificRoutePolyline =
                                         polylinePoints[index]['points'];
                                   });
                                 },
-                                child: TripDurationBox(
-
-                                  duration: totalDuration[index],
-                                  distance: totalDistance[index],
-                                  exproute: widget.exproute![index],
-                                  index: index, selectedindex: selectedIndex,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: height(context) * 0.02),
+                                  child: TicketWidget(
+                                    width: width(context),
+                                    height: 168.h,
+                                    isCornerRounded: true,
+                                    padding: EdgeInsets.all(10.h),
+                                    color:selectdIndexColor==index?AppColors.skyColor:Colors.white,
+                                    onPressed: () {
+                                      setState(() {
+                                        selectdIndexColor=index;
+                                      });
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              totalDuration[index],
+                                              style: poppinsMedium.copyWith(
+                                                fontSize: 24.0,
+                                                color: selectdIndexColor==index?Colors.white:AppColors.skyColor,
+                                              ),
+                                            ),
+                                            SizedBox(width: 3.h),
+                                            Text(
+                                              totalDistance[index],
+                                              style: poppinsMedium.copyWith(
+                                                fontSize: 24.0,
+                                                color: selectdIndexColor==index?Colors.white:AppColors.blueDarkColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 12.h,
+                                        ),
+                                        SizedBox(
+                                          height: 24.h,
+                                          width: 320.w,
+                                          child: Image.asset(
+                                            AppIcons.ticketcomponet,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        )
+                                        // Row(
+                                        //   children:[
+                                        //     Container(
+                                        //       width: 30,
+                                        //       height: 30,
+                                        //       margin:const  EdgeInsets.only(right: 6),
+                                        //       padding:const EdgeInsets.all(6),
+                                        //       alignment: Alignment.center,
+                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+                                        //       child: Image.asset("assets/icons/walk.png"),
+                                        //     ),
+                                        //     widget.index==1?Container(
+                                        //       width: 30,
+                                        //       height: 30,
+                                        //       margin:const  EdgeInsets.only(right: 6),
+                                        //       padding:const EdgeInsets.all(6),
+                                        //       alignment: Alignment.center,
+                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+                                        //       child: Image.asset("assets/icons/bus.png"),
+                                        //     ):SizedBox(),
+                                        //     Container(
+                                        //       width: 30,
+                                        //       height: 30,
+                                        //       margin:const  EdgeInsets.only(right: 6),
+                                        //       padding:const EdgeInsets.all(6),
+                                        //       alignment: Alignment.center,
+                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+                                        //       child:Image.asset("assets/icons/metro.png"),
+                                        //     ),
+                                        //     Container(
+                                        //       width: 30,
+                                        //       height: 30,
+                                        //       margin:const  EdgeInsets.only(right: 6),
+                                        //       padding:const EdgeInsets.all(6),
+                                        //       alignment: Alignment.center,
+                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+                                        //       child:Image.asset("assets/icons/metro.png"),
+                                        //     ),
+                                        //     Container(
+                                        //       width: 30,
+                                        //       height: 30,
+                                        //       margin:const  EdgeInsets.only(right: 6),
+                                        //       padding:const EdgeInsets.all(6),
+                                        //       alignment: Alignment.center,
+                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
+                                        //       child: Image.asset("assets/icons/walk.png"),
+                                        //     ),
+                                        //   ],
+                                        // )
+                                        ,
+                                        SizedBox(
+                                          height: 30.h,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],)));
+                                          },
+                                          child: Text(
+                                            'Details',
+                                            style: poppinsSemiBold.copyWith(
+                                              fontSize: 14.sp,
+                                              color:selectdIndexColor==index?Colors.white: AppColors.skyColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               );
                             },
