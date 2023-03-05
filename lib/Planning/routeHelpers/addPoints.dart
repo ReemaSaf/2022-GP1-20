@@ -101,7 +101,9 @@ Future<List<RouteModel>?> intersationAddPoints1({IntersectionModel? i1,Intersect
   List<String> nameList=[];
   bool? isAdd=false;
   List<RouteModel> exproute=[];
-  if(int.parse(i1!.OrderE!)>int.parse(i2!.OrderS!)) {
+  print("this is the intersection ordrr sdkdjfkdjfldjflk ======= ${i1!.Name} ${i1!.OrderS} === ${i1!.OrderE}");
+  print("this is the intersection ordrr sdkdjfkdjfldjflk ======= ${i2!.Name} ${i2!.OrderS} === ${i2!.OrderE}");
+  if(int.parse(i1!.OrderE!)>int.parse(i2!.OrderE!)) {
     await metroService.containsDescending().then((value) {
       value.forEach((e) async {
         if (e.Line_ID.id == i1.Line_ID!.id) {
@@ -110,6 +112,23 @@ Future<List<RouteModel>?> intersationAddPoints1({IntersectionModel? i1,Intersect
         }
       });
     });
+    for (var element in nameList)  {
+      await metroService.getMetroStation(Name: element).then((v){
+        v.forEach((element) {
+          print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
+          if(element.Name==i1.Name){
+            isAdd=true;
+          }
+          if(isAdd==true){
+            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
+            if(element.Name==i2.Name ){
+              isAdd=false;
+            }
+          }
+        });
+
+      });
+    }
   }else{
     await  metroService.containsAssending().then((value){
       value.forEach((e) async {
@@ -119,25 +138,25 @@ Future<List<RouteModel>?> intersationAddPoints1({IntersectionModel? i1,Intersect
         }
       });
     });
-  }
-
-  for (var element in nameList)  {
-    await metroService.getMetroStation(Name: element).then((v){
-      v.forEach((element) {
-        print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
-        if(element.Name==i1.Name || element.Name==i2.Name){
-          isAdd=true;
-        }
-        if(isAdd==true){
-          exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-          if(element.Name==i2.Name ){
-            isAdd=false;
+    for (var element in nameList)  {
+      await metroService.getMetroStation(Name: element).then((v){
+        v.forEach((element) {
+          print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
+          if(element.Name==i1.Name || element.Name==i2.Name){
+            isAdd=true;
           }
-        }
-      });
+          if(isAdd==true){
+            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
+            if(element.Name==i2.Name ){
+              isAdd=false;
+            }
+          }
+        });
 
-    });
+      });
+    }
   }
+
   return exproute;
 }
 

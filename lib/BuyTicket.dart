@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api, depend_on_referenced_packages, non_constant_identifier_names, unused_field, unused_local_variable, sized_box_for_whitespace, avoid_print, sort_child_properties_last
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
@@ -76,7 +78,7 @@ class _BuyTicketState extends State<BuyTicket> {
                   topRight: Radius.circular(30.0),
                 ),
               ),
-              padding: EdgeInsets.only(left: 20, top: 10),
+              padding: const EdgeInsets.only(left: 20, top: 10),
               // margin: const EdgeInsets.only(bottom: 20),
               width: double.infinity,
 
@@ -134,7 +136,7 @@ class _BuyTicketState extends State<BuyTicket> {
                         children: [
                           const Icon(Icons.account_circle_outlined,
                               size: 35, color: AppColors.skyColor),
-                          SizedBox(width: 200),
+                          const SizedBox(width: 200),
                           SizedBox(
                             height: 35, //height of button
                             width: 30,
@@ -148,7 +150,7 @@ class _BuyTicketState extends State<BuyTicket> {
                               child: const Icon(Icons.remove),
                             ),
                           ),
-                          SizedBox(width: 7),
+                          const SizedBox(width: 7),
                           SizedBox(
                             width: 7,
                             child: Text(
@@ -159,7 +161,7 @@ class _BuyTicketState extends State<BuyTicket> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 11),
+                          const SizedBox(width: 11),
                           SizedBox(
                             height: 35, //height of button
                             width: 30,
@@ -192,7 +194,7 @@ class _BuyTicketState extends State<BuyTicket> {
                         children: [
                           Align(
                             child: Container(
-                              padding: EdgeInsets.only(bottom: 7),
+                              padding: const EdgeInsets.only(bottom: 7),
                               height: 54,
                               width: 155,
                               decoration: const BoxDecoration(
@@ -265,7 +267,7 @@ class _BuyTicketState extends State<BuyTicket> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Center(
                       child: Text(
                         'Total Price: $_price SAR',
@@ -275,7 +277,7 @@ class _BuyTicketState extends State<BuyTicket> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Center(
                       child: Container(
                         width: 200,

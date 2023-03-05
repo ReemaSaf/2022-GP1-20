@@ -352,7 +352,6 @@ class _RouteMapState extends State<RouteMap> {
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
                     margin: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
-<<<<<<< HEAD
                         color: const Color(0xffF2F2F2),
                         borderRadius: BorderRadius.circular(12)),
                     child: Row(
@@ -362,193 +361,6 @@ class _RouteMapState extends State<RouteMap> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-=======
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(6)),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Route details",
-                    style: TextStyle(
-                        color: AppColors.blueDarkColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-                  margin: const EdgeInsets.only(left: 16, right: 16),
-                  decoration: BoxDecoration(
-                      color: const Color(0xffF2F2F2),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              Text(
-                                "${widget.route.length - 2}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontSize: 30),
-                              ),
-                              const SizedBox(width: 8),
-                              const Text("Stops",
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: 16))
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() =>  BuyTicket());
-                          
-                            },
-                            child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            decoration: BoxDecoration(
-                                color: const Color(0xff50B2CC),
-                                borderRadius: BorderRadius.circular(18)),
-                            child: const Text("PURCHASE TICKET",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16)),
-                          ),)
-                          // const SizedBox(width: 6),
-                          // Container(
-                          //   padding: const EdgeInsets.symmetric(
-                          //       horizontal: 12, vertical: 12),
-                          //   decoration: BoxDecoration(
-                          //       border: Border.all(color: Color(0xff50B2CC)),
-                          //       borderRadius: BorderRadius.circular(18)),
-                          //   child: Row(
-                          //     children: const [
-                          //       Icon(Icons.near_me, color: Color(0xff50B2CC)),
-                          //       SizedBox(width: 6),
-                          //       Text("Start",
-                          //           style: TextStyle(
-                          //               color: Color(0xff50B2CC),
-                          //               fontWeight: FontWeight.bold,
-                          //               fontSize: 16)),
-                          //     ],
-                          //   ),
-                          // )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Expanded(
-                //   child: SizedBox(
-                //     child: SingleChildScrollView(
-                //         controller: scrollController,
-                //         child: Wrap(
-                //           children: List.generate(widget.route.length, (index) {
-                //             return Padding(
-                //               padding: EdgeInsets.all(8.0),
-                //               child: Row(
-                //                 crossAxisAlignment: CrossAxisAlignment.center,
-                //                 children: [
-                //                   widget.route[index].type == 'metro'
-                //                       ? Container(
-                //                           width: 30,
-                //                           height: 30,
-                //                           margin:
-                //                               const EdgeInsets.only(right: 6),
-                //                           padding: const EdgeInsets.all(6),
-                //                           alignment: Alignment.center,
-                //                           decoration: BoxDecoration(
-                //                               borderRadius:
-                //                                   BorderRadius.circular(6),
-                //                               color: CustomColor.kprimaryblue),
-                //                           child: Image.asset(
-                //                               "assets/icons/metro.png"),
-                //                         )
-                //                       : widget.route[index].type == 'bus'
-                //                           ? Container(
-                //                               width: 30,
-                //                               height: 30,
-                //                               margin: const EdgeInsets.only(
-                //                                   right: 6),
-                //                               padding: const EdgeInsets.all(6),
-                //                               alignment: Alignment.center,
-                //                               decoration: BoxDecoration(
-                //                                   borderRadius:
-                //                                       BorderRadius.circular(6),
-                //                                   color:
-                //                                       CustomColor.kprimaryblue),
-                //                               child: Image.asset(
-                //                                   "assets/icons/bus.png"),
-                //                             )
-                //                           : Container(
-                //                               width: 30,
-                //                               height: 30,
-                //                               margin: const EdgeInsets.only(
-                //                                   right: 6),
-                //                               padding: const EdgeInsets.all(6),
-                //                               alignment: Alignment.center,
-                //                               decoration: BoxDecoration(
-                //                                   borderRadius:
-                //                                       BorderRadius.circular(6),
-                //                                   color:
-                //                                       CustomColor.kprimaryblue),
-                //                               child: Image.asset(
-                //                                   "assets/icons/walk.png"),
-                //                             ),
-                //                   Text('==>'),
-                //                   SizedBox(
-                //                       width: MediaQuery.of(context).size.width -
-                //                           75,
-                //                       child: Text(widget.route[index].name!,
-                //                           style: TextStyle(
-                //                               fontWeight: FontWeight.bold),
-                //                           overflow: TextOverflow.ellipsis))
-                //                 ],
-                //               ),
-                //             );
-                //           }),
-                //         )),
-                //   ),
-                // ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const DotIndicator(size: 20),
-                              const SizedBox(width: 8),
-                              Text(widget.route[0].name!,
-                                  style: const TextStyle(
-                                      color: AppColors.blueDarkColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
->>>>>>> a202b713087509ea237295a297b032d18f39c5d2
                               children: [
                                 const SizedBox(width: 16),
                                 Text(
@@ -556,7 +368,7 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.skyColor,
-                                      fontSize: 30),
+                                      fontSize: 26),
                                 ),
                                 const SizedBox(width: 8),
                                 const Text("",
@@ -572,7 +384,7 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.blueDarkColor,
-                                      fontSize: 30),
+                                      fontSize: 26),
                                 ),
                                 const SizedBox(width: 8),
                                 const Text("Stops",

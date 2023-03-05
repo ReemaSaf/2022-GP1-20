@@ -12,7 +12,6 @@ import 'package:google_maps_webservice/directions.dart';
 import 'package:http/http.dart';
 import 'package:sekkah_app/Planning/polyline_map/polyline_map.dart';
 import 'package:sekkah_app/constants/app_icons.dart';
-// import 'package:sekkah_app/constants/app_icons.dart';
 import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/Planning/components/trip_duration_box.dart';
 import 'package:sekkah_app/core/const.dart';
@@ -330,7 +329,18 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                     color:selectdIndexColor==index?AppColors.skyColor:Colors.white,
                                     onPressed: () {
                                       setState(() {
-                                        selectdIndexColor=index;
+                                        if(selectdIndexColor!=index){
+                                          selectdIndexColor=index;
+                                          Future.delayed(const Duration(seconds: 2),() {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],)));
+                                            selectdIndexColor=null;
+                                          },);
+                                        }else{
+                                          selectdIndexColor=null;
+                                        }
                                       });
                                     },
                                     child: Column(

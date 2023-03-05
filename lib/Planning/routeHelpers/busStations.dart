@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_function_literals_in_foreach_calls, avoid_print
+// ignore_for_file: file_names, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps
 
 import 'package:geolocator/geolocator.dart';
 
@@ -22,7 +22,7 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
   IntersectionModel? intersectionLine1;
   IntersectionModel? intersectionLine2;
   bool noIntersectionSameLine=true;
-  String? intersectionLineName;
+  List<String> intersectionLineName=[];
   distance? startdis;
   distance? enddis;
   busDistance? busdis;
@@ -115,63 +115,109 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
       });
     });
     /// Intersection not in same line
+    // if(noIntersectionSameLine==true){
+    //   print("no intersection in same line -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ");
+    //   for(var element in getLineList(list: startingLine!.Line_ID.id)){
+    //     for(var e in getLineList(list: endLine!.Line_ID.id)){
+    //       if(element==e){
+    //         print('inter line is $e =============================');
+    //         intersectionLineName=e;
+    //         break;
+    //       }
+    //     }
+    //     break;
+    //   }
+    //   if(startingLine!.Line_ID.id=='Line_2'){
+    //     for (var element in Line_2) {
+    //       if(endLine!.Line_ID.id=='Line_3'){
+    //         for (var e in Line_3) {
+    //           if(element==e){
+    //             print('inter line is $e =============================');
+    //             intersectionLineName=e;
+    //             break;
+    //           }
+    //         }
+    //         break;
+    //       }
+    //     }
+    //   }
+    //   ///findin intersectrion point
+    //   await intersectionStation(startingLine:startingLine!.Line_ID.id,endingLine:intersectionLineName).then((value) async {
+    //     intersectionLine1=value;
+    //     print("============================================================================================ ${value!.Line_ID!.id}");
+    //     print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
+    //     await intersationAddPoints(startingLine:startingLine,i1:value).then((value) {
+    //       value!.forEach((element) {
+    //         print("==================================  ${element.name}");
+    //         exproute.add(element);
+    //       });
+    //     });
+    //   });
+    //   await intersectionStation(startingLine:endLine!.Line_ID.id,endingLine:intersectionLineName).then((value) {
+    //     print("============================================================================================ ${value!.Line_ID!.id}");
+    //     intersectionLine2=value;
+    //     print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
+    //   });
+    //   await intersationAddPoints1(i1: intersectionLine1,i2: intersectionLine2).then((value) {
+    //     value!.forEach((element) {
+    //       exproute.add(element);
+    //     });
+    //   });
+    //   await intersationAddPoints2(i2: intersectionLine2,endLine: endLine).then((value) {
+    //     value!.forEach((element) {
+    //       exproute.add(element);
+    //     });
+    //   });
+    //   exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
+    //
+    // }
     if(noIntersectionSameLine==true){
       print("no intersection in same line -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ");
       for(var element in getLineList(list: startingLine!.Line_ID.id)){
         for(var e in getLineList(list: endLine!.Line_ID.id)){
           if(element==e){
             print('inter line is $e =============================');
-            intersectionLineName=e;
-            break;
-          }
-        }
-        break;
-      }
-      if(startingLine!.Line_ID.id=='Line_2'){
-        for (var element in Line_2) {
-          if(endLine!.Line_ID.id=='Line_3'){
-            for (var e in Line_3) {
-              if(element==e){
-                print('inter line is $e =============================');
-                intersectionLineName=e;
-                break;
-              }
-            }
-            break;
+            intersectionLineName.add(e);
+            // intersectionLineName=e;
           }
         }
       }
-      ///findin intersectrion point
-      await intersectionStation(startingLine:startingLine!.Line_ID.id,endingLine:intersectionLineName).then((value) async {
-        intersectionLine1=value;
-        print("============================================================================================ ${value!.Line_ID!.id}");
-        print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
-        await intersationAddPoints(startingLine:startingLine,i1:value).then((value) {
+      ///finding intersectrion point
+      for (var element in intersectionLineName)  {
+        print("********************************************************* ${element}");
+        exproute=[];
+        exproute.add(RouteModel(type: 'walk',isShow: true,name:start!.name!,lat:start!.lat!,lng:start!.lng!));
+        await intersectionStation(startingLine:startingLine!.Line_ID.id,endingLine:element).then((value) async {
+          intersectionLine1=value;
+          print("============================================================================================ ${value!.Line_ID!.id}");
+          print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
+          await intersationAddPoints(startingLine:startingLine,i1:value).then((value) {
+            value!.forEach((element) {
+              print("==================================  ${element.name}");
+              exproute.add(element);
+            });
+          });
+        });
+        await intersectionStation(startingLine:endLine!.Line_ID.id,endingLine:element).then((value) {
+          print("============================================================================================ ${value!.Line_ID!.id}");
+          intersectionLine2=value;
+          print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
+        });
+        await intersationAddPoints1(i1: intersectionLine1,i2: intersectionLine2).then((value) {
           value!.forEach((element) {
-            print("==================================  ${element.name}");
             exproute.add(element);
           });
         });
-      });
-      await intersectionStation(startingLine:endLine!.Line_ID.id,endingLine:intersectionLineName).then((value) {
-        print("============================================================================================ ${value!.Line_ID!.id}");
-        intersectionLine2=value;
-        print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
-      });
-      await intersationAddPoints1(i1: intersectionLine1,i2: intersectionLine2).then((value) {
-        value!.forEach((element) {
-          exproute.add(element);
+        await intersationAddPoints2(i2: intersectionLine2,endLine: endLine).then((value) {
+          value!.forEach((element) {
+            exproute.add(element);
+          });
         });
-      });
-      await intersationAddPoints2(i2: intersectionLine2,endLine: endLine).then((value) {
-        value!.forEach((element) {
-          exproute.add(element);
-        });
-      });
-      exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
-
+        exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
+      }
     }
     else{
+      exproute.add(RouteModel(type: 'walk',isShow: true,name:start!.name!,lat:start!.lat!,lng:start!.lng!));
       await metroService.containsAssending().then((value){
         value.forEach((e) {
           if(e.Name==intersectionLine!.Name && startingLine!.Line_ID.id==e.Line_ID.id){
@@ -180,43 +226,41 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
         });
       });
       print("_______________________________________________${intersectionLine!.Name} &&& ${intersectionLine!.OrderS} && ${intersectionLine!.OrderE}");
-      print("=============================================================== order start ${startingLine!.Order} &&& inter}");
       if(int.parse(startingLine!.Order)>int.parse(intersectionLine!.OrderS!)){
-        print("end First *-*-*-*-*-*-*-/*/*/*//*/*/*/*/*/*/*/*/*/***/*//*/*");
-        print("============================================================= step 2");
+        print("this is deccending");
+        nameList=[];
         await  metroService.containsDescending().then((value){
           value.forEach((e) async {
             if(e.Line_ID.id==startingLine!.Line_ID.id){
-              print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
               nameList.add(e.Name);
             }
           });
         });
-        for (var element in nameList)  {
-          await metroService.getMetroStation(Name: element).then((v){
+        for (var e in nameList)  {
+          print("this are the name of list ======================== ${e}");
+          await metroService.getMetroStation(Name: e).then((v){
             v.forEach((element) {
-              print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
-              if(element.Name==startdis!.name! || element.Name==intersectionLine!.Name){
+              if(element.Name==intersectionLine!.Name){
                 isAdd=true;
               }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name ){
+                if(element.Name==startdis!.name!){
                   isAdd=false;
-                  exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
+                  // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
                 }
               }
             });
 
           });
         }
-      }else{
-        print("end First *-*-*-*-*-*-*-/*/*/*//*/*/*/*/*/*/*/*/*/***/*//*/*");
-        print("============================================================= step 2");
+      }
+      else{
+        print("this is accending");
         await  metroService.containsAssending().then((value){
+          nameList=[];
           value.forEach((e) async {
             if(e.Line_ID.id==startingLine!.Line_ID.id){
-              print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
               nameList.add(e.Name);
             }
           });
@@ -224,14 +268,14 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
         for (var element in nameList)  {
           await metroService.getMetroStation(Name: element).then((v){
             v.forEach((element) {
-              print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
-              if(element.Name==startdis!.name! || element.Name==intersectionLine!.Name){
+              if(element.Name==startdis!.name!){
                 isAdd=true;
               }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name ){
+                if(element.Name==intersectionLine!.Name){
                   isAdd=false;
+                  // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
                 }
               }
             });
@@ -240,14 +284,12 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
         }
       }
       /// this is from intersection to end
-      if(int.parse(endLine!.Order)>int.parse(intersectionLine!.OrderE!)){
-        print("end First *-*-*-*-*-*-*-/*/*/*//*/*/*/*/*/*/*/*/*/***/*//*/*");
-        print("============================================================= step 3");
+      if(int.parse(endLine!.Order)<int.parse(intersectionLine!.OrderE!)){
+        print("descendoongdffkhfl; ");
         nameList=[];
         await  metroService.containsDescending().then((value){
           value.forEach((e) async {
             if(e.Line_ID.id==endLine!.Line_ID.id){
-              print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
               nameList.add(e.Name);
             }
           });
@@ -255,44 +297,14 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
         for (var element in nameList)  {
           await metroService.getMetroStation(Name: element).then((v){
             v.forEach((element) {
-              print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
-              if(element.Name==enddis!.name! || element.Name==intersectionLine!.Name){
+              if(element.Name==intersectionLine!.Name){
                 isAdd=true;
               }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name ){
+                if(element.Name==enddis!.name){
                   isAdd=false;
-                  exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
-                }
-              }
-            });
-
-          });
-        }
-      }else{
-        print("end First *-*-*-*-*-*-*-/*/*/*//*/*/*/*/*/*/*/*/*/***/*//*/*");
-        print("============================================================= step 3");
-        await  metroService.containsAssending().then((value){
-          value.forEach((e) async {
-            if(e.Line_ID.id==endLine!.Line_ID.id){
-              print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
-              nameList.add(e.Name);
-            }
-          });
-        });
-        for (var element in nameList)  {
-          await metroService.getMetroStation(Name: element).then((v){
-            v.forEach((element) {
-              print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
-              if(element.Name==enddis!.name! || element.Name==intersectionLine!.Name){
-                isAdd=true;
-              }
-              if(isAdd==true){
-                exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name ){
-                  isAdd=false;
-                  exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
+                  exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
                 }
               }
             });
@@ -300,6 +312,39 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
           });
         }
       }
-    }}
+      else{
+        print("assending kfdlkfjlk ; ");
+        print("inter section sdfdklfdjfkl ${intersectionLine!.Name} ${intersectionLine!.OrderE}");
+        print("end line ${endLine!.Name} ${endLine!.Order}");
+        await  metroService.containsAssending().then((value){
+          nameList=[];
+          value.forEach((e) async {
+            if(e.Line_ID.id==endLine!.Line_ID.id){
+              print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
+              nameList.add(e.Name);
+            }
+          });
+        });
+        for (var element in nameList)  {
+          await metroService.getMetroStation(Name: element).then((v){
+            v.forEach((element) {
+              print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
+              if(element.Name==enddis!.name!){
+                isAdd=true;
+              }
+              if(isAdd==true){
+                exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
+                if(element.Name==intersectionLine!.Name ){
+                  isAdd=false;
+                  exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
+                }
+              }
+            });
+
+          });
+        }
+      }
+    }
+  }
   return exproute;
 }

@@ -10,6 +10,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_sizes.dart';
 import '../../constants/app_text_styles.dart';
 import '../../helpers/route_model.dart';
+
 class TripDurationBox extends StatefulWidget {
   const TripDurationBox({
     Key? key,
@@ -64,7 +65,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                 Text(
                   widget.distance.toString(),
                   style: poppinsMedium.copyWith(
-                    fontSize: 20.0,
+                    fontSize: 24.0,
                     color: AppColors.blueDarkColor,
                   ),
                 ),

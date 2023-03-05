@@ -17,8 +17,9 @@ import 'dart:ui' as ui;
 
 class Tracking extends StatefulWidget {
   final List<RouteModel> route;
+  final String? time;
 
-  const Tracking({super.key, required this.route});
+  const Tracking({super.key, required this.route,this.time});
 
   @override
   State<Tracking> createState() => _TrackingState();
@@ -47,14 +48,15 @@ class _TrackingState extends State<Tracking> {
   bool isLoad = true;
   int currentLocationNumber = 1;
 
-  // [LatLng(24.69480962821743,46.67990130161707),LatLng(24.696571105638657, 46.6837677588918),LatLng(24.737262838662325,46.66339794924775),LatLng(24.740640121256355,46.67113291220544)];
   Future<void> getCurrentLocation() async {
     Location location = Location();
     await location.getLocation().then((location) {
       currentLocation = location;
     });
     location.onLocationChanged.listen((event) {
-      currentLocation = event;
+      setState(() {
+        currentLocation = event;
+      });
       afterLocationLine(lat: event.latitude, lng: event.longitude);
     });
   }
@@ -81,6 +83,8 @@ class _TrackingState extends State<Tracking> {
                 markerId: MarkerId(i.toString()),
                 visible: false,
                 icon: metroIcon,
+                infoWindow:
+                InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
           } else {
             if (i == currentLocationNumber) {
@@ -191,58 +195,6 @@ class _TrackingState extends State<Tracking> {
     setState(() {
       stationNumber = widget.route.length - 2;
     });
-    // List newRoute = widget.route;
-    // newRoute.forEach((element) {
-    //   RouteModel e = element;
-    //   latlan.add(LatLng(e.lat!, e.lng!));
-    // });
-    // for (int i = 0; i < latlan.length; i++) {
-    //   print(
-    //       "====================================================> lat ${latlan[i].latitude}");
-    //   _marker.add(Marker(
-    //       markerId: MarkerId(i.toString()),
-    //       visible: false,
-    //       position: latlan[i]));
-    //   if (i == latlan.length) {
-    //     _marker = Set<Marker>.of(controller.allMarkers.values);
-    //   }
-    //   if (i == 0) {
-    //     _polyline.add(Polyline(
-    //         color: Color(0xff4CA7C3),
-    //         width: 3,
-    //         polylineId: const PolylineId('1'),
-    //         patterns: [
-    //           PatternItem.dash(8),
-    //           PatternItem.gap(15)
-    //         ],
-    //         points: [
-    //           LatLng(latlan[0].latitude, latlan[0].longitude),
-    //           LatLng(latlan[1].latitude, latlan[1].longitude)
-    //         ]));
-    //   } else if (i == latlan.length - 1) {
-    //     _polyline.add(Polyline(
-    //         color: Color(0xff4CA7C3),
-    //         width: 3,
-    //         polylineId: const PolylineId('1'),
-    //         patterns: [
-    //           PatternItem.dash(8),
-    //           PatternItem.gap(15)
-    //         ],
-    //         points: [
-    //           LatLng(latlan[latlan.length - 2].latitude,
-    //               latlan[latlan.length - 2].longitude),
-    //           LatLng(latlan[latlan.length - 1].latitude,
-    //               latlan[latlan.length - 1].longitude)
-    //         ]));
-    //   } else {
-    //     _polyline.add(Polyline(
-    //         color: Color(0xff4CA7C3),
-    //         width: 6,
-    //         polylineId: const PolylineId('1'),
-    //         points: latlan.getRange(1, latlan.length - 1).toList()));
-    //   }
-    //   setState(() {});
-    // }
     getPoline();
   }
 
@@ -265,12 +217,16 @@ class _TrackingState extends State<Tracking> {
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: metroIcon,
+              infoWindow:
+              InfoWindow(title: 'Station', snippet: widget.route[i].name),
               position: latlan[currentLocationNumber]));
         } else {
           _marker.add(Marker(
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: dotIcon,
+              infoWindow:
+              InfoWindow(title: 'Station', snippet: widget.route[i].name),
               position: latlan[i]));
         }
       }
@@ -357,8 +313,9 @@ class _TrackingState extends State<Tracking> {
                           position: latlan[latlan.length - 1])
                     },
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(latlan[0].latitude, latlan[0].longitude),
-                      zoom: 13,
+                      target: LatLng(currentLocation!.latitude!,
+                          currentLocation!.longitude!),
+                      zoom: 15,
                     ),
                     zoomControlsEnabled: false,
                     zoomGesturesEnabled: true,
@@ -431,18 +388,33 @@ class _TrackingState extends State<Tracking> {
                             children: [
                               Row(
                                 children: [
-                                  const SizedBox(width: 16),
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 16),
+                                      Text(
+                                        "$stationNumber",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.blueDarkColor,
+                                            fontSize: 26),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Text("Stops",
+                                          style: TextStyle(
+                                              color: AppColors.blueDarkColor,
+                                              fontSize: 26,fontWeight: FontWeight.bold))
+                                    ],
+                                  ),
+                                  const SizedBox(width:12,),
+                                  const Text('|',style:TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                                  const SizedBox(width:12,),
                                   Text(
-                                    "${stationNumber}",
+                                    widget.time!,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.blue,
-                                        fontSize: 30),
+                                        color: AppColors.skyColor,
+                                        fontSize: 26),
                                   ),
-                                  const SizedBox(width: 8),
-                                  const Text("Stops",
-                                      style: TextStyle(
-                                          color: Colors.blue, fontSize: 16))
                                 ],
                               ),
                             ],
@@ -584,7 +556,7 @@ class _TrackingState extends State<Tracking> {
                                           "${widget.route.length - 4} Stops Before",
                                           style: const TextStyle(
                                               color: AppColors.skyColor,
-                                              fontSize: 16)),
+                                              fontSize: 16,fontWeight: FontWeight.bold)),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)
@@ -649,71 +621,6 @@ class _TrackingState extends State<Tracking> {
                         ],
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 220,
-                    //   width: MediaQuery.of(context).size.width,
-                    //   child: ListView.builder(
-                    //     itemCount: widget.route.length,
-                    //     controller: scrollController,
-                    //     itemBuilder: (context, index) {
-                    //       return Padding(
-                    //         padding: EdgeInsets.all(8.0),
-                    //         child: Row(
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           children: [
-                    //             widget.route[index].type == 'metro'
-                    //                 ? Container(
-                    //                     width: 30,
-                    //                     height: 30,
-                    //                     margin: const EdgeInsets.only(right: 6),
-                    //                     padding: const EdgeInsets.all(6),
-                    //                     alignment: Alignment.center,
-                    //                     decoration: BoxDecoration(
-                    //                         borderRadius: BorderRadius.circular(6),
-                    //                         color: CustomColor.kprimaryblue),
-                    //                     child:
-                    //                         Image.asset("assets/icons/metro.png"),
-                    //                   )
-                    //                 : widget.route[index].type == 'bus'
-                    //                     ? Container(
-                    //                         width: 30,
-                    //                         height: 30,
-                    //                         margin: const EdgeInsets.only(right: 6),
-                    //                         padding: const EdgeInsets.all(6),
-                    //                         alignment: Alignment.center,
-                    //                         decoration: BoxDecoration(
-                    //                             borderRadius:
-                    //                                 BorderRadius.circular(6),
-                    //                             color: CustomColor.kprimaryblue),
-                    //                         child:
-                    //                             Image.asset("assets/icons/bus.png"),
-                    //                       )
-                    //                     : Container(
-                    //                         width: 30,
-                    //                         height: 30,
-                    //                         margin: const EdgeInsets.only(right: 6),
-                    //                         padding: const EdgeInsets.all(6),
-                    //                         alignment: Alignment.center,
-                    //                         decoration: BoxDecoration(
-                    //                             borderRadius:
-                    //                                 BorderRadius.circular(6),
-                    //                             color: CustomColor.kprimaryblue),
-                    //                         child: Image.asset(
-                    //                             "assets/icons/walk.png"),
-                    //                       ),
-                    //             Text('==>'),
-                    //             SizedBox(
-                    //                 width: MediaQuery.of(context).size.width - 75,
-                    //                 child: Text(widget.route[index].name!,
-                    //                     style:
-                    //                         TextStyle(fontWeight: FontWeight.bold),
-                    //                     overflow: TextOverflow.ellipsis))
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
               )),

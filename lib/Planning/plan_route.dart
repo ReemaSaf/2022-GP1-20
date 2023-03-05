@@ -49,8 +49,10 @@ class _PlanARoute extends State<PlanARoute> {
   List<dynamic> placeId = [];
   List originLatLong = [];
   List destinationLatLong = [];
-  double currentLocationLat=0;
-  double currentLocationLng=0;
+  List exchangeLatLong=[];
+  String? exchangeName;
+  double currentLocationLat = 0;
+  double currentLocationLng = 0;
 
   @override
   void initState() {
@@ -112,8 +114,8 @@ class _PlanARoute extends State<PlanARoute> {
         : const SizedBox();
     // ignore: avoid_function_literals_in_foreach_calls
     setState(() {
-      description=[];
-      placeId=[];
+      description = [];
+      placeId = [];
     });
     places.predictions.forEach((pred) {
       setState(() {
@@ -135,12 +137,12 @@ class _PlanARoute extends State<PlanARoute> {
     setState(() {
       if (isFromFieldFocus && isToFieldFocus == false) {
         fromController.text = description[index];
-        originLatLong=[];
+        originLatLong = [];
         originLatLong.add(lat);
         originLatLong.add(lang);
       } else if (isToFieldFocus && isFromFieldFocus == false) {
         toController.text = description[index];
-        destinationLatLong=[];
+        destinationLatLong = [];
         destinationLatLong.add(lat);
         destinationLatLong.add(lang);
       }
@@ -148,23 +150,32 @@ class _PlanARoute extends State<PlanARoute> {
       isToFieldFocus = false;
     });
   }
+
   Future<void> getCurrentLocation() async {
     await CurrentLocationLng().then((value) {
-      currentLocationLng=value;
-      setState(() {
-
-      });
+      currentLocationLng = value;
+      setState(() {});
     });
     await CurrentLocationLat().then((value) {
-      currentLocationLat=value;
-      setState(() {
-      });
+      currentLocationLat = value;
+      setState(() {});
     });
-    fromController.text ="Your Current Location";
-    print("lakdskjsjhfkfhlkjf $currentLocationLat  $currentLocationLng");
-    originLatLong=[];
+    fromController.text = "Your Current Location";
+    originLatLong = [];
     originLatLong.add(currentLocationLat);
     originLatLong.add(currentLocationLng);
+  }
+  onExchange(){
+    setState(() {
+      exchangeName=fromController.text;
+      exchangeLatLong=originLatLong;
+      originLatLong=[];
+      originLatLong=destinationLatLong;
+      fromController.text=toController.text;
+      destinationLatLong=[];
+      destinationLatLong=exchangeLatLong;
+      toController.text=exchangeName!;
+    });
   }
 
   @override
@@ -196,8 +207,8 @@ class _PlanARoute extends State<PlanARoute> {
                   aspectRatio: Get.width /
                       (isFromFieldFocus || isToFieldFocus
                           ? 600.h //Get.height*0.5-10
-                          : 319.h//Get.height * 0.44
-                          ),
+                          : 319.h //Get.height * 0.44
+                      ),
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Color(0xFFFAFAFA),
@@ -211,43 +222,43 @@ class _PlanARoute extends State<PlanARoute> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                        Padding(
-                           padding: EdgeInsets.only(
-                                  top: isFromFieldFocus || isToFieldFocus ? 80.h : 100.h,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: isFromFieldFocus || isToFieldFocus
+                                      ? 80.h
+                                      : 100.h,
                                   left: 13.h,
                                   right: 5.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-        
-                               SizedBox(
-                                  child: SvgPicture.asset(
-                                   AppIcons.fromicon,
-                                  height: 26.h,
-                                  width: 28.w,
-                                  fit: BoxFit.contain,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      child: SvgPicture.asset(
+                                        AppIcons.fromicon,
+                                        height: 26.h,
+                                        width: 28.w,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
-                              SizedBox(
-                                  child: SvgPicture.asset(
-                                   AppIcons.lines,
-                                  height: 45.h,
-                                  width: 1.w,
-                                  fit: BoxFit.contain,
+                                    SizedBox(
+                                      child: SvgPicture.asset(
+                                        AppIcons.lines,
+                                        height: 45.h,
+                                        width: 1.w,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
-                              SizedBox(
-                                  child: SvgPicture.asset(
-                                   AppIcons.toicon,
-                                  height: 26.h,
-                                  width: 28.w,
-                                  fit: BoxFit.contain,
+                                    SizedBox(
+                                      child: SvgPicture.asset(
+                                        AppIcons.toicon,
+                                        height: 26.h,
+                                        width: 28.w,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
-                            ]
-                              ),
-                        ),
-                        Column(
+                                  ]),
+                            ),
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -272,10 +283,10 @@ class _PlanARoute extends State<PlanARoute> {
                                           ? Text(
                                               'Hi there',
                                               style: TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 12.5,
                                                   fontWeight: CustomFontWeight
-                                                      .kLightFontWeight,
-                                                  color: CustomColor.kgrey),
+                                                      .kMediumFontWeight,
+                                                  color: CustomColor.kprimaryblue),
                                             )
                                           : StreamBuilder<UserModel>(
                                               stream: FirebaseFirestore.instance
@@ -308,11 +319,11 @@ class _PlanARoute extends State<PlanARoute> {
                                                 return Text(
                                                   'Hi $username',
                                                   style: TextStyle(
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.5,
                                                       fontWeight:
                                                           CustomFontWeight
-                                                              .kLightFontWeight,
-                                                      color: CustomColor.kgrey),
+                                                              .kMediumFontWeight,
+                                                      color: CustomColor.kprimaryblue),
                                                 );
                                               });
                                     }),
@@ -322,12 +333,12 @@ class _PlanARoute extends State<PlanARoute> {
                                     : Text(
                                         "Where would you like to go?",
                                         style: TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 14.5,
                                             fontWeight: CustomFontWeight
                                                 .kSemiBoldFontWeight,
                                             color: CustomColor.klightblue),
                                       ),
-                              SizedBox(height: 11.h),
+                                SizedBox(height: 11.h),
                                 Text(
                                   "From",
                                   style: TextStyle(
@@ -362,19 +373,40 @@ class _PlanARoute extends State<PlanARoute> {
                                         ),
                                       ),
                                     ),
-                                    InkWell(onTap:() {
-                                      getCurrentLocation();
-                                    },child: Image.asset('assets/images/currentLocation.png',height: 34,width: 34))
+                                    InkWell(
+                                        onTap: () {
+                                          getCurrentLocation();
+                                        },
+                                        child: Image.asset(
+                                            'assets/images/currentLocation.png',
+                                            height: 34,
+                                            width: 34))
                                   ],
                                 ),
-                               SizedBox(height: 8.h),
-                                Text(
-                                  "To",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight:
-                                          CustomFontWeight.kLightFontWeight,
-                                      color: CustomColor.ksemigrey),
+                                SizedBox(height: 8.h),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "To",
+                                      style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight:
+                                              CustomFontWeight.kLightFontWeight,
+                                          color: CustomColor.ksemigrey),
+                                    ),
+                                    SizedBox(width: Get.width * 0.8 - 55),
+                                    InkWell(
+                                      onTap: () {
+                                        onExchange();
+                                      },
+                                      child: Image.asset(
+                                          "assets/images/arrows.png",
+                                          height: 30,
+                                          width: 30),
+                                    )
+                                  ],
                                 ),
                                 // const SizedBox(height: 3),
                                 FocusScope(
@@ -398,33 +430,11 @@ class _PlanARoute extends State<PlanARoute> {
                                     ),
                                   ),
                                 ),
-                              SizedBox(height: 8.h),
-                        //         Text(
-                        //           "Departing / Arrival time",
-                        //           style: TextStyle(
-                        //               fontSize: 12,
-                        //               fontWeight:
-                        //                   CustomFontWeight.kLightFontWeight,
-                        //               color: CustomColor.ksemigrey),
-                        //         ),
-                        //         const SizedBox(height: 3),
-                        //         SizedBox(
-                        //           height: Get.height * 0.05,
-                        //           width: Get.width * 0.8,
-                        //           child: CustomTextField(
-                        //             controller: arrivaltimeController,
-                        //             textInputType: TextInputType.none,
-                        //             hintText: 'now',
-                        //             showCalenderIcon: true,
-                        //             oncross: () {},
-                        //             onChanged: (String value) {},
-                        //           ),
-                        //         ),
+                                SizedBox(height: 8.h),
                               ],
-                             )
-                           ],
-                         ),
-                        
+                            )
+                          ],
+                        ),
                         isFromFieldFocus || isToFieldFocus
                             ? const SizedBox()
                             : SearchRoutesButton(
@@ -437,17 +447,23 @@ class _PlanARoute extends State<PlanARoute> {
                             ? SizedBox(
                                 height: 300.h,
                                 width: double.infinity * .80,
-                                child: ListView.builder(
-                                  itemCount: description.length,
-                                  itemBuilder: ((context, index) {
-                                    return ListTile(
-                                      onTap: () async {
-                                        await putSpecificLocation(index);
-                                      },
-                                      leading: const Icon(Icons.location_on),
-                                      title: Text(description[index]),
-                                    );
-                                  }),
+                                child: Scrollbar(
+                                  thumbVisibility: true,
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(6),
+                                  thickness: 10,
+                                  child: ListView.builder(
+                                    itemCount: description.length,
+                                    itemBuilder: ((context, index) {
+                                      return ListTile(
+                                        onTap: () async {
+                                          await putSpecificLocation(index);
+                                        },
+                                        leading: const Icon(Icons.location_on),
+                                        title: Text(description[index]),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               )
                             : const SizedBox(),
@@ -459,13 +475,13 @@ class _PlanARoute extends State<PlanARoute> {
               isFromFieldFocus || isToFieldFocus
                   ? const SizedBox()
                   : SizedBox(
-                    height: 390.h,
-                    width: double.infinity,
-                    child: PlanRouteMap(
+                      height: 390.h,
+                      width: double.infinity,
+                      child: PlanRouteMap(
                         originLatLong: originLatLong,
                         destinationLatLong: destinationLatLong,
                       ),
-                  )
+                    )
             ],
           ),
         ),
