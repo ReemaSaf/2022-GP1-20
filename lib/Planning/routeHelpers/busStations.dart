@@ -33,21 +33,25 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
   await metroService.busStation().then((v){
     busdis=busDistance(name: v.first.Name,number: v.first.Number,dis:Geolocator.distanceBetween(start.lat!,start.lng!, v.first.Location.latitude,v.first.Location.longitude));
     v.forEach((e) {
-      if(busdis!.dis!>Geolocator.distanceBetween(start.lat!,start.lng!, e.Location.latitude,e.Location.longitude)){
-        busdis=busDistance(name: e.Name,number: e.Number,dis:Geolocator.distanceBetween(start.lat!,start.lng!, e.Location.latitude,e.Location.longitude));
-        print("============================== busssssssssssssssssssssssssssssssssss ${e.Name} &&& ${e.Number}");
-      }
+     if(e.Available==true){
+       if(busdis!.dis!>Geolocator.distanceBetween(start.lat!,start.lng!, e.Location.latitude,e.Location.longitude)){
+         busdis=busDistance(name: e.Name,number: e.Number,dis:Geolocator.distanceBetween(start.lat!,start.lng!, e.Location.latitude,e.Location.longitude));
+         print("============================== busssssssssssssssssssssssssssssssssss ${e.Name} &&& ${e.Number}");
+       }
+     }
     });
   });
   await metroService.getBusStation(Name: busdis!.name!).then((value){
     value.forEach((element) {
-      if(element.Number==busdis!.number!){
-        busData=element;
-        print("============================ thisi s date ${element.Name} && ${element.Name} && ${element.Location.latitude}");
-      }
+     if(element.Available==true){
+       if(element.Number==busdis!.number!){
+         busData=element;
+         print("============================ thisi s date ${element.Name} && ${element.Name} && ${element.Location.latitude}");
+       }
+     }
     });
   });
-  exproute.add(RouteModel(type: 'Bus',isShow: true,name:busData!.Name,lat:busData!.Location.latitude,lng:busData!.Location.longitude));
+  exproute.add(RouteModel(type: 'Bus',isShow: true,name:busData!.Name,lat:busData!.Location.latitude,lng:busData!.Location.longitude,onTime:busData!.onTime));
   await metroService.metroStation().then((v){
     startdis=distance(name: v.first.Name,dis:Geolocator.distanceBetween(busData!.Location.latitude,busData!.Location.longitude, v.first.Location.latitude,v.first.Location.longitude));
     v.forEach((e) {
@@ -217,7 +221,6 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
       }
     }
     else{
-      exproute.add(RouteModel(type: 'walk',isShow: true,name:start!.name!,lat:start!.lat!,lng:start!.lng!));
       await metroService.containsAssending().then((value){
         value.forEach((e) {
           if(e.Name==intersectionLine!.Name && startingLine!.Line_ID.id==e.Line_ID.id){
@@ -240,12 +243,12 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
           print("this are the name of list ======================== ${e}");
           await metroService.getMetroStation(Name: e).then((v){
             v.forEach((element) {
-              if(element.Name==intersectionLine!.Name){
+              if(element.Name==startdis!.name!){
                 isAdd=true;
               }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==startdis!.name!){
+                if(element.Name==intersectionLine!.Name){
                   isAdd=false;
                   // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
                 }
@@ -313,8 +316,6 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
         }
       }
       else{
-        print("assending kfdlkfjlk ; ");
-        print("inter section sdfdklfdjfkl ${intersectionLine!.Name} ${intersectionLine!.OrderE}");
         print("end line ${endLine!.Name} ${endLine!.Order}");
         await  metroService.containsAssending().then((value){
           nameList=[];

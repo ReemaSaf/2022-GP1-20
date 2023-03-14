@@ -42,6 +42,8 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
   List<RouteModel> exproute1=[];
   List<RouteModel> exproute2=[];
   List<String> nameList=[];
+  String? lineName;
+  Color? lineColor;
   ContainsModel? startingLine;
   ContainsModel? endLine;
   List<String> intersection=[];
@@ -215,36 +217,37 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                       }
                     });
                   });
-                  print("_______________________________________________${intersectionLine!.Name} &&& ${intersectionLine!.OrderS} && ${intersectionLine!.OrderE}");
                   if(int.parse(startingLine!.Order)>int.parse(intersectionLine!.OrderS!)){
-                    print("this is deccending");
+
                     setState(() {
                       nameList=[];
+                      lineColor=null;
+                      lineName=null;
                     });
                     await  metroService.containsDescending().then((value){
                       value.forEach((e) async {
                         if(e.Line_ID.id==startingLine!.Line_ID.id){
                           nameList.add(e.Name);
+                          lineName=e.Line_ID.id;
                         }
                       });
                     });
+                    lineColor=getColor(line:lineName);
                     for (var e in nameList)  {
-                      print("this are the name of list ======================== ${e}");
                       await metroService.getMetroStation(Name: e).then((v){
                         v.forEach((element) {
                           setState(() {
-                            if(element.Name==intersectionLine!.Name){
+                            if(element.Name==startdis!.name!){
                               isAdd=true;
                             }
                           });
+                          setState(() {
+                            if(element.Name==intersectionLine!.Name){
+                              isAdd=false;
+                            }
+                          });
                           if(isAdd==true){
-                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                            setState(() {
-                              if(element.Name==startdis!.name!){
-                                isAdd=false;
-                                // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
-                              }
-                            });
+                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,lineColor: lineColor,line: lineName));
                           }
                         });
 
@@ -252,15 +255,18 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                     }
                   }
                   else{
-                    print("this is accending");
                     await  metroService.containsAssending().then((value){
                       nameList=[];
+                      lineName=null;
+                      lineColor=null;
                       value.forEach((e) async {
                         if(e.Line_ID.id==startingLine!.Line_ID.id){
                           nameList.add(e.Name);
+                          lineName=e.Line_ID.id;
                         }
                       });
                     });
+                    lineColor=getColor(line: lineName);
                     for (var element in nameList)  {
                       await metroService.getMetroStation(Name: element).then((v){
                         v.forEach((element) {
@@ -269,14 +275,13 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                               isAdd=true;
                             }
                           });
+                          setState(() {
+                            if(element.Name==intersectionLine!.Name){
+                              isAdd=false;
+                            }
+                          });
                           if(isAdd==true){
-                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                            setState(() {
-                              if(element.Name==intersectionLine!.Name){
-                                isAdd=false;
-                                // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
-                              }
-                            });
+                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,line:lineName,lineColor: lineColor));
                           }
                         });
 
@@ -285,17 +290,20 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                   }
                   /// this is from intersection to end
                   if(int.parse(endLine!.Order)<int.parse(intersectionLine!.OrderE!)){
-                    print("descendoongdffkhfl; ");
                     setState(() {
                       nameList=[];
+                      lineName=null;
+                      lineColor=null;
                     });
                     await  metroService.containsDescending().then((value){
                       value.forEach((e) async {
                         if(e.Line_ID.id==endLine!.Line_ID.id){
                           nameList.add(e.Name);
+                          lineName=e.Line_ID.id;
                         }
                       });
                     });
+                    lineColor=getColor(line: lineName);
                     for (var element in nameList)  {
                       await metroService.getMetroStation(Name: element).then((v){
                         v.forEach((element) {
@@ -305,7 +313,12 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                             }
                           });
                           if(isAdd==true){
-                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
+                            if(element.Name==intersectionLine!.Name){
+                              exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,line:lineName,isChange:true,lineColor: lineColor));
+                            }else{
+                              exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,line: lineName,lineColor: lineColor));
+                            }
+
                             setState(() {
                               if(element.Name==enddis!.name){
                                 isAdd=false;
@@ -319,31 +332,35 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                     }
                   }
                   else{
-                    print("assending kfdlkfjlk ; ");
-                    print("inter section sdfdklfdjfkl ${intersectionLine!.Name} ${intersectionLine!.OrderE}");
-                    print("end line ${endLine!.Name} ${endLine!.Order}");
                     await  metroService.containsAssending().then((value){
                       nameList=[];
+                      lineColor=null;
+                      lineName=null;
                       value.forEach((e) async {
                         if(e.Line_ID.id==endLine!.Line_ID.id){
                           print("=========== ${e.Name} ===== ${e.Line_ID.id} &&& ${e.Order}");
                           nameList.add(e.Name);
+                          lineName=e.Line_ID.id;
                         }
                       });
                     });
+                    lineColor=getColor(line:lineName);
                     for (var element in nameList)  {
                       await metroService.getMetroStation(Name: element).then((v){
                         v.forEach((element) {
-                          print("+++++++++++++++++++++++++++++++ ${element.Name} &&& ${element.Location.latitude} &&& ${element.Location.longitude}");
                           setState(() {
-                            if(element.Name==enddis!.name!){
+                            if(element.Name==intersectionLine!.Name){
                               isAdd=true;
                             }
                           });
                           if(isAdd==true){
-                            exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
+                            if(element.Name==intersectionLine!.Name ){
+                              exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,isChange: true,line:lineName,lineColor: lineColor));
+                            }else{
+                              exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude,line:lineName,lineColor: lineColor));
+                            }
                             setState(() {
-                              if(element.Name==intersectionLine!.Name ){
+                              if(element.Name==enddis!.name!){
                                 isAdd=false;
                                 exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
                               }

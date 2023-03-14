@@ -1,7 +1,8 @@
-// ignore_for_file: unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, await_only_futures
+// ignore_for_file: unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, await_only_futures, duplicate_ignore, null_check_always_fails
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:timelines/timelines.dart';
 import '../Homepage/providers/locationProvider.dart';
 import '../Homepage/viewmap.dart';
+import '../core/const.dart';
 import '../helpers/route_model.dart';
 import '../others/map_controller.dart';
 import 'dart:ui' as ui;
@@ -19,7 +21,7 @@ class Tracking extends StatefulWidget {
   final List<RouteModel> route;
   final String? time;
 
-  const Tracking({super.key, required this.route,this.time});
+  const Tracking({super.key, required this.route, this.time});
 
   @override
   State<Tracking> createState() => _TrackingState();
@@ -43,6 +45,8 @@ class _TrackingState extends State<Tracking> {
   BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor metroIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor dotIcon = BitmapDescriptor.defaultMarker;
+  PolylinePoints polylinePoints = PolylinePoints();
+  List<LatLng> polylineCoordinates = [];
   bool isShow = false;
   int stationNumber = 0;
   bool isLoad = true;
@@ -64,8 +68,23 @@ class _TrackingState extends State<Tracking> {
   Future<void> afterLocationLine({double? lat, double? lng}) async {
     var dis = Geolocator.distanceBetween(
         lat!, lng!, widget.route[num].lat!, widget.route[num].lng!);
+    if(widget.route[num].isChange==true){
+      if(dis<300){
+        MotionToast.warning(
+          barrierColor: widget.route[num].lineColor!,
+            title: Text("You Need To change line to ${widget.route[num].line}"),
+            description: Text("${widget.route[num].name}"));
+      }
+    }
     if (dis < 50) {
-      _polyline.add(Polyline(
+      num==1?await getDisPolyLine(
+        startLat:latlan[0].latitude,
+        startLng:latlan[0].longitude,
+        endLng:latlan[1].longitude,
+        endLat:latlan[1].latitude,
+        isDash: false,
+        color: AppColors.blueDarkColor,
+      ):_polyline.add(Polyline(
           color: AppColors.blueDarkColor,
           width: 3,
           polylineId: PolylineId(num.toString()),
@@ -76,22 +95,23 @@ class _TrackingState extends State<Tracking> {
       setState(() {
         stationNumber = stationNumber - 1;
         currentLocationNumber = currentLocationNumber + 1;
-        _marker={};
-        for (int i = 0; i < latlan.length; i++){
+        _marker = {};
+        for (int i = 0; i < latlan.length; i++) {
           if (i == 0 || i == latlan.length - 1) {
             _marker.add(Marker(
                 markerId: MarkerId(i.toString()),
                 visible: false,
                 icon: metroIcon,
                 infoWindow:
-                InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                    InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
           } else {
             if (i == currentLocationNumber) {
               _marker.add(Marker(
                   markerId: MarkerId(i.toString()),
                   visible: true,
-                  infoWindow: InfoWindow(title: 'Station',snippet:widget.route[i].name),
+                  infoWindow: InfoWindow(
+                      title: 'Station', snippet: widget.route[i].name),
                   icon: metroIcon,
                   position: latlan[currentLocationNumber]));
             } else {
@@ -99,7 +119,8 @@ class _TrackingState extends State<Tracking> {
                   markerId: MarkerId(i.toString()),
                   visible: true,
                   icon: dotIcon,
-                  infoWindow: InfoWindow(title: 'Station',snippet:widget.route[i].name),
+                  infoWindow: InfoWindow(
+                      title: 'Station', snippet: widget.route[i].name),
                   position: latlan[i]));
             }
           }
@@ -218,7 +239,7 @@ class _TrackingState extends State<Tracking> {
               visible: true,
               icon: metroIcon,
               infoWindow:
-              InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                  InfoWindow(title: 'Station', snippet: widget.route[i].name),
               position: latlan[currentLocationNumber]));
         } else {
           _marker.add(Marker(
@@ -226,38 +247,38 @@ class _TrackingState extends State<Tracking> {
               visible: true,
               icon: dotIcon,
               infoWindow:
-              InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                  InfoWindow(title: 'Station', snippet: widget.route[i].name),
               position: latlan[i]));
         }
       }
       if (i == 0) {
-        await _polyline.add(Polyline(
-            color: const Color(0xff4CA7C3),
-            width: 3,
-            polylineId: const PolylineId('1'),
-            patterns: [
-              PatternItem.dash(8),
-              PatternItem.gap(15)
-            ],
-            points: [
-              LatLng(latlan[0].latitude, latlan[0].longitude),
-              LatLng(latlan[1].latitude, latlan[1].longitude)
-            ]));
+        await getDisPolyLine(
+          startLat:latlan[0].latitude,
+          startLng:latlan[0].longitude,
+          endLng:latlan[1].longitude,
+          endLat:latlan[1].latitude,
+        );
       } else if (i == latlan.length - 1) {
-        await _polyline.add(Polyline(
-            color: const Color(0xff4CA7C3),
-            width: 3,
-            polylineId: const PolylineId('1'),
-            patterns: [
-              PatternItem.dash(8),
-              PatternItem.gap(15)
-            ],
-            points: [
-              LatLng(latlan[latlan.length - 2].latitude,
-                  latlan[latlan.length - 2].longitude),
-              LatLng(latlan[latlan.length - 1].latitude,
-                  latlan[latlan.length - 1].longitude)
-            ]));
+        // await _polyline.add(Polyline(
+        //     color: Color(0xff4CA7C3),
+        //     width: 3,
+        //     polylineId: const PolylineId('1'),
+        //     patterns: [
+        //       PatternItem.dash(8),
+        //       PatternItem.gap(15)
+        //     ],
+        //     points: [
+        //       LatLng(latlan[latlan.length - 2].latitude,
+        //           latlan[latlan.length - 2].longitude),
+        //       LatLng(latlan[latlan.length - 1].latitude,
+        //           latlan[latlan.length - 1].longitude)
+        //     ]));
+        await getDisPolyLine(
+          startLat:latlan[latlan.length - 2].latitude,
+          startLng:latlan[latlan.length - 2].longitude,
+          endLat:latlan[latlan.length - 1].latitude,
+          endLng: latlan[latlan.length - 1].longitude,
+        );
       } else {
         await _polyline.add(Polyline(
             color: const Color(0xff4CA7C3),
@@ -272,12 +293,60 @@ class _TrackingState extends State<Tracking> {
       isLoad = false;
     });
   }
+  getDisPolyLine({double? startLat,double? startLng,double? endLat,double? endLng,bool? isDash,Color? color}) async {
+    polylineCoordinates=[];
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      Const.apiKey,
+      PointLatLng(startLat!, startLng!),
+      PointLatLng(endLat!, endLng!),
+      travelMode: TravelMode.walking,
+    );
+    if (result.points.isNotEmpty) {
+      // ignore: avoid_function_literals_in_foreach_calls
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    _addPolyLine(isDash:isDash,color: color);
+  }
+  _addPolyLine({bool? isDash,Color? color}) {
+    _polyline.add(Polyline(
+      width: 3,
+      polylineId: const PolylineId("poly"),
+      color:isDash==false?color!: const Color(0xff4CA7C3),
+      patterns:isDash==false?null!: [
+        PatternItem.dash(8),
+        PatternItem.gap(15)
+      ],
+      points: polylineCoordinates,
+    ));
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [mapWidget(), bottomDetailsSheet()],
+        children: [
+          mapWidget(),
+          bottomDetailsSheet(),
+          Positioned(
+            top: (MediaQuery.of(context).viewPadding.top) + 10,
+            left: 16,
+            child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(Icons.arrow_back, color: Colors.black))),
+          ),
+        ],
       ),
     );
   }
@@ -303,13 +372,17 @@ class _TrackingState extends State<Tracking> {
                       ),
                       Marker(
                           markerId: MarkerId(0.toString()),
-                          infoWindow: InfoWindow(title: 'Start',snippet:widget.route[0].name),
+                          infoWindow: InfoWindow(
+                              title: 'Start', snippet: widget.route[0].name),
                           icon: startIcon,
                           position: latlan[0]),
                       Marker(
                           markerId: MarkerId(0.toString()),
                           icon: endIcon,
-                          infoWindow: InfoWindow(title: 'End',snippet:widget.route[widget.route.length-1].name),
+                          infoWindow: InfoWindow(
+                              title: 'End',
+                              snippet:
+                                  widget.route[widget.route.length - 1].name),
                           position: latlan[latlan.length - 1])
                     },
                     initialCameraPosition: CameraPosition(
@@ -385,6 +458,7 @@ class _TrackingState extends State<Tracking> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -396,128 +470,49 @@ class _TrackingState extends State<Tracking> {
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.blueDarkColor,
-                                            fontSize: 26),
+                                            fontSize: 30),
                                       ),
                                       const SizedBox(width: 8),
                                       const Text("Stops",
                                           style: TextStyle(
                                               color: AppColors.blueDarkColor,
-                                              fontSize: 26,fontWeight: FontWeight.bold))
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold))
                                     ],
                                   ),
-                                  const SizedBox(width:12,),
-                                  const Text('|',style:TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
-                                  const SizedBox(width:12,),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  const Text('|',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14)),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
                                   Text(
                                     widget.time!,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.skyColor,
-                                        fontSize: 26),
+                                        fontSize: 30),
                                   ),
                                 ],
                               ),
+                              Padding(padding: const EdgeInsets.only(left: 16,top:8),child:widget.route[1].type=='Bus'?widget.route[1].onTime==false?const Text("Delay",style: TextStyle(fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                  fontSize:20 )):const Text("On Route",style: TextStyle(fontWeight: FontWeight.bold,
+                                  color: AppColors.skyColor,
+                                  fontSize:20 ),):const Text("On Route",style: TextStyle(fontWeight: FontWeight.bold,
+                                  color: AppColors.skyColor,
+                                  fontSize:20 ),) )
+
                             ],
                           ),
-                          // Row(
-                          //   children: [
-                          //     // const SizedBox(width: 6),
-                          //     // Container(
-                          //     //   padding: const EdgeInsets.symmetric(
-                          //     //       horizontal: 12, vertical: 12),
-                          //     //   decoration: BoxDecoration(
-                          //     //       border: Border.all(color: Color(0xff50B2CC)),
-                          //     //       borderRadius: BorderRadius.circular(18)),
-                          //     //   child: Row(
-                          //     //     children: const [
-                          //     //       Icon(Icons.near_me, color: Color(0xff50B2CC)),
-                          //     //       SizedBox(width: 6),
-                          //     //       Text("Start",
-                          //     //           style: TextStyle(
-                          //     //               color: Color(0xff50B2CC),
-                          //     //               fontWeight: FontWeight.bold,
-                          //     //               fontSize: 16)),
-                          //     //     ],
-                          //     //   ),
-                          //     // )
-                          //   ],
-                          // ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Expanded(
-                    //   child: SizedBox(
-                    //     child: SingleChildScrollView(
-                    //         controller: scrollController,
-                    //         child: Wrap(
-                    //           children: List.generate(widget.route.length, (index) {
-                    //             return Padding(
-                    //               padding: EdgeInsets.all(8.0),
-                    //               child: Row(
-                    //                 crossAxisAlignment: CrossAxisAlignment.center,
-                    //                 children: [
-                    //                   widget.route[index].type == 'metro'
-                    //                       ? Container(
-                    //                           width: 30,
-                    //                           height: 30,
-                    //                           margin:
-                    //                               const EdgeInsets.only(right: 6),
-                    //                           padding: const EdgeInsets.all(6),
-                    //                           alignment: Alignment.center,
-                    //                           decoration: BoxDecoration(
-                    //                               borderRadius:
-                    //                                   BorderRadius.circular(6),
-                    //                               color: CustomColor.kprimaryblue),
-                    //                           child: Image.asset(
-                    //                               "assets/icons/metro.png"),
-                    //                         )
-                    //                       : widget.route[index].type == 'bus'
-                    //                           ? Container(
-                    //                               width: 30,
-                    //                               height: 30,
-                    //                               margin: const EdgeInsets.only(
-                    //                                   right: 6),
-                    //                               padding: const EdgeInsets.all(6),
-                    //                               alignment: Alignment.center,
-                    //                               decoration: BoxDecoration(
-                    //                                   borderRadius:
-                    //                                       BorderRadius.circular(6),
-                    //                                   color:
-                    //                                       CustomColor.kprimaryblue),
-                    //                               child: Image.asset(
-                    //                                   "assets/icons/bus.png"),
-                    //                             )
-                    //                           : Container(
-                    //                               width: 30,
-                    //                               height: 30,
-                    //                               margin: const EdgeInsets.only(
-                    //                                   right: 6),
-                    //                               padding: const EdgeInsets.all(6),
-                    //                               alignment: Alignment.center,
-                    //                               decoration: BoxDecoration(
-                    //                                   borderRadius:
-                    //                                       BorderRadius.circular(6),
-                    //                                   color:
-                    //                                       CustomColor.kprimaryblue),
-                    //                               child: Image.asset(
-                    //                                   "assets/icons/walk.png"),
-                    //                             ),
-                    //                   Text('==>'),
-                    //                   SizedBox(
-                    //                       width: MediaQuery.of(context).size.width -
-                    //                           75,
-                    //                       child: Text(widget.route[index].name!,
-                    //                           style: TextStyle(
-                    //                               fontWeight: FontWeight.bold),
-                    //                           overflow: TextOverflow.ellipsis))
-                    //                 ],
-                    //               ),
-                    //             );
-                    //           }),
-                    //         )),
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Column(
@@ -556,7 +551,8 @@ class _TrackingState extends State<Tracking> {
                                           "${widget.route.length - 4} Stops Before",
                                           style: const TextStyle(
                                               color: AppColors.skyColor,
-                                              fontSize: 16,fontWeight: FontWeight.bold)),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)
@@ -643,3 +639,4 @@ class _TrackingState extends State<Tracking> {
 //   controller.setAllMarkers();
 // }
 }
+

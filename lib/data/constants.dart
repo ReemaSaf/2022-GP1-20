@@ -18,8 +18,8 @@ class CustomColor {
   static Color kgrey500 = const Color(0xFF9E9E9E);
   static Color kgrey400 = const Color(0xFFBDBDBD);
   static Color kgrey300 = const Color(0xFFE0E0E0);
-  static Color kgrey100 = const Color(0xFFF5F5F5);
   static Color kgrey200 = const Color(0xFFEEEEEE);
+  static Color kgrey100 = const Color(0xFFF5F5F5);
   static Color kgrey50 = const Color(0xFFFAFAFA);
   static Color kbackgroundwhite = const Color(0xFFFFFFFF);
 }

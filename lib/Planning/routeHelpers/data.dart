@@ -1,4 +1,8 @@
-// ignore_for_file: camel_case_types, non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unnecessary_import, camel_case_types
+
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 List<String> Line_1=['Line_4','Line_2','Line_5','Line_3'];
 List<String> Line_2=['Line_1','Line_6','Line_5',];
@@ -31,3 +35,18 @@ class busDistance{
   busDistance({this.dis,this.name,this.number});
 }
 
+Color getColor({String? line}){
+  if(line=='Line_1'){
+    return Colors.blueAccent;
+  } else if(line=='Line_2'){
+    return Colors.red;
+  } else if(line=='Line_3'){
+    return Colors.orangeAccent;
+  }  else if(line=='Line_4'){
+    return Colors.yellow;
+  }  else if(line=='Line_5'){
+    return Colors.green;
+  }else{
+    return Colors.purple;
+  }
+}

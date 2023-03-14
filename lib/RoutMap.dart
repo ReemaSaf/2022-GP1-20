@@ -1,7 +1,8 @@
-// ignore_for_file: file_names, unused_import, unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, prefer_final_fields, await_only_futures
+// ignore_for_file: file_names, unused_import, unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, prefer_final_fields, await_only_futures, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,14 +22,14 @@ import '../others/map_controller.dart';
 import 'dart:ui' as ui;
 
 import 'BuyTicket.dart';
+import 'core/const.dart';
 import 'data/constants.dart';
-
 
 class RouteMap extends StatefulWidget {
   final List<RouteModel> route;
   final String? time;
 
-  const RouteMap({super.key, required this.route,this.time});
+  const RouteMap({super.key, required this.route, this.time});
 
   @override
   State<RouteMap> createState() => _RouteMapState();
@@ -51,14 +52,17 @@ class _RouteMapState extends State<RouteMap> {
   BitmapDescriptor startIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor metroIcon = BitmapDescriptor.defaultMarker;
-  bool isShow=false;
-  bool isLoad=true;
+  BitmapDescriptor busIcon = BitmapDescriptor.defaultMarker;
+  PolylinePoints polylinePoints = PolylinePoints();
+  List<LatLng> polylineCoordinates = [];
+  bool isShow = false;
+  bool isLoad = true;
 
   // [LatLng(24.69480962821743,46.67990130161707),LatLng(24.696571105638657, 46.6837677588918),LatLng(24.737262838662325,46.66339794924775),LatLng(24.740640121256355,46.67113291220544)];
   Future<void> getCurrentLocation() async {
     Location location = Location();
-    await location.getLocation().then((location)  {
-       currentLocation = location;
+    await location.getLocation().then((location) {
+      currentLocation = location;
     });
   }
 
@@ -74,24 +78,29 @@ class _RouteMapState extends State<RouteMap> {
 
   void setMarkerIcon() {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, 'assets/images/rec8.png')
+            ImageConfiguration.empty, 'assets/images/rec8.png')
         .then((value) {
       locationIcon = value;
     });
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, 'assets/images/start.png')
+            ImageConfiguration.empty, 'assets/images/start.png')
         .then((value) {
       startIcon = value;
     });
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, 'assets/images/end.png')
+            ImageConfiguration.empty, 'assets/images/end.png')
         .then((value) {
       endIcon = value;
     });
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, 'assets/images/metro.png')
+            ImageConfiguration.empty, 'assets/images/metro.png')
         .then((value) {
       metroIcon = value;
+    });
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, 'assets/images/bus.png')
+        .then((value) {
+      busIcon = value;
     });
   }
 
@@ -101,76 +110,126 @@ class _RouteMapState extends State<RouteMap> {
     setMarkerIcon();
     getPoline();
   }
+
   getPoline() async {
     List newRoute = widget.route;
-     for (var element in newRoute) {
-       RouteModel e = element;
+    for (var element in newRoute) {
+      RouteModel e = element;
       latlan.add(LatLng(e.lat!, e.lng!));
     }
     for (int i = 0; i < latlan.length; i++) {
-      if(i == 0 || i == latlan.length-1) {
+      if (i == 0 || i == latlan.length - 1) {
         _marker.add(Marker(
             markerId: MarkerId(i.toString()),
             visible: false,
             icon: metroIcon,
             position: latlan[i]));
-      }else{
+      } else {
         _marker.add(Marker(
             markerId: MarkerId(i.toString()),
             visible: true,
-            infoWindow: InfoWindow(title: 'Station',snippet:widget.route[i].name),
-            icon: metroIcon,
+            infoWindow:
+                InfoWindow(title: 'Station ${widget.route[i].line}', snippet: widget.route[i].name),
+            icon:widget.route[i].type=="Bus"?busIcon: metroIcon,
             position: latlan[i]));
       }
       if (i == 0) {
-       await _polyline.add(Polyline(
-            color: const Color(0xff4CA7C3),
-            width: 3,
-            polylineId: const PolylineId('1'),
-            patterns: [
-              PatternItem.dash(8),
-              PatternItem.gap(15)
-            ],
-            points: [
-              LatLng(latlan[0].latitude, latlan[0].longitude),
-              LatLng(latlan[1].latitude, latlan[1].longitude)
-            ]));
+        await getDisPolyLine(
+          startLat:latlan[0].latitude,
+          startLng:latlan[0].longitude,
+          endLng:latlan[1].longitude,
+          endLat:latlan[1].latitude,
+        );
+        // await _polyline.add(Polyline(
+        //     color: Color(0xff4CA7C3),
+        //     width: 3,
+        //     polylineId: const PolylineId('1'),
+        //     patterns: [
+        //       PatternItem.dash(8),
+        //       PatternItem.gap(15)
+        //     ],
+        //     points: [
+        //       LatLng(latlan[0].latitude, latlan[0].longitude),
+        //       LatLng(latlan[1].latitude, latlan[1].longitude)
+        //     ]));
       } else if (i == latlan.length - 1) {
-        await _polyline.add(Polyline(
-            color: const Color(0xff4CA7C3),
-            width: 3,
-            polylineId: const PolylineId('1'),
-            patterns: [
-              PatternItem.dash(8),
-              PatternItem.gap(15)
-            ],
-            points: [
-              LatLng(latlan[latlan.length - 2].latitude,
-                  latlan[latlan.length - 2].longitude),
-              LatLng(latlan[latlan.length - 1].latitude,
-                  latlan[latlan.length - 1].longitude)
-            ]));
+        await getDisPolyLine(
+          startLat:latlan[latlan.length - 2].latitude,
+          startLng:latlan[latlan.length - 2].longitude,
+          endLat:latlan[latlan.length - 1].latitude,
+          endLng: latlan[latlan.length - 1].longitude,
+        );
+
       } else {
-       await _polyline.add(Polyline(
+        await _polyline.add(Polyline(
             color: const Color(0xff4CA7C3),
             width: 6,
             polylineId: const PolylineId('1'),
             points: latlan.getRange(1, latlan.length - 1).toList()));
       }
       setState(() {});
-
     }
     await getCurrentLocation();
     setState(() {
-      isLoad=false;
+      isLoad = false;
     });
+  }
+
+  getDisPolyLine({double? startLat,double? startLng,double? endLat,double? endLng}) async {
+    polylineCoordinates=[];
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      Const.apiKey,
+      PointLatLng(startLat!, startLng!),
+      PointLatLng(endLat!, endLng!),
+      travelMode: TravelMode.walking,
+    );
+    if (result.points.isNotEmpty) {
+      // ignore: avoid_function_literals_in_foreach_calls
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    _addPolyLine();
+  }
+
+  _addPolyLine() {
+    _polyline.add(Polyline(
+      width: 3,
+      polylineId: const PolylineId("poly"),
+      color: const Color(0xff4CA7C3),
+              patterns: [
+                PatternItem.dash(8),
+                PatternItem.gap(15)
+              ],
+      points: polylineCoordinates,
+    ));
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [mapWidget(), bottomDetailsSheet()],
+        children: [
+          mapWidget(),
+          bottomDetailsSheet(),
+          Positioned(
+            top: (MediaQuery.of(context).viewPadding.top)+10,
+            left: 16,
+            child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(Icons.arrow_back, color: Colors.black))),
+          )
+        ],
       ),
     );
   }
@@ -179,131 +238,50 @@ class _RouteMapState extends State<RouteMap> {
     return Column(
       children: [
         SizedBox(
-          height: (MediaQuery.of(context).size.height) * 0.7,
-          child:isLoad==true?const Center(child: CircularProgressIndicator()):GoogleMap(
-              polylines: _polyline,
-              markers: {
-               ..._marker,
-                // ...Set<Marker>.of(
-                //     controller.allMarkers.values),
-                Marker(
-                  markerId: const MarkerId('location'),
-                  position: LatLng(
-                      currentLocation!.latitude!,
-                      currentLocation!.longitude!),
-                  icon: locationIcon,
-                ),
-                Marker(
-                    markerId: MarkerId(0.toString()),
-                    infoWindow: InfoWindow(title: 'Start',snippet:widget.route[0].name ),
-                    icon:startIcon,
-                    position: latlan[0]),
-                Marker(
-                    markerId: MarkerId(0.toString()),
-                    icon: endIcon,
-                    infoWindow: InfoWindow(title: 'End',snippet:widget.route[widget.route.length-1].name),
-                    position: latlan[latlan.length-1])
-              },
-              initialCameraPosition: CameraPosition(
-                target: LatLng(latlan[0].latitude,
-                    latlan[0].longitude),
-                zoom: 13,
-              ),
-              zoomControlsEnabled: false,
-              zoomGesturesEnabled: true,
-              onMapCreated:
-                  (GoogleMapController controller) async {
-                String style =
-                await DefaultAssetBundle.of(context)
-                    .loadString(
-                    'assets/mapstyle.json');
-                //customize your map style at: https://mapstyle.withgoogle.com/
-                controller.setMapStyle(style);
+            height: (MediaQuery.of(context).size.height) * 0.7,
+            child: isLoad == true
+                ? const Center(child: CircularProgressIndicator())
+                : GoogleMap(
+                    polylines: _polyline,
+                    markers: {
+                      ..._marker,
+                      // ...Set<Marker>.of(
+                      //     controller.allMarkers.values),
+                      Marker(
+                        markerId: const MarkerId('location'),
+                        position: LatLng(currentLocation!.latitude!,
+                            currentLocation!.longitude!),
+                        icon: locationIcon,
+                      ),
+                      Marker(
+                          markerId: MarkerId(0.toString()),
+                          infoWindow: InfoWindow(
+                              title: 'Start', snippet: widget.route[0].name),
+                          icon: startIcon,
+                          position: latlan[0]),
+                      Marker(
+                          markerId: MarkerId(0.toString()),
+                          icon: endIcon,
+                          infoWindow: InfoWindow(
+                              title: 'End',
+                              snippet:
+                                  widget.route[widget.route.length - 1].name),
+                          position: latlan[latlan.length - 1])
+                    },
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(latlan[0].latitude, latlan[0].longitude),
+                      zoom: 13,
+                    ),
+                    zoomControlsEnabled: false,
+                    zoomGesturesEnabled: true,
+                    onMapCreated: (GoogleMapController controller) async {
+                      String style = await DefaultAssetBundle.of(context)
+                          .loadString('assets/mapstyle.json');
+                      //customize your map style at: https://mapstyle.withgoogle.com/
+                      controller.setMapStyle(style);
 
-                _mapController = controller;
-              })
-          // child: StreamBuilder2<List<MetroStationModel>?,
-          //     List<BusStationModel>?>(
-          //     streams: StreamTuple2(
-          //         controller.getAllStations(), controller.getAllBuses()),
-          //     builder: ((context, snapshots) {
-          //       if (snapshots.snapshot1.connectionState ==
-          //           ConnectionState.waiting ||
-          //           snapshots.snapshot2.connectionState ==
-          //               ConnectionState.waiting) {
-          //         return const Center(child: CircularProgressIndicator());
-          //       }
-          //       // controller.setAllStations = snapshots.snapshot1.data ?? [];
-          //       // controller.setAllBuses = snapshots.snapshot2.data ?? [];
-          //       if (controller.allStations.isNotEmpty) {
-          //         initMarkers();
-          //       }
-          //
-          //       return FutureBuilder<void>(
-          //           future: controller.stationMarkers.isEmpty
-          //               ? initMarkers()
-          //               : null,
-          //           builder: (context, markersSnapshot) {
-          //             if (markersSnapshot.connectionState ==
-          //                 ConnectionState.waiting) {
-          //               return const Center(child: CircularProgressIndicator());
-          //             }
-          //
-          //             return StreamBuilder<LocationData>(
-          //                 stream: provider.getCurrentLoction(context),
-          //                 builder: (context, locations) {
-          //                   if (locations.hasData) {
-          //                     return Obx(() {
-          //                       return GoogleMap(
-          //                           polylines: _polyline,
-          //                           markers: {
-          //                             ..._marker,
-          //                             ...Set<Marker>.of(
-          //                                 controller.allMarkers.values),
-          //                             Marker(
-          //                               markerId: MarkerId('location'),
-          //                               position: LatLng(
-          //                                   currentLocation!.latitude!,
-          //                                   currentLocation!.longitude!),
-          //                               icon: locationIcon,
-          //                             ),
-          //                             Marker(
-          //                                 markerId: MarkerId(0.toString()),
-          //                                 icon:startIcon,
-          //                                 position: latlan[0]),
-          //                             Marker(
-          //                                 markerId: MarkerId(0.toString()),
-          //                                 icon: endIcon,
-          //                                 position: latlan[latlan.length-1])
-          //                           },
-          //                           initialCameraPosition: CameraPosition(
-          //                             target: LatLng(latlan[0].latitude,
-          //                                 latlan[0].longitude),
-          //                             zoom: 13,
-          //                           ),
-          //                           zoomControlsEnabled: false,
-          //                           zoomGesturesEnabled: true,
-          //                           onMapCreated:
-          //                               (GoogleMapController controller) async {
-          //                             String style =
-          //                             await DefaultAssetBundle.of(context)
-          //                                 .loadString(
-          //                                 'assets/mapstyle.json');
-          //                             //customize your map style at: https://mapstyle.withgoogle.com/
-          //                             controller.setMapStyle(style);
-          //
-          //                             _mapController = controller;
-          //                           });
-          //                     });
-          //                   } else {
-          //                     return const Center(
-          //                       child: CircularProgressIndicator(),
-          //                     );
-          //                   }
-          //                 });
-          //           });
-          //     })),
-        ),
+                      _mapController = controller;
+                    })),
       ],
     );
   }
@@ -318,6 +296,7 @@ class _RouteMapState extends State<RouteMap> {
           controller: scrollController,
           child: Container(
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.9,
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -368,12 +347,8 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.skyColor,
-                                      fontSize: 26),
+                                      fontSize: 30),
                                 ),
-                                const SizedBox(width: 8),
-                                const Text("",
-                                    style: TextStyle(
-                                        color:AppColors.blueDarkColor, fontSize: 16))
                               ],
                             ),
                             Row(
@@ -384,15 +359,16 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.blueDarkColor,
-                                      fontSize: 26),
+                                      fontSize: 30),
                                 ),
                                 const SizedBox(width: 8),
                                 const Text("Stops",
                                     style: TextStyle(
-                                        color:AppColors.blueDarkColor, fontSize: 16))
+                                        color: AppColors.blueDarkColor,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold))
                               ],
                             ),
-
                           ],
                         ),
                         Row(
@@ -412,17 +388,25 @@ class _RouteMapState extends State<RouteMap> {
                             const SizedBox(width: 6),
                             InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Tracking(route:widget.route)));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Tracking(
+                                              route: widget.route,
+                                              time: widget.time,
+                                            )));
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 12),
                                 decoration: BoxDecoration(
-                                    border: Border.all(color: const Color(0xff50B2CC)),
+                                    border:
+                                        Border.all(color: const Color(0xff50B2CC)),
                                     borderRadius: BorderRadius.circular(18)),
                                 child: Row(
                                   children: const [
-                                    Icon(Icons.near_me, color: Color(0xff50B2CC)),
+                                    Icon(Icons.near_me,
+                                        color: Color(0xff50B2CC)),
                                   ],
                                 ),
                               ),
@@ -441,7 +425,8 @@ class _RouteMapState extends State<RouteMap> {
                       children: [
                         Row(
                           children: [
-                    Image.asset('assets/images/start.png',width: 30,height: 30),
+                            Image.asset('assets/images/start.png',
+                                width: 30, height: 30),
                             const SizedBox(width: 8),
                             Text(widget.route[0].name!,
                                 style: const TextStyle(
@@ -474,9 +459,9 @@ class _RouteMapState extends State<RouteMap> {
                                             fontSize: 16)),
                                     isShow == false
                                         ? const Icon(Icons.arrow_drop_down,
-                                        color: AppColors.skyColor)
+                                            color: AppColors.skyColor)
                                         : const Icon(Icons.arrow_drop_up,
-                                        color: AppColors.skyColor)
+                                            color: AppColors.skyColor)
                                   ],
                                 ),
                               )
@@ -485,49 +470,62 @@ class _RouteMapState extends State<RouteMap> {
                         ),
                         isShow == true
                             ? SizedBox(
-                          child: Wrap(
-                            children: List.generate(
-                                widget.route.length - 2, (index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 6),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const DotIndicator(size: 20),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                            widget.route[index + 1].name!,
-                                            style: const TextStyle(
-                                                color: AppColors
-                                                    .blueDarkColor,
-                                                fontSize: 16,
-                                                fontWeight:
-                                                FontWeight.bold))
-                                      ],
-                                    ),
-                                    Row(
-                                      children: const [
-                                        Padding(
-                                          padding:
-                                          EdgeInsets.only(left: 8.0),
-                                          child: SizedBox(
-                                            height: 20.0,
-                                            child: SolidLineConnector(color:Colors.grey),
+                                child: Wrap(
+                                  children: List.generate(
+                                      widget.route.length - 2, (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              widget.route[index + 1].type ==
+                                                      'Bus'
+                                                  ? Image.asset(
+                                                      "assets/images/bus.png",
+                                                      width: 30,
+                                                      height: 30,
+                                                    )
+                                                  : Image.asset(
+                                                      "assets/images/metro.png",
+                                                      width: 30,
+                                                      height: 30,
+                                                    ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                  widget.route[index + 1].name!,
+                                                  style: const TextStyle(
+                                                      color: AppColors
+                                                          .blueDarkColor,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold))
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          Row(
+                                            children: const [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 14.0),
+                                                child: SizedBox(
+                                                  height: 20.0,
+                                                  child: SolidLineConnector(
+                                                      color: Colors.grey),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
                                 ),
-                              );
-                            }),
-                          ),
-                        )
+                              )
                             : const SizedBox(),
                         Row(
                           children: [
-                            Image.asset('assets/images/end.png',width: 30,height: 30),
+                            Image.asset('assets/images/end.png',
+                                width: 30, height: 30),
                             const SizedBox(width: 8),
                             Text(widget.route[widget.route.length - 1].name!,
                                 style: const TextStyle(
@@ -546,18 +544,18 @@ class _RouteMapState extends State<RouteMap> {
     );
   }
 
-  // Future<void> initMarkers() async {
-  //   controller.allStations.isEmpty ? null : await 2.seconds.delay();
-  //   await controller.getAllContains();
-  //   // await controller.getAllLines();
-  //   // controller.setPolyLineData();
-  //   for (var element in controller.allStations) {
-  //     controller.initStationMarkers(element, "Station_${element.Name}");
-  //   }
-  //   for (var element in controller.allBuses) {
-  //     controller.initBusMarkers(element, "Bus_${element.Number}");
-  //   }
-  //   controller.setAllMarkers();
-  // }
+// Future<void> initMarkers() async {
+//   controller.allStations.isEmpty ? null : await 2.seconds.delay();
+//   await controller.getAllContains();
+//   // await controller.getAllLines();
+//   // controller.setPolyLineData();
+//   for (var element in controller.allStations) {
+//     controller.initStationMarkers(element, "Station_${element.Name}");
+//   }
+//   for (var element in controller.allBuses) {
+//     controller.initBusMarkers(element, "Bus_${element.Number}");
+//   }
+//   controller.setAllMarkers();
+// }
 }
 

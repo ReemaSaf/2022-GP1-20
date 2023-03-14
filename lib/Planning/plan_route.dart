@@ -283,10 +283,10 @@ class _PlanARoute extends State<PlanARoute> {
                                           ? Text(
                                               'Hi there',
                                               style: TextStyle(
-                                                  fontSize: 12.5,
+                                                  fontSize: 12,
                                                   fontWeight: CustomFontWeight
-                                                      .kMediumFontWeight,
-                                                  color: CustomColor.kprimaryblue),
+                                                      .kLightFontWeight,
+                                                  color: CustomColor.kgrey),
                                             )
                                           : StreamBuilder<UserModel>(
                                               stream: FirebaseFirestore.instance
@@ -319,21 +319,19 @@ class _PlanARoute extends State<PlanARoute> {
                                                 return Text(
                                                   'Hi $username',
                                                   style: TextStyle(
-                                                      fontSize: 12.5,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           CustomFontWeight
-                                                              .kMediumFontWeight,
-                                                      color: CustomColor.kprimaryblue),
+                                                              .kLightFontWeight,
+                                                      color: CustomColor.kgrey),
                                                 );
                                               });
                                     }),
                                 SizedBox(height: 4.h),
-                                isFromFieldFocus || isToFieldFocus
-                                    ? const SizedBox()
-                                    : Text(
+                                Text(
                                         "Where would you like to go?",
                                         style: TextStyle(
-                                            fontSize: 14.5,
+                                            fontSize: 14,
                                             fontWeight: CustomFontWeight
                                                 .kSemiBoldFontWeight,
                                             color: CustomColor.klightblue),
@@ -398,8 +396,15 @@ class _PlanARoute extends State<PlanARoute> {
                                     ),
                                     SizedBox(width: Get.width * 0.8 - 55),
                                     InkWell(
-                                      onTap: () {
-                                        onExchange();
+                                      onTap: () async {
+                                        setState(() {
+                                          isFromFieldFocus=true;
+                                        });
+                                        await onExchange();
+                                        await Future.delayed(const Duration(milliseconds: 50));
+                                        setState(() {
+                                          isFromFieldFocus=false;
+                                        });
                                       },
                                       child: Image.asset(
                                           "assets/images/arrows.png",
