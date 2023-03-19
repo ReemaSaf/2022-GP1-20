@@ -11,6 +11,7 @@ import 'package:sekkah_app/helpers/user_model.dart';
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static String? LeftDuration = null;
   Future<void> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
@@ -31,9 +32,9 @@ class AuthController {
           .set(userModel.toMap());
 
       Get.back();
-      Get.snackbar("Profile Updated", "Your Profile has been updated succesfully",
-      backgroundColor: const Color(0xff50b2cc)
-      );
+      Get.snackbar(
+          "Profile Updated", "Your Profile has been updated succesfully",
+          backgroundColor: const Color(0xff50b2cc));
       return true;
     } on FirebaseAuthException catch (err) {
       String errorMessage =
@@ -97,13 +98,18 @@ class AuthController {
     String newPassword,
   ) async {
     try {
-      showLoadingDialog(message: "Processing...");//Mainly Show prosseing dialog.
-      final user = FirebaseAuth.instance.currentUser; //Getting firebase auth instance
-      final cred = EmailAuthProvider.credential( //making credential ...
-          email: user!.email!, password: currentPassword);
-      await user.reauthenticateWithCredential(cred).then((value) async { //This is a function that reauthetciate and change password it take email and newpasssword as Credential to update/change the credentials
+      showLoadingDialog(
+          message: "Processing..."); //Mainly Show prosseing dialog.
+      final user =
+          FirebaseAuth.instance.currentUser; //Getting firebase auth instance
+      final cred = EmailAuthProvider.credential(
+          //making credential ...
+          email: user!.email!,
+          password: currentPassword);
+      await user.reauthenticateWithCredential(cred).then((value) async {
+        //This is a function that reauthetciate and change password it take email and newpasssword as Credential to update/change the credentials
         await user.updatePassword(newPassword); //Here Updating new Password
-        // When The password is change new password will also encrpted before updting it to firebase so that the securoty remains 
+        // When The password is change new password will also encrpted before updting it to firebase so that the securoty remains
         var encryptedPassword =
             Encryptor.encrypt(_auth.currentUser!.uid, newPassword);
         //Updating only passwordfeild in firebase with encrpted password
@@ -113,17 +119,18 @@ class AuthController {
             .update({'password': encryptedPassword});
       });
       //Clossing Dialog
-      
+
       Get.back();
       hideLoadingDialog();
       //Profile updated- your profile has been updated successfully
-       Get.snackbar("Password Updated", "Your password has been updated successfully",
-       backgroundColor: const Color(0xff50b2cc)
-       );
+      Get.snackbar(
+          "Password Updated", "Your password has been updated successfully",
+          backgroundColor: const Color(0xff50b2cc));
     } on Exception catch (e) {
-       //Clossing Dialog
+      //Clossing Dialog
       hideLoadingDialog();
-      showErrorDialog(e.toString());    }
+      showErrorDialog(e.toString());
+    }
   }
 
   Future<void> signUpAsGuest() async {
@@ -139,6 +146,130 @@ class AuthController {
       await _auth.signOut();
     } on Exception catch (err) {
       Get.snackbar("error", err.toString());
+    }
+  }
+
+  static Future<String?> checkIfUserHasPass() async {
+    try {
+      final user =
+          FirebaseAuth.instance.currentUser; //Getting firebase auth instance
+
+      final db = FirebaseFirestore.instance;
+      DocumentSnapshot userObj =
+          await db.collection('Passenger').doc(user!.uid).get();
+
+      final mUser = UserModel.fromMap(userObj.data() as Map<String, dynamic>);
+
+      final currentDate = DateTime.now();
+      final userDate = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(mUser.Pass_Expired_date));
+
+      if (mUser.Pass_Expired_date == "0") {
+        await db.collection('Passenger').doc(user!.uid).update(
+          {
+            'Pass_Expired_date': "0",
+          },
+        );
+        LeftDuration = "Expired";
+        return LeftDuration;
+      } else if (currentDate.isBefore(userDate)) {
+        var diff = userDate.difference(currentDate).inDays;
+        if (diff == 0) {
+          LeftDuration =
+              userDate.difference(currentDate).inHours.toString() + " Hours";
+        } else {
+          if (diff == 1) {
+            LeftDuration = diff.toString() + " Day";
+          } else {
+            LeftDuration = diff.toString() + " Days";
+          }
+        }
+        return LeftDuration;
+      } else if (currentDate.isAfter(userDate)) {
+        await db.collection('Passenger').doc(user!.uid).update(
+          {
+            'Pass_Expired_date': "0",
+          },
+        );
+
+        LeftDuration = "Expired";
+        return LeftDuration;
+      } else {
+        await db.collection('Passenger').doc(user!.uid).update(
+          {
+            'Pass_Expired_date': "0",
+          },
+        );
+        LeftDuration = "Expiring";
+        return LeftDuration;
+      }
+    } on Exception catch (err) {
+      Get.snackbar("error", err.toString());
+    }
+    return null;
+  }
+
+  static bool isAfterToday(int timestamp) {
+    return DateTime.now().toUtc().isAfter(
+          DateTime.fromMillisecondsSinceEpoch(
+            timestamp,
+            isUtc: false,
+          ).toUtc(),
+        );
+  }
+
+  static Future<void> savePass(
+    int passTime,
+    String passType,
+    int price,
+  ) async {
+    try {
+      showLoadingDialog(
+          message: "Processing..."); //Mainly Show prosseing dialog.
+      final user =
+          FirebaseAuth.instance.currentUser; //Getting firebase auth instance
+
+      final db = FirebaseFirestore.instance;
+
+      DocumentSnapshot userObj =
+          await db.collection('Passenger').doc(user!.uid).get();
+
+      final mUser = UserModel.fromMap(userObj.data() as Map<String, dynamic>);
+      print(mUser.email.toString());
+
+      var expiredDate;
+
+      if (mUser.Pass_Expired_date != "0") {
+        var alreadyTime = DateTime.fromMillisecondsSinceEpoch(
+            int.parse(mUser.Pass_Expired_date));
+
+        expiredDate =
+            alreadyTime.add(Duration(days: passTime)).millisecondsSinceEpoch;
+      } else {
+        expiredDate =
+            DateTime.now().add(Duration(days: passTime)).millisecondsSinceEpoch;
+      }
+
+      print(expiredDate);
+
+      await db.collection('Passenger').doc(user!.uid).update(
+        {
+          'Pass_Expired_date': expiredDate.toString(),
+          'passType': passType,
+          'price': price,
+        },
+      );
+
+      //Clossing Dialog
+
+      Get.back();
+      hideLoadingDialog();
+      //Profile updated- your profile has been updated successfully
+
+    } on Exception catch (e) {
+      //Clossing Dialog
+      hideLoadingDialog();
+      showErrorDialog(e.toString());
     }
   }
 }

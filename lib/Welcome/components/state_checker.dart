@@ -15,6 +15,10 @@ class UserStateChecker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isAdminEmail ? const AdminNavScreen() : const NavScreen();
+    return isAdminEmail
+        ? const AdminNavScreen()
+        : const NavScreen(
+            inh: 0,
+          );
   }
 }

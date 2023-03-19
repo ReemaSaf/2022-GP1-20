@@ -328,7 +328,7 @@ class _RouteMapState extends State<RouteMap> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 22),
                     margin: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
                         color: const Color(0xffF2F2F2),
@@ -347,7 +347,7 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.skyColor,
-                                      fontSize: 30),
+                                      fontSize: 28),
                                 ),
                               ],
                             ),
@@ -359,13 +359,13 @@ class _RouteMapState extends State<RouteMap> {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.blueDarkColor,
-                                      fontSize: 30),
+                                      fontSize: 28),
                                 ),
                                 const SizedBox(width: 8),
                                 const Text("Stops",
                                     style: TextStyle(
                                         color: AppColors.blueDarkColor,
-                                        fontSize: 30,
+                                        fontSize: 28,
                                         fontWeight: FontWeight.bold))
                               ],
                             ),
@@ -373,17 +373,29 @@ class _RouteMapState extends State<RouteMap> {
                         ),
                         Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff50B2CC),
-                                  borderRadius: BorderRadius.circular(18)),
-                              child: const Text("PURCHASE TICKET",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => BuyTicket(
+                                      stops: widget.route.length - 2,
+                                      startLocation: widget.route[0].name!,
+                                      endLocation: widget
+                                          .route[widget.route.length - 1].name!,
+                                      allRoutes: widget.route,
+                                      routeTime: widget.time!,
+                                    ));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 12),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff50B2CC),
+                                    borderRadius: BorderRadius.circular(18)),
+                                child: const Text("PURCHASE TICKET",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                              ),
                             ),
                             const SizedBox(width: 6),
                             InkWell(
