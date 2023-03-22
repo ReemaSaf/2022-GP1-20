@@ -47,7 +47,11 @@ android {
         applicationId "com.GP.sekkah_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+<<<<<<< HEAD
         minSdkVersion 33
+=======
+         minSdkVersion 33
+>>>>>>> bcd855ee9de96c80058f73d8597edbc1bec396ef
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -11,8 +11,11 @@ import 'package:sekkah_app/helpers/dialog_alert.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 import 'package:sekkah_app/others/constants.dart';
 
+import '../../Tickets/History.dart';
+
 class NavScreen extends StatefulWidget {
-  const NavScreen({super.key});
+  final int inh;
+  const NavScreen({super.key, required this.inh});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -20,15 +23,14 @@ class NavScreen extends StatefulWidget {
 }
 
 class _NavScreenState extends State<NavScreen> {
-  int index = 0;
+  late int index = widget.inh;
 
   final screens = [
     const ViewMap(),
     const PlanARoute(),
     const DigitalCard(),
-    const Center(child: Text('tickets', style: (TextStyle(fontSize: 72)))),
+    const HistoryTickets(),
     ProfileScreen(),
-  
   ];
 
   @override
@@ -48,12 +50,11 @@ class _NavScreenState extends State<NavScreen> {
               selectedIndex: index,
               onDestinationSelected: (currentIndex) {
                 setState(() => index = currentIndex);
-                 if (FirebaseAuth.instance.currentUser!.isAnonymous &&
+                if (FirebaseAuth.instance.currentUser!.isAnonymous &&
                     (index == 3)) {
                   showConfirmationDialog(
                       heading: "Alert",
-                      message:
-                          "You must register to view tickets.",
+                      message: "You must register to view tickets.",
                       okText: "Register",
                       onPressedOk: () {
                         Get.back();
@@ -98,7 +99,6 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Map',
                 ),
-
                 const NavigationDestination(
                   icon: Icon(
                     Icons.train_outlined,
@@ -106,7 +106,6 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Plan Route',
                 ),
-
                 const NavigationDestination(
                   icon: Icon(
                     Icons.account_balance_wallet_outlined,
@@ -114,7 +113,6 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Digital Card',
                 ),
-                
                 const NavigationDestination(
                   icon: Icon(
                     Icons.confirmation_number_outlined,
@@ -122,7 +120,6 @@ class _NavScreenState extends State<NavScreen> {
                   ),
                   label: 'Tickets',
                 ),
-
                 const NavigationDestination(
                   icon: Icon(
                     Icons.person,
