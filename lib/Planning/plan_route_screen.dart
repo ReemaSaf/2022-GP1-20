@@ -323,7 +323,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                   padding: EdgeInsets.only(top: height(context) * 0.02),
                                   child: TicketWidget(
                                     width: width(context),
-                                    height: 168.h,
+                                    height: 180.h,
                                     isCornerRounded: true,
                                     padding: EdgeInsets.all(10.h),
                                     color:selectdIndexColor==index?AppColors.skyColor:Colors.white,
@@ -331,12 +331,11 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                       setState(() {
                                         if(selectdIndexColor!=index){
                                           selectdIndexColor=index;
-                                          Future.delayed(const Duration(seconds: 2),() {
+                                          Future.delayed(const Duration(seconds: 1),() {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],)));
-                                            selectdIndexColor=null;
                                           },);
                                         }else{
                                           selectdIndexColor=null;

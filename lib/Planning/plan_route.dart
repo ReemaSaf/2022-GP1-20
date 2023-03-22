@@ -145,6 +145,7 @@ class _PlanARoute extends State<PlanARoute> {
         destinationLatLong = [];
         destinationLatLong.add(lat);
         destinationLatLong.add(lang);
+        FocusManager.instance.primaryFocus?.unfocus();
       }
       isFromFieldFocus = false;
       isToFieldFocus = false;

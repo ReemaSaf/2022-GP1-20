@@ -101,7 +101,7 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
                     widget.originLatLong[0],
                     widget.originLatLong[1],
                   ),
-        zoom: 11,
+        zoom: 10,
       ),
       zoomControlsEnabled: false,
       zoomGesturesEnabled: true,

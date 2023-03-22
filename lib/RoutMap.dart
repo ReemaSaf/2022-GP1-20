@@ -129,7 +129,7 @@ class _RouteMapState extends State<RouteMap> {
             markerId: MarkerId(i.toString()),
             visible: true,
             infoWindow:
-                InfoWindow(title: 'Station ${widget.route[i].line}', snippet: widget.route[i].name),
+                InfoWindow(title: 'Station', snippet: widget.route[i].name),
             icon:widget.route[i].type=="Bus"?busIcon: metroIcon,
             position: latlan[i]));
       }
@@ -241,47 +241,51 @@ class _RouteMapState extends State<RouteMap> {
             height: (MediaQuery.of(context).size.height) * 0.7,
             child: isLoad == true
                 ? const Center(child: CircularProgressIndicator())
-                : GoogleMap(
-                    polylines: _polyline,
-                    markers: {
-                      ..._marker,
-                      // ...Set<Marker>.of(
-                      //     controller.allMarkers.values),
-                      Marker(
-                        markerId: const MarkerId('location'),
-                        position: LatLng(currentLocation!.latitude!,
-                            currentLocation!.longitude!),
-                        icon: locationIcon,
+                : Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+                  child: GoogleMap(
+                      polylines: _polyline,
+                      markers: {
+                        ..._marker,
+                        // ...Set<Marker>.of(
+                        //     controller.allMarkers.values),
+                        Marker(
+                          markerId: const MarkerId('location'),
+                          position: LatLng(currentLocation!.latitude!,
+                              currentLocation!.longitude!),
+                          icon: locationIcon,
+                        ),
+                        Marker(
+                            markerId: MarkerId(0.toString()),
+                            infoWindow: InfoWindow(
+                                title: 'Start', snippet: widget.route[0].name),
+                            icon: startIcon,
+                            position: latlan[0]),
+                        Marker(
+                            markerId: MarkerId(0.toString()),
+                            icon: endIcon,
+                            infoWindow: InfoWindow(
+                                title: 'End',
+                                snippet:
+                                    widget.route[widget.route.length - 1].name),
+                            position: latlan[latlan.length - 1])
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(latlan[0].latitude, latlan[0].longitude),
+                        zoom: 13,
                       ),
-                      Marker(
-                          markerId: MarkerId(0.toString()),
-                          infoWindow: InfoWindow(
-                              title: 'Start', snippet: widget.route[0].name),
-                          icon: startIcon,
-                          position: latlan[0]),
-                      Marker(
-                          markerId: MarkerId(0.toString()),
-                          icon: endIcon,
-                          infoWindow: InfoWindow(
-                              title: 'End',
-                              snippet:
-                                  widget.route[widget.route.length - 1].name),
-                          position: latlan[latlan.length - 1])
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(latlan[0].latitude, latlan[0].longitude),
-                      zoom: 13,
-                    ),
-                    zoomControlsEnabled: false,
-                    zoomGesturesEnabled: true,
-                    onMapCreated: (GoogleMapController controller) async {
-                      String style = await DefaultAssetBundle.of(context)
-                          .loadString('assets/mapstyle.json');
-                      //customize your map style at: https://mapstyle.withgoogle.com/
-                      controller.setMapStyle(style);
+                      zoomControlsEnabled: false,
+                      zoomGesturesEnabled: true,
+                      onMapCreated: (GoogleMapController controller) async {
+                        String style = await DefaultAssetBundle.of(context)
+                            .loadString('assets/mapstyle.json');
+                        //customize your map style at: https://mapstyle.withgoogle.com/
+                        controller.setMapStyle(style);
 
-                      _mapController = controller;
-                    })),
+                        _mapController = controller;
+                      },
+            ),
+                )),
       ],
     );
   }
@@ -296,248 +300,251 @@ class _RouteMapState extends State<RouteMap> {
           controller: scrollController,
           child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.9,
+              height: MediaQuery.of(context).size.height * 0.9,
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
                       topRight: Radius.circular(40))),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: 8,
-                      width: 60,
+              child: SingleChildScrollView(
+                controller:scrollController,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 8,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(6)),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Route details",
+                        style: TextStyle(
+                            color: AppColors.blueDarkColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                      margin: const EdgeInsets.only(left: 16, right: 16),
                       decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(6)),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Route details",
-                      style: TextStyle(
-                          color: AppColors.blueDarkColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-                    margin: const EdgeInsets.only(left: 16, right: 16),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffF2F2F2),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const SizedBox(width: 16),
-                                Text(
-                                  widget.time!,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.skyColor,
-                                      fontSize: 30),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const SizedBox(width: 16),
-                                Text(
-                                  "${widget.route.length - 2}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.blueDarkColor,
-                                      fontSize: 30),
-                                ),
-                                const SizedBox(width: 8),
-                                const Text("Stops",
-                                    style: TextStyle(
-                                        color: AppColors.blueDarkColor,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff50B2CC),
-                                  borderRadius: BorderRadius.circular(18)),
-                              child: const Text("PURCHASE TICKET",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
-                            ),
-                            const SizedBox(width: 6),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Tracking(
-                                              route: widget.route,
-                                              time: widget.time,
-                                            )));
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 12),
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xff50B2CC)),
-                                    borderRadius: BorderRadius.circular(18)),
-                                child: Row(
-                                  children: const [
-                                    Icon(Icons.near_me,
-                                        color: Color(0xff50B2CC)),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset('assets/images/start.png',
-                                width: 30, height: 30),
-                            const SizedBox(width: 8),
-                            Text(widget.route[0].name!,
-                                style: const TextStyle(
-                                    color: AppColors.blueDarkColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14),
-                          child: Row(
+                          color: const Color(0xffF2F2F2),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 50.0,
-                                child: SolidLineConnector(color: Colors.grey),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    widget.time!,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.skyColor,
+                                        fontSize: 30),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 16),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    "${widget.route.length - 2}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.blueDarkColor,
+                                        fontSize: 30),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text("Stops",
+                                      style: TextStyle(
+                                          color: AppColors.blueDarkColor,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 12),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff50B2CC),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: const Text("PURCHASE TICKET",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,overflow: TextOverflow.ellipsis)),
+                              ),
+                              const SizedBox(width: 6),
                               InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isShow = !isShow;
-                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Tracking(
+                                                route: widget.route,
+                                                time: widget.time,
+                                              )));
                                 },
-                                child: Row(
-                                  children: [
-                                    Text(
-                                        "${widget.route.length - 4} Stops Before",
-                                        style: const TextStyle(
-                                            color: AppColors.skyColor,
-                                            fontSize: 16)),
-                                    isShow == false
-                                        ? const Icon(Icons.arrow_drop_down,
-                                            color: AppColors.skyColor)
-                                        : const Icon(Icons.arrow_drop_up,
-                                            color: AppColors.skyColor)
-                                  ],
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 12),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: const Color(0xff50B2CC)),
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.near_me,
+                                          color: Color(0xff50B2CC),size:16),
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
                           ),
-                        ),
-                        isShow == true
-                            ? SizedBox(
-                                child: Wrap(
-                                  children: List.generate(
-                                      widget.route.length - 2, (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              widget.route[index + 1].type ==
-                                                      'Bus'
-                                                  ? Image.asset(
-                                                      "assets/images/bus.png",
-                                                      width: 30,
-                                                      height: 30,
-                                                    )
-                                                  : Image.asset(
-                                                      "assets/images/metro.png",
-                                                      width: 30,
-                                                      height: 30,
-                                                    ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                  widget.route[index + 1].name!,
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .blueDarkColor,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold))
-                                            ],
-                                          ),
-                                          Row(
-                                            children: const [
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 14.0),
-                                                child: SizedBox(
-                                                  height: 20.0,
-                                                  child: SolidLineConnector(
-                                                      color: Colors.grey),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              )
-                            : const SizedBox(),
-                        Row(
-                          children: [
-                            Image.asset('assets/images/end.png',
-                                width: 30, height: 30),
-                            const SizedBox(width: 8),
-                            Text(widget.route[widget.route.length - 1].name!,
-                                style: const TextStyle(
-                                    color: AppColors.blueDarkColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset('assets/images/start.png',
+                                  width: 30, height: 30),
+                              const SizedBox(width: 8),
+                              Text(widget.route[0].name!,
+                                  style: const TextStyle(
+                                      color: AppColors.blueDarkColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 14),
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  height: 50.0,
+                                  child: SolidLineConnector(color: Colors.grey),
+                                ),
+                                const SizedBox(width: 16),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      isShow = !isShow;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                          "${widget.route.length - 4} Stops Before",
+                                          style: const TextStyle(
+                                              color: AppColors.skyColor,
+                                              fontSize: 16)),
+                                      isShow == false
+                                          ? const Icon(Icons.arrow_drop_down,
+                                              color: AppColors.skyColor)
+                                          : const Icon(Icons.arrow_drop_up,
+                                              color: AppColors.skyColor)
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          isShow == true
+                              ? SizedBox(
+                                  child: Wrap(
+                                    children: List.generate(
+                                        widget.route.length - 2, (index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(left: 0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                widget.route[index + 1].type ==
+                                                        'Bus'
+                                                    ? Image.asset(
+                                                        "assets/images/bus.png",
+                                                        width: 30,
+                                                        height: 30,
+                                                      )
+                                                    : Image.asset(
+                                                        "assets/images/metro.png",
+                                                        width: 30,
+                                                        height: 30,
+                                                      ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                    widget.route[index + 1].name!,
+                                                    style: const TextStyle(
+                                                        color: AppColors
+                                                            .blueDarkColor,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold))
+                                              ],
+                                            ),
+                                            Row(
+                                              children: const [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(left: 14.0),
+                                                  child: SizedBox(
+                                                    height: 20.0,
+                                                    child: SolidLineConnector(
+                                                        color: Colors.grey),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          Row(
+                            children: [
+                              Image.asset('assets/images/end.png',
+                                  width: 30, height: 30),
+                              const SizedBox(width: 8),
+                              Text(widget.route[widget.route.length - 1].name!,
+                                  style: const TextStyle(
+                                      color: AppColors.blueDarkColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               )),
         );
       },

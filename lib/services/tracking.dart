@@ -388,7 +388,7 @@ class _TrackingState extends State<Tracking> {
                     initialCameraPosition: CameraPosition(
                       target: LatLng(currentLocation!.latitude!,
                           currentLocation!.longitude!),
-                      zoom: 15,
+                      zoom: 11,
                     ),
                     zoomControlsEnabled: false,
                     zoomGesturesEnabled: true,
@@ -480,23 +480,23 @@ class _TrackingState extends State<Tracking> {
                                               fontWeight: FontWeight.bold))
                                     ],
                                   ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  const Text('|',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Text(
-                                    widget.time!,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.skyColor,
-                                        fontSize: 30),
-                                  ),
+                                  // SizedBox(
+                                  //   width: 12,
+                                  // ),
+                                  // Text('|',
+                                  //     style: TextStyle(
+                                  //         fontWeight: FontWeight.bold,
+                                  //         fontSize: 14)),
+                                  // SizedBox(
+                                  //   width: 12,
+                                  // ),
+                                  // Text(
+                                  //   widget.time!,
+                                  //   style: const TextStyle(
+                                  //       fontWeight: FontWeight.bold,
+                                  //       color: AppColors.skyColor,
+                                  //       fontSize: 30),
+                                  // ),
                                 ],
                               ),
                               Padding(padding: const EdgeInsets.only(left: 16,top:8),child:widget.route[1].type=='Bus'?widget.route[1].onTime==false?const Text("Delay",style: TextStyle(fontWeight: FontWeight.bold,
@@ -521,7 +521,7 @@ class _TrackingState extends State<Tracking> {
                         children: [
                           Row(
                             children: [
-                              const DotIndicator(size: 20),
+                              DotIndicator(size: 20,color:currentLocationNumber==2?Colors.grey:Colors.blue),
                               const SizedBox(width: 8),
                               Text(widget.route[0].name!,
                                   style: const TextStyle(
@@ -534,9 +534,9 @@ class _TrackingState extends State<Tracking> {
                             padding: const EdgeInsets.only(left: 8),
                             child: Row(
                               children: [
-                                const SizedBox(
+                                 SizedBox(
                                   height: 50.0,
-                                  child: SolidLineConnector(),
+                                  child: SolidLineConnector(color:currentLocationNumber==2?Colors.grey:Colors.blue),
                                 ),
                                 const SizedBox(width: 16),
                                 InkWell(
@@ -573,7 +573,7 @@ class _TrackingState extends State<Tracking> {
                                         children: [
                                           Row(
                                             children: [
-                                              const DotIndicator(size: 20),
+                                              DotIndicator(size: 20,color:index+2==currentLocationNumber?Colors.grey:Colors.blue),
                                               const SizedBox(width: 8),
                                               Text(
                                                   widget.route[index + 1].name!,
@@ -586,13 +586,13 @@ class _TrackingState extends State<Tracking> {
                                             ],
                                           ),
                                           Row(
-                                            children: const [
+                                            children:  [
                                               Padding(
                                                 padding:
-                                                    EdgeInsets.only(left: 8.0),
+                                                    const EdgeInsets.only(left: 8.0),
                                                 child: SizedBox(
                                                   height: 20.0,
-                                                  child: SolidLineConnector(),
+                                                  child: SolidLineConnector(color:index+2==currentLocationNumber?Colors.grey:Colors.blue),
                                                 ),
                                               ),
                                             ],
