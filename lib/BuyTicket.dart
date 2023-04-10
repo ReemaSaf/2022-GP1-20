@@ -19,6 +19,7 @@ import 'constants/app_colors.dart';
 import 'constants/app_icons.dart';
 import 'constants/app_sizes.dart';
 import 'constants/app_text_styles.dart';
+import 'helpers/dialog_alert.dart';
 import 'helpers/route_model.dart';
 
 class BuyTicket extends StatefulWidget {
@@ -45,20 +46,19 @@ class _BuyTicketState extends State<BuyTicket> {
   bool isDigitalCard = false;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  get $_price => _price;
+  String time='';
 
   void _incrementPassengerCount() {
     setState(() {
       if (_selectedOption == 2) {
         _passengerCount = 1;
-        _price = _passengerCount * 5;
-        _sarPrice = _price * 0.267;
         return;
       }
-      if (_passengerCount >= 1) {
+      if (_passengerCount < 6) {
         _passengerCount++;
-        _price = _passengerCount * 5;
+        _price = _passengerCount * 4;
         _sarPrice = _price * 0.267;
+         _formattedUSPrice = _sarPrice.toStringAsFixed(2);
       }
     });
   }
@@ -67,16 +67,18 @@ class _BuyTicketState extends State<BuyTicket> {
     setState(() {
       if (_passengerCount > 1) {
         _passengerCount--;
-        _price = _passengerCount * 5;
-        _sarPrice = _price * 0.267;
+        _price = _passengerCount * 4;
+        _sarPrice = (_price * 0.267);
+        _formattedUSPrice = _sarPrice.toStringAsFixed(2);
       }
     });
   }
 
   int _passengerCount = 1;
-  int _price = 5;
-  late double _sarPrice ;
-  
+  int _price = 4;
+  late double _sarPrice;
+   String _formattedUSPrice="1.07";
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String startAddress = "";
@@ -134,14 +136,18 @@ class _BuyTicketState extends State<BuyTicket> {
   Widget build(BuildContext buildContext) => Scaffold(
       backgroundColor: AppColors.blueDarkColor,
       appBar: AppBar(
+        leading: IconButton(
+    icon:const Icon(Icons.arrow_back, color: Colors.white),
+    onPressed: () => Navigator.of(context).pop(),
+  ), 
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'Select a route',
+          'Purchase A Ticket',
           style: poppinsMedium.copyWith(
-            fontSize: 18.0,
+            fontSize: 18.sp,
             color: AppColors.whiteColor,
           ),
         ),
@@ -164,8 +170,7 @@ class _BuyTicketState extends State<BuyTicket> {
 
               //  height: height(context) * 0.8,
 
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
@@ -300,19 +305,25 @@ class _BuyTicketState extends State<BuyTicket> {
                       ),
                     ),
                     ButtonWidget(
+                      time: time,
                       onClicked: () => Utils.showSheet(
                         buildContext,
                         child: buildDateTimePicker(),
                         onClicked: () {
                           final value =
-                              DateFormat('MM/dd/yyyy HH:mm').format(_dateTime);
+                              DateFormat('dd/MM/yyyy HH:mm').format(_dateTime);
+                              time= value;
+                              setState(() {
 
-                          //Utils.showSnackBar(context, 'Selected "$value"');
-
+                               });
+           
                           Navigator.pop(buildContext);
                         },
                       ),
+                       
+                      
                     ),
+                    
                     Text(
                       'Passengers:',
                       // textAlign: TextAlign.left,
@@ -387,19 +398,20 @@ class _BuyTicketState extends State<BuyTicket> {
                     ),
                     Container(
                       width: 350,
-                      height: 54,
-                      child: Row(
+                      height: 100,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
+                            alignment: Alignment.topRight,
                             child: Container(
                               padding: const EdgeInsets.only(bottom: 7),
-                              height: 54,
-                              width: 155,
+                              height: 47,
+                              width: 350,
                               decoration: const BoxDecoration(
                                 color: AppColors.whiteLightColor,
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(7.0),
+                                  Radius.circular(20.0),
                                 ),
                               ),
                               child: ListView(
@@ -416,7 +428,7 @@ class _BuyTicketState extends State<BuyTicket> {
                                       'PayPal',
                                       style: poppinsMedium.copyWith(
                                         fontSize: 15.0,
-                                        color: AppColors.skyColor,
+                                        color: AppColors.blueDarkColor,
                                       ),
                                     ),
                                     onChanged: (int? value) {
@@ -430,68 +442,112 @@ class _BuyTicketState extends State<BuyTicket> {
                             ),
                           ),
                           Align(
-                              child: Container(
-                            height: 54,
-                            width: 155,
-                            decoration: const BoxDecoration(
-                              color: AppColors.whiteLightColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7.0),
-                              ),
-                            ),
+                             
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 47,
+                                    width: 175,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.whiteLightColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.0),
+                                        bottomLeft: Radius.circular(20.0),
+                                      ),
+                                    ),
 
-                            //alignment: Alignment.center,
-                            child: ListView(
-                              children: [
-                                RadioListTile(
-                                  value: 2,
-                                  activeColor: AppColors.blueDarkColor,
-                                  groupValue: _selectedOption,
-                                  title: Text(
-                                    'By Pass',
-                                    style: poppinsMedium.copyWith(
-                                      fontSize: 15.0,
-                                      color: AppColors.skyColor,
+                                    // padding: EdgeInsets.only(bottom: 10),
+                                    //alignment: Alignment.center,
+
+                                    child: ListView(
+                                      children: [
+                                        RadioListTile(
+                                          value: 2,
+                                          activeColor: AppColors.blueDarkColor,
+                                          groupValue: _selectedOption,
+                                          title: Text(
+                                            'By Pass',
+                                            style: poppinsMedium.copyWith(
+                                              fontSize: 15.0,
+                                              color: AppColors.blueDarkColor,
+                                            ),
+                                          ),
+                                          onChanged: (int? value) {
+                                            if (_passengerCount > 1)
+                                            Get.snackbar(
+                                                'Alert',
+                                                "Pass Is Limited For One Passenger",
+                                                colorText: Colors.white,
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 80, 159, 204));
+
+                                            setState(() {
+                                              _selectedOption = value;
+                                              _passengerCount = 1;
+                                              _price = _passengerCount * 4;
+                                              _sarPrice = _price * 0.267;
+                                              _formattedUSPrice = _sarPrice.toStringAsFixed(2);
+                                            });
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  onChanged: (int? value) {
-                                    Get.snackbar(
-                                        'Pass Is Limited For One Passenger',
-                                        "",
-                                        colorText: Colors.white,
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 80, 159, 204));
-                                    setState(() {
-                                      _selectedOption = value;
-                                      _passengerCount = 1;
-                                      _price = _passengerCount * 5;
-                                      _sarPrice = _price * 0.267;
-                                      
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          )),
+                                  if (!auth.currentUser!.isAnonymous && isDigitalCard)
+                                    Container(
+                                      height: 47,
+                                      width: 175,
+                                      padding: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.whiteLightColor,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20.0),
+                                          bottomRight: Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        'Pass Expires In $passtime',
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 13.0,
+                                          color: AppColors.skyColor,
+                                        ),
+                                      ),
+                                    ),
+
+                                     if (auth.currentUser!.isAnonymous || !isDigitalCard)
+                                    Container(
+                                      height: 47,
+                                      width: 175,
+                                      padding: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.whiteLightColor,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20.0),
+                                          bottomRight: Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        "* No Active Pass ",
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 13.0,
+                                          color: AppColors.skyColor,
+                                        ),
+                                      ),
+                                    )
+                                    
+                                ],
+                              )),
                         ],
                       ),
                     ),
-                    if (!auth.currentUser!.isAnonymous && isDigitalCard)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 66.0),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          'Time Left: $passtime',
-                          style: poppinsMedium.copyWith(
-                            fontSize: 16.0,
-                            color: const Color.fromARGB(255, 90, 91, 94),
-                          ),
-                        ),
-                      ),
-                    ),
-                   
-                    const SizedBox(height: 43),
+                    const SizedBox(height: 40),
                     Center(
                       child: Text(
                         'Total Price: $_price SAR',
@@ -553,16 +609,16 @@ class _BuyTicketState extends State<BuyTicket> {
                                             transactions: [
                                               {
                                                 "amount": {
-                                                  "total": _price.toString(),
+                                                  "total": _formattedUSPrice,
                                                   "currency": "USD",
                                                   "details": {
-                                                    "subtotal": _price.toString(),
+                                                    "subtotal": _formattedUSPrice,
                                                     "shipping": '0',
                                                     "shipping_discount": 0
                                                   }
                                                 },
                                                 "description":
-                                                    "The payment transaction description.",
+                                                    "To Buy A Metro Card.",
                                                 // "payment_options": {
                                                 //   "allowed_payment_method":
                                                 //       "INSTANT_FUNDING_SOURCE"
@@ -570,10 +626,9 @@ class _BuyTicketState extends State<BuyTicket> {
                                                 "item_list": {
                                                   "items": [
                                                     {
-                                                      "name": "A demo product",
+                                                      "name": "Metro Ticket",
                                                       "quantity": 1,
-                                                      "price":
-                                                          _price.toString(),
+                                                      "price": _formattedUSPrice,
                                                       "currency": "USD"
                                                     }
                                                   ],
@@ -581,14 +636,14 @@ class _BuyTicketState extends State<BuyTicket> {
                                                   // shipping address is not required though
                                                   "shipping_address": const {
                                                     "recipient_name":
-                                                        "Jane Foster",
-                                                    "line1": "Travis County",
+                                                        "SEKKAH",
+                                                    "line1": "King Khaled Road",
                                                     "line2": "",
-                                                    "city": "Austin",
+                                                    "city": "Riyadh",
                                                     "country_code": "US",
-                                                    "postal_code": "73301",
-                                                    "phone": "+00000000",
-                                                    "state": "Texas"
+                                                    "postal_code": "11111",
+                                                    "phone": "+966592000422",
+                                                    "state": "Riyadh"
                                                   },
                                                 }
                                               }
@@ -636,27 +691,20 @@ class _BuyTicketState extends State<BuyTicket> {
                                 );
                               } else if (_selectedOption == 2) {
                                 if (!isDigitalCard) {
-                                  await showDialog(
-                                      context: buildContext,
-                                      builder: (_) {
-                                        return AlertDialog(
-                                          title: const Text(
-                                              'You do not have active digital card or get Expired.'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text(
-                                                  'Activate digital card'),
-                                              onPressed: () {
-                                                Get.offAll(const NavScreen(inh: 2));
+                                  await showConfirmationDialog(
+                                      heading: "Alert",
+                                      message:
+                                          "You Don't Have An Active Digital Card",
+                                      okText: "Activate",
+                                      onPressedOk:() {
+                                                Get.offAll(
+                                                    const NavScreen(inh: 2));
                                               },
-                                            ),
-                                            TextButton(
-                                                child: const Text('cancel'),
-                                                onPressed: () =>
-                                                    Navigator.pop(buildContext))
-                                          ],
-                                        );
+                                      cancel: () {
+                                        Get.back();
+                                        
                                       });
+                                      
                                 } else {
                                   FirebaseFirestore.instance
                                       .collection('tickets')
@@ -691,7 +739,7 @@ class _BuyTicketState extends State<BuyTicket> {
 
   Widget buildDateTimePicker() => SizedBox(
         height: 180,
-        child: CupertinoDatePicker(
+        child: CupertinoDatePicker( 
           mode: CupertinoDatePickerMode.dateAndTime,
           minimumDate: DateTime(
               DateTime.now().year,
@@ -709,17 +757,16 @@ class _BuyTicketState extends State<BuyTicket> {
       );
 }
 
-class YourClass {
-  int passengerCount = 1;
-  int price = 5;
-  double sarPrice = (5 * 0.267);
-}
+
+
 
 class Utils {
   static void showSheet(
     BuildContext context, {
     required Widget child,
     required VoidCallback onClicked,
+     
+    
   }) =>
       showCupertinoModalPopup(
         context: context,
@@ -737,10 +784,12 @@ class Utils {
 
 class ButtonWidget extends StatelessWidget {
   final VoidCallback onClicked;
+  final String time;
 
   const ButtonWidget({
     Key? key,
     required this.onClicked,
+    required this.time
   }) : super(key: key);
 
   @override
@@ -750,12 +799,13 @@ class ButtonWidget extends StatelessWidget {
             backgroundColor: AppColors.whiteLightColor,
             minimumSize: const Size(350, 42)),
         onPressed: onClicked,
+        
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.more_time, size: 28),
-
-            //const SizedBox(width: 8),
+          children:  [
+            const Icon(Icons.more_time, size: 28),
+const SizedBox(width: 8),
+            Text(time,style: const TextStyle(fontSize: 15,),)
           ],
         ),
       );

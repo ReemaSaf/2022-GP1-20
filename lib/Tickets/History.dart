@@ -93,10 +93,25 @@ class _HistoryTickets extends State<HistoryTickets> {
                                 if (!snapshot.hasData) {
                                   return const Center(
                                     child: Center(
-                                      child: Text('No tickets' ,style: TextStyle(color: AppColors.whiteColor),),
+                                      child: Text(''),
                                     ),
                                   );
                                 }
+                                if(snapshot.data!.docs.isEmpty){
+                                  return const Center(
+                                    child: Center(
+                                      child: Text('No Tickets' ,style: TextStyle(color: AppColors.whiteColor ),),
+                                    ),
+                                  );
+                                }
+                                if(snapshot.hasError){
+                                  return const Center(
+                                    child: Center(
+                                      child: Text('Something went wrong' ,style: TextStyle(color: AppColors.whiteColor),),
+                                    ),
+                                  );
+                                }
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 2.0,

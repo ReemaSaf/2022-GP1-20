@@ -122,7 +122,7 @@ class _DigitalCard extends State<DigitalCard> {
                                   showConfirmationDialog(
                                       heading: "Alert",
                                       message:
-                                          "You must register to view tickets.",
+                                          "You must register to add a pass.",
                                       okText: "Register",
                                       onPressedOk: () {
                                         Get.back();
@@ -432,10 +432,11 @@ class _DigitalCard extends State<DigitalCard> {
           note: "Contact us for any questions on your order.",
           onSuccess: (Map params) {
             showLoadingDialog(message: "Saving");
-            AuthController.savePass(days, name, price).then((value) => {
+            AuthController.savePass(days, name).then((value) => {
                   AuthController.checkIfUserHasPass().then((result) {
                     hideLoadingDialog();
                     setState(() {});
+                    
                   })
                 });
           },

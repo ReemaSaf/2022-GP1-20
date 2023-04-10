@@ -269,9 +269,11 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                           ),
                         ]),
                         Row(
+                
                           children: [
                           Container(
-                            width: 140,
+                            
+                            width: 150,
                             height: 30,
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -283,13 +285,16 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                               ),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                               
                               children: [
                                 
-                                const Icon(Icons.timer_sharp,
+                                const Icon(
+                                  Icons.timer_sharp,
                                     size: 20, color: AppColors.skyColor),
                                 Container(
-                                  width: 90,
+                                  // alignment: Alignment.center,
+                                  width: 120,
                                   child: Text(
                                     outputDate,
                                     style: poppinsSemiBold.copyWith(

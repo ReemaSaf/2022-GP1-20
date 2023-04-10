@@ -9,7 +9,7 @@ class UserModel {
   String? password;
   String? imageUrl;
   String? passType;
-  int price = 0;
+
   String Pass_Expired_date = "0";
   UserModel(
       {required this.email,
@@ -18,7 +18,7 @@ class UserModel {
       this.password,
       this.imageUrl,
       this.passType,
-      this.price = 0,
+      
       this.Pass_Expired_date = "0"});
 
   Map<String, dynamic> toMap() {
@@ -38,7 +38,7 @@ class UserModel {
     }
 
     result.addAll({'Pass_Expired_date': Pass_Expired_date});
-    result.addAll({'price': price});
+    
 
     return result;
   }
@@ -52,7 +52,7 @@ class UserModel {
       imageUrl: map['imageUrl'],
       Pass_Expired_date: map['Pass_Expired_date'] ?? "0",
       passType: map['passType'] ?? '',
-      price: map['price'] ?? 0,
+      
     );
   }
 

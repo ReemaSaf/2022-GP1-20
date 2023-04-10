@@ -223,7 +223,7 @@ class AuthController {
   static Future<void> savePass(
     int passTime,
     String passType,
-    int price,
+    
   ) async {
     try {
       showLoadingDialog(
@@ -258,7 +258,7 @@ class AuthController {
         {
           'Pass_Expired_date': expiredDate.toString(),
           'passType': passType,
-          'price': price,
+          
         },
       );
 
