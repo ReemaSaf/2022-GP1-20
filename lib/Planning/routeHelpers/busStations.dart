@@ -51,7 +51,7 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
      }
     });
   });
-  exproute.add(RouteModel(type: 'Bus',isShow: true,name:busData!.Name,lat:busData!.Location.latitude,lng:busData!.Location.longitude,onTime:busData!.onTime));
+  exproute.add(RouteModel(type: 'Bus',isShow: true,name:busData!.Name,lat:busData!.Location.latitude,lng:busData!.Location.longitude,OnTime:busData!.OnTime));
   await metroService.metroStation().then((v){
     startdis=distance(name: v.first.Name,dis:Geolocator.distanceBetween(busData!.Location.latitude,busData!.Location.longitude, v.first.Location.latitude,v.first.Location.longitude));
     v.forEach((e) {

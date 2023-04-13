@@ -21,8 +21,9 @@ class LocationServices {
       return true;
     } else if (status.isPermanentlyDenied) {
       showErrorDialogg(errorMessage);
-      var status2 = await Permission.location.request();
-      return status2.isGranted ? true : false;
+      // var status2 = await Permission.location.request();
+      // return status2.isGranted ? true : false;
+      return false;
     } else {
       return false;
     }

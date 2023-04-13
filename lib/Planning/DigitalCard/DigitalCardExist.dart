@@ -22,6 +22,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
     AuthController.checkIfUserHasPass().then((result) {
       print("Days");
       print(result);
+      setState(() {});
     });
     ;
   }
@@ -49,10 +50,12 @@ class _DigitalCardExist extends State<DigitalCardExist> {
               aspectRatio: Get.width / (Get.height * 0.79),
               child: Container(
                 decoration: const BoxDecoration(
-                    color: Color(0xFFFAFAFA),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        topLeft: Radius.circular(40))),
+                  color: Color(0xFFFAFAFA),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(40),
+                    topLeft: Radius.circular(40),
+                  ),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -80,9 +83,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(18),
                                   child: Text(
-                                      'Left Duration: ' +
-                                          AuthController.LeftDuration
-                                              .toString(),
+                                      'Left Duration: ${AuthController.LeftDuration == null ? '' : AuthController.LeftDuration.toString()}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 25,
@@ -378,7 +379,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
           onSuccess: (Map params) {
             print("onSuccess: $params");
             showLoadingDialog(message: "Saving");
-            AuthController.savePass(days, name, price).then((value) => {
+            AuthController.savePass(days, name).then((value) => {
                   AuthController.checkIfUserHasPass().then((result) {
                     hideLoadingDialog();
                     setState(() {});

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:ui';
 
 class RouteModel{
@@ -9,7 +11,16 @@ class RouteModel{
   bool? isChange;
   String? line;
   Color? lineColor;
-  bool? onTime;
+  bool? OnTime;
 
-  RouteModel({this.lng,this.lat,this.name,this.type,this.isShow,this.isChange,this.line,this.lineColor,this.onTime});
+  RouteModel({
+    this.lng,
+    this.lat,
+    this.name,
+    this.type,
+    this.isShow,
+    this.isChange,
+    this.line,
+    this.lineColor,
+    this.OnTime});
 }

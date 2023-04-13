@@ -7,14 +7,14 @@ class BusStationModel {
   GeoPoint Location;
   String Name;
   int Number;
-  bool? onTime;
+  bool? OnTime;
 
   BusStationModel({
     required this.Available,
     required this.Location,
     required this.Name,
     required this.Number,
-    required this.onTime
+    required this.OnTime
   });
 
   Map<String, dynamic> toMap() {
@@ -23,7 +23,7 @@ class BusStationModel {
       'Location': Location,
       'Name': Name,
       'Number': Number,
-      'onTime': onTime,
+      'OnTime': OnTime,
     };
   }
 
@@ -33,7 +33,7 @@ class BusStationModel {
       Location: map['Location'],
       Name: map['Name'],
       Number: map['Number'],
-      onTime: map['onTime'],
+      OnTime: map['OnTime'],
     );
   }
 
