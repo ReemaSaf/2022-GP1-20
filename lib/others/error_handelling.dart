@@ -6,7 +6,7 @@ class ErrorHandelling {
       case "email-already-in-use":
         return "This email address already exists.\nPlease use another email to register.";
       case "ERROR_WRONG_PASSWORD":
-        return "The password you entered is incorrect.\nPlease try again.";
+        return "The password is incorrect.\nPlease try again.";
       case "wrong-password":
         return "The password is incorrect.\nPlease try again.";
       case "ERROR_USER_NOT_FOUND":
@@ -22,7 +22,7 @@ class ErrorHandelling {
       case "operation-not-allowed":
         return "Too many requests to log into this account.";
       case "ERROR_OPERATION_NOT_ALLOWED":
-        return "Server error, please try again later.";
+        return "Too many requests to log into this account.";
       case "ERROR_INVALID_EMAIL":
         return "Email address is invalid.";
       case "invalid-email":

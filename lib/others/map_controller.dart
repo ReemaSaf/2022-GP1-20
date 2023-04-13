@@ -191,7 +191,7 @@ class MapStationsController extends GetxController {
     route5Stations.clear();
     route6Stations.clear();
 
-    //assinging values to lines [to make polyline] on map
+    //assigning values to lines [to make polyline] on map
     for (var element in line1) {
       // all stations in line1 are saved with this
       if (allStations

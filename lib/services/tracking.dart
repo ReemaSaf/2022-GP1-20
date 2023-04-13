@@ -47,10 +47,14 @@ class _TrackingState extends State<Tracking> {
   BitmapDescriptor dotIcon = BitmapDescriptor.defaultMarker;
   PolylinePoints polylinePoints = PolylinePoints();
   List<LatLng> polylineCoordinates = [];
+  List<LatLng> startToStation = [];
   bool isShow = false;
   int stationNumber = 0;
   bool isLoad = true;
   int currentLocationNumber = 1;
+  bool isReachedStation=false;
+  int num1=0;
+  int alert=200;
 
   Future<void> getCurrentLocation() async {
     Location location = Location();
@@ -66,17 +70,48 @@ class _TrackingState extends State<Tracking> {
   }
 
   Future<void> afterLocationLine({double? lat, double? lng}) async {
+    print("this is to check $isReachedStation");
+    var dis1 = Geolocator.distanceBetween(
+        lat!, lng!, widget.route[1].lat!, widget.route[1].lng!);
+    if(dis1<10){
+      setState(() {
+        isReachedStation=true;
+      });
+    }
+    if(isReachedStation==false){
+      print("station check ${startToStation[0].latitude}");
+      var dis2 = Geolocator.distanceBetween(
+          lat!, lng!,startToStation[0].latitude,startToStation[0].longitude);
+      print("this is distance $dis2");
+      if(dis2==0){
+        setState(() {
+          num1=num1+1;
+        });
+      }else{
+        if(dis2>alert){
+          Get.snackbar(
+              'Alert', 'You are on wrong path',
+              colorText: Colors.white,
+              backgroundColor:
+              const Color.fromARGB(255, 204, 84, 80));
+          setState(() {
+            alert=alert+1000;
+          });
+        }
+      }
+    }
     var dis = Geolocator.distanceBetween(
         lat!, lng!, widget.route[num].lat!, widget.route[num].lng!);
     if(widget.route[num].isChange==true){
       if(dis<300){
         MotionToast.warning(
-          barrierColor: widget.route[num].lineColor!,
+            barrierColor: widget.route[num].lineColor!,
             title: Text("You Need To change line to ${widget.route[num].line}"),
             description: Text("${widget.route[num].name}"));
       }
     }
     if (dis < 50) {
+      print("your have reached station");
       num==1?await getDisPolyLine(
         startLat:latlan[0].latitude,
         startLng:latlan[0].longitude,
@@ -103,7 +138,7 @@ class _TrackingState extends State<Tracking> {
                 visible: false,
                 icon: metroIcon,
                 infoWindow:
-                    InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
           } else {
             if (i == currentLocationNumber) {
@@ -127,8 +162,8 @@ class _TrackingState extends State<Tracking> {
         }
       });
       MotionToast.error(
-              title: const Text("Your Have Reached"),
-              description: Text("${widget.route[num].name}"))
+          title: const Text("Your Have Reached"),
+          description: Text("${widget.route[num].name}"))
           .show(context);
       setState(() {
         num = num + 1;
@@ -154,7 +189,7 @@ class _TrackingState extends State<Tracking> {
                   const SizedBox(height: 22),
                   const Text("You Have Reach At Your Destination",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
                 ],
               ),
             );
@@ -239,7 +274,7 @@ class _TrackingState extends State<Tracking> {
               visible: true,
               icon: metroIcon,
               infoWindow:
-                  InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
               position: latlan[currentLocationNumber]));
         } else {
           _marker.add(Marker(
@@ -247,7 +282,7 @@ class _TrackingState extends State<Tracking> {
               visible: true,
               icon: dotIcon,
               infoWindow:
-                  InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
               position: latlan[i]));
         }
       }
@@ -295,6 +330,7 @@ class _TrackingState extends State<Tracking> {
   }
   getDisPolyLine({double? startLat,double? startLng,double? endLat,double? endLng,bool? isDash,Color? color}) async {
     polylineCoordinates=[];
+    print("called for creating line =========================== ");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Const.apiKey,
       PointLatLng(startLat!, startLng!),
@@ -307,6 +343,11 @@ class _TrackingState extends State<Tracking> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
+    if(startLat==latlan[0].latitude&& startLng==latlan[0].longitude) {
+      setState(() {
+        startToStation=polylineCoordinates;
+      });
+    }
     _addPolyLine(isDash:isDash,color: color);
   }
   _addPolyLine({bool? isDash,Color? color}) {
@@ -314,16 +355,24 @@ class _TrackingState extends State<Tracking> {
       width: 3,
       polylineId: const PolylineId("poly"),
       color:isDash==false?color!: const Color(0xff4CA7C3),
-      patterns:isDash==false?null!: [
-        PatternItem.dash(8),
-        PatternItem.gap(15)
-      ],
+      patterns:isDash==false?[
+        PatternItem.dash(1),
+      ]: [
+              PatternItem.dash(8),
+              PatternItem.gap(15)
+            ],
       points: polylineCoordinates,
     ));
 
     setState(() {});
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    getCurrentLocation();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -547,12 +596,11 @@ class _TrackingState extends State<Tracking> {
                                   },
                                   child: Row(
                                     children: [
-                                      Text(
-                                          "${widget.route.length - 4} Stops Before",
-                                          style: const TextStyle(
-                                              color: AppColors.skyColor,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
+                                  isShow == false?Text(
+                                  "${widget.route.length - 4} Stops Before",
+                                      style: const TextStyle(
+                                          color: AppColors.skyColor,
+                                          fontSize: 16)): Text(""),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)

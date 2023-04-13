@@ -176,7 +176,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                       height: 23,
                       //width: 320,
                       child: Image.asset(
-                        'assets/icons/traincompoet.png',
+                        'assets/icons/traincomponent.png',
                         fit: BoxFit.fitWidth,
                       ),
                     ),

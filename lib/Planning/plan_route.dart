@@ -70,6 +70,10 @@ class _PlanARoute extends State<PlanARoute> {
         placeId = [];
       }
     });
+    CurrentLocationLng().then((value) {
+      currentLocationLng = value;
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -141,6 +145,12 @@ class _PlanARoute extends State<PlanARoute> {
         originLatLong.add(lat);
         originLatLong.add(lang);
       } else if (isToFieldFocus && isFromFieldFocus == false) {
+        if(originLatLong.isEmpty){
+          fromController.text = "Your Current Location";
+          originLatLong = [];
+          originLatLong.add(currentLocationLat);
+          originLatLong.add(currentLocationLng);
+        }
         toController.text = description[index];
         destinationLatLong = [];
         destinationLatLong.add(lat);
@@ -155,10 +165,6 @@ class _PlanARoute extends State<PlanARoute> {
   Future<void> getCurrentLocation() async {
     await CurrentLocationLng().then((value) {
       currentLocationLng = value;
-      setState(() {});
-    });
-    await CurrentLocationLat().then((value) {
-      currentLocationLat = value;
       setState(() {});
     });
     fromController.text = "Your Current Location";
@@ -378,8 +384,8 @@ class _PlanARoute extends State<PlanARoute> {
                                         },
                                         child: Image.asset(
                                             'assets/images/currentLocation.png',
-                                            height: 34,
-                                            width: 34))
+                                            height: 30,
+                                            width: 30))
                                   ],
                                 ),
                                 SizedBox(height: 8.h),
@@ -414,7 +420,7 @@ class _PlanARoute extends State<PlanARoute> {
                                     )
                                   ],
                                 ),
-                                // const SizedBox(height: 3),
+                                //const SizedBox(height: 3),
                                 FocusScope(
                                   child: Focus(
                                     onFocusChange: (focus) => setState(() {
@@ -443,12 +449,22 @@ class _PlanARoute extends State<PlanARoute> {
                         ),
                         isFromFieldFocus || isToFieldFocus
                             ? const SizedBox()
-                            : SearchRoutesButton(
-                                originLatLong: originLatLong,
-                                destinationLatLang: destinationLatLong,
-                                originAddress: fromController.text,
-                                destinationAddress: toController.text,
-                              ),
+                            :InkWell(
+                          onTap: () {
+                            if(originLatLong==[]){
+                              fromController.text = "Your Current Location";
+                              originLatLong = [];
+                              originLatLong.add(currentLocationLat);
+                              originLatLong.add(currentLocationLng);
+                            }
+                          },
+                              child: SearchRoutesButton(
+                                  originLatLong: originLatLong,
+                                  destinationLatLang: destinationLatLong,
+                                  originAddress: fromController.text,
+                                  destinationAddress: toController.text,
+                                ),
+                            ),
                         isFromFieldFocus || isToFieldFocus
                             ? SizedBox(
                                 height: 300.h,

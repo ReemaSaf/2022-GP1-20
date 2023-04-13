@@ -78,7 +78,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
               height: 24.h,
               width: 320.w,
               child: Image.asset(
-                AppIcons.ticketcomponet,
+                AppIcons.ticketcomponent,
                 fit: BoxFit.fitWidth,
               ),
             )

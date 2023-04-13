@@ -77,7 +77,7 @@ class _RouteMapState extends State<RouteMap> {
   }
 
   void setMarkerIcon() {
-    BitmapDescriptor.fromAssetImage(
+     BitmapDescriptor.fromAssetImage(
             ImageConfiguration.empty, 'assets/images/rec8.png')
         .then((value) {
       locationIcon = value;
@@ -129,7 +129,7 @@ class _RouteMapState extends State<RouteMap> {
             markerId: MarkerId(i.toString()),
             visible: true,
             infoWindow:
-                InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
             icon:widget.route[i].type=="Bus"?busIcon: metroIcon,
             position: latlan[i]));
       }
@@ -272,7 +272,7 @@ class _RouteMapState extends State<RouteMap> {
                       },
                       initialCameraPosition: CameraPosition(
                         target: LatLng(latlan[0].latitude, latlan[0].longitude),
-                        zoom: 13,
+                        zoom: 11,
                       ),
                       zoomControlsEnabled: false,
                       zoomGesturesEnabled: true,
@@ -470,16 +470,16 @@ class _RouteMapState extends State<RouteMap> {
                                   },
                                   child: Row(
                                     children: [
-                                      Text(
-                                          "${widget.route.length - 4} Stops Before",
+                                      isShow == false?Text(
+                                          "${widget.route.length - 2} Stops Before",
                                           style: const TextStyle(
                                               color: AppColors.skyColor,
-                                              fontSize: 16)),
+                                              fontSize: 16)): Text(""),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)
                                           : const Icon(Icons.arrow_drop_up,
-                                              color: AppColors.skyColor)
+                                              color: AppColors.skyColor,size: 22)
                                     ],
                                   ),
                                 )

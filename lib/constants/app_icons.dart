@@ -11,6 +11,6 @@ class AppIcons {
   static const String lines = 'assets/icons/Lines.svg';
   static const String myloc = 'assets/icons/mylocpng.png';
   static const String des = 'assets/icons/destinationpng.png';
-  static const String ticketcomponet = 'assets/icons/traincompoet.png';
+  static const String ticketcomponent = 'assets/icons/traincomponent.png';
   static const String busmarker = 'assets/icons/busstop.png';
 }

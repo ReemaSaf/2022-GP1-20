@@ -54,11 +54,15 @@ class AuthController {
     try {
       UserCredential? credentials = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // Here, We are Encrypting the password so that nobody can see the password from Firebase console,
-      //it takes the password as Text and user id as key to encrypt the password and the return us The encryrted Password which we use to send it to firebase
+     
+      // Here, We are encrypting the password so that nobody can see the password from the Firebase console,
+
       var encryptedPassword =
           Encryptor.encrypt(_auth.currentUser!.uid, password);
-      //Creating Model
+      //it takes the password as Text and the user id as key to encrypt the password and then it will return the encryrted Password which we will use to send it to firebase
+
+
+      //Creating the UserModel
       if (credentials.user != null) {
         UserModel user = UserModel(
           email: email,
@@ -66,7 +70,8 @@ class AuthController {
           lastName: lastName,
           password: encryptedPassword,
         );
-        //Sending UserModel To firebase
+
+        //Sending the UserModel To firebase
         _firestore
             .collection('Passenger')
             .doc(credentials.user!.uid)
@@ -94,14 +99,14 @@ class AuthController {
     }
   }
 
-  //Change Password Function , It takes New password and Old Password , This function is used in Change password Screen from Profile Section, please refer to that screen in order to understand how to use this function;
+  //the Change Password Function takes both the New password and the Old Password (this function is used in the Change password Screen located in the Profile Section).
   Future<void> changePassword(
     String currentPassword,
     String newPassword,
   ) async {
     try {
       showLoadingDialog(
-          message: "Processing..."); //Mainly Show prosseing dialog.
+          message: "Processing..."); //Mainly Show the processing dialog.
       final user =
           FirebaseAuth.instance.currentUser; //Getting firebase auth instance
       final cred = EmailAuthProvider.credential(
@@ -109,27 +114,26 @@ class AuthController {
           email: user!.email!,
           password: currentPassword);
       await user.reauthenticateWithCredential(cred).then((value) async {
-        //This is a function that reauthetciate and change password it take email and newpasssword as Credential to update/change the credentials
-        await user.updatePassword(newPassword); //Here Updating new Password
-        // When The password is change new password will also encrpted before updting it to firebase so that the securoty remains
+        //This is a function that reauthentciates the user and then changes the password if successfully validated,  it takes the email and OldPasssword as Credential to update/change the user's password.
+        await user.updatePassword(newPassword); //Here Updating into the new Password
+        // When The password is changed, new password will be encrpted as well before updating it to firebase so that the security remains.
         var encryptedPassword =
             Encryptor.encrypt(_auth.currentUser!.uid, newPassword);
-        //Updating only passwordfeild in firebase with encrpted password
+        //Updating only the password field in firebase with the new encrpted password
         await FirebaseFirestore.instance
             .collection('Passenger')
             .doc(user.uid)
             .update({'password': encryptedPassword});
       });
-      //Clossing Dialog
+      //Closing Dialog
 
       Get.back();
       hideLoadingDialog();
-      //Profile updated- your profile has been updated successfully
       Get.snackbar(
           "Password Updated", "Your password has been updated successfully",
           backgroundColor: const Color(0xff50b2cc));
     } on Exception catch (e) {
-      //Clossing Dialog
+      //Closing Dialog
       hideLoadingDialog();
       showErrorDialog(e.toString());
     }
@@ -137,7 +141,7 @@ class AuthController {
 
   Future<void> signUpAsGuest() async {
     try {
-      await _auth.signInAnonymously(); // continue as guest
+      await _auth.signInAnonymously(); // Continue as guest
     } on Exception catch (err) {
       Get.snackbar("error", err.toString());
     }
@@ -262,14 +266,13 @@ class AuthController {
         },
       );
 
-      //Clossing Dialog
+      //Closing Dialog
 
       Get.back();
       hideLoadingDialog();
-      //Profile updated- your profile has been updated successfully
 
     } on Exception catch (e) {
-      //Clossing Dialog
+      //Closing Dialog
       hideLoadingDialog();
       showErrorDialog(e.toString());
     }
