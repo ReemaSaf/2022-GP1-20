@@ -574,6 +574,23 @@ class _BuyTicketState extends State<BuyTicket> {
                               ),
                             ),
                             onPressed: () async {
+                              Navigator.of(buildContext).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext
+                                  context) =>
+                                      Tickets(
+                                        routeTime:
+                                        widget.routeTime,
+                                        start:
+                                        widget.startLocation,
+                                        end: widget.endLocation,
+                                        date: _dateTime,
+                                        tickets: _passengerCount,
+                                        paymentType: "Paypal",
+                                        route: widget.allRoutes,
+                                      ),
+                                ),
+                              );
                               if (auth.currentUser!.isAnonymous) {
                                 Get.snackbar(
                                     'Alert', 'You have to Register First',
@@ -676,6 +693,7 @@ class _BuyTicketState extends State<BuyTicket> {
                                                       date: _dateTime,
                                                       tickets: _passengerCount,
                                                       paymentType: "Paypal",
+                                                          route: widget.allRoutes,
                                                     ),
                                                   ),
                                                 );
@@ -715,6 +733,7 @@ class _BuyTicketState extends State<BuyTicket> {
                                     'tickets': _passengerCount,
                                     'user': auth.currentUser!.uid,
                                     'paymentType': "Card",
+
                                   }).then((value) {
                                     Navigator.of(buildContext).push(
                                       MaterialPageRoute(
@@ -726,6 +745,7 @@ class _BuyTicketState extends State<BuyTicket> {
                                           date: _dateTime,
                                           tickets: _passengerCount,
                                           paymentType: "Card",
+                                              route: widget.allRoutes,
                                         ),
                                       ),
                                     );

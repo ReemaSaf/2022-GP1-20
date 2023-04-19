@@ -119,62 +119,7 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
       });
     });
     /// Intersection not in same line
-    // if(noIntersectionSameLine==true){
-    //   print("no intersection in same line -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ");
-    //   for(var element in getLineList(list: startingLine!.Line_ID.id)){
-    //     for(var e in getLineList(list: endLine!.Line_ID.id)){
-    //       if(element==e){
-    //         print('inter line is $e =============================');
-    //         intersectionLineName=e;
-    //         break;
-    //       }
-    //     }
-    //     break;
-    //   }
-    //   if(startingLine!.Line_ID.id=='Line_2'){
-    //     for (var element in Line_2) {
-    //       if(endLine!.Line_ID.id=='Line_3'){
-    //         for (var e in Line_3) {
-    //           if(element==e){
-    //             print('inter line is $e =============================');
-    //             intersectionLineName=e;
-    //             break;
-    //           }
-    //         }
-    //         break;
-    //       }
-    //     }
-    //   }
-    //   ///findin intersectrion point
-    //   await intersectionStation(startingLine:startingLine!.Line_ID.id,endingLine:intersectionLineName).then((value) async {
-    //     intersectionLine1=value;
-    //     print("============================================================================================ ${value!.Line_ID!.id}");
-    //     print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
-    //     await intersationAddPoints(startingLine:startingLine,i1:value).then((value) {
-    //       value!.forEach((element) {
-    //         print("==================================  ${element.name}");
-    //         exproute.add(element);
-    //       });
-    //     });
-    //   });
-    //   await intersectionStation(startingLine:endLine!.Line_ID.id,endingLine:intersectionLineName).then((value) {
-    //     print("============================================================================================ ${value!.Line_ID!.id}");
-    //     intersectionLine2=value;
-    //     print("=-=-=-=-==-=-=-===-_++_+_+_+_+_+_+__+_++_+_   ${value.Name}");
-    //   });
-    //   await intersationAddPoints1(i1: intersectionLine1,i2: intersectionLine2).then((value) {
-    //     value!.forEach((element) {
-    //       exproute.add(element);
-    //     });
-    //   });
-    //   await intersationAddPoints2(i2: intersectionLine2,endLine: endLine).then((value) {
-    //     value!.forEach((element) {
-    //       exproute.add(element);
-    //     });
-    //   });
-    //   exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end.lat!,lng:end.lng!));
-    //
-    // }
+
     if(noIntersectionSameLine==true){
       print("no intersection in same line -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ");
       for(var element in getLineList(list: startingLine!.Line_ID.id)){
@@ -246,12 +191,11 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
               if(element.Name==startdis!.name!){
                 isAdd=true;
               }
+              if(element.Name==intersectionLine!.Name){
+                isAdd=false;
+              }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name){
-                  isAdd=false;
-                  // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
-                }
               }
             });
 
@@ -274,12 +218,11 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
               if(element.Name==startdis!.name!){
                 isAdd=true;
               }
+              if(element.Name==intersectionLine!.Name){
+                isAdd=false;
+              }
               if(isAdd==true){
                 exproute.add(RouteModel(type: 'metro',isShow: true,name: element.Name,lat: element.Location.latitude,lng: element.Location.longitude));
-                if(element.Name==intersectionLine!.Name){
-                  isAdd=false;
-                  // exproute.add(RouteModel(type: 'walk',isShow: true,name:end!.name!,lat:end!.lat!,lng:end!.lng!));
-                }
               }
             });
 
@@ -288,7 +231,6 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
       }
       /// this is from intersection to end
       if(int.parse(endLine!.Order)<int.parse(intersectionLine!.OrderE!)){
-        print("descendoongdffkhfl; ");
         nameList=[];
         await  metroService.containsDescending().then((value){
           value.forEach((e) async {

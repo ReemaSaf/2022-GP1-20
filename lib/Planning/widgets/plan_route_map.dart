@@ -12,10 +12,14 @@ class PlanRouteMap extends StatefulWidget {
     Key? key,
     required this.originLatLong,
     required this.destinationLatLong,
+    required this.currentLat,
+    required this.currentLong,
   }) : super(key: key);
 
   final List originLatLong;
   final List destinationLatLong;
+  final double currentLat;
+  final double currentLong;
 
   @override
   State<PlanRouteMap> createState() => _PlanRouteMapState();
@@ -88,6 +92,13 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
         position:
             LatLng(widget.destinationLatLong[0], widget.destinationLatLong[1]),
       ));
+    _markers.add(Marker(
+      icon: await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), 'assets/images/rec8.png'),
+      markerId: const MarkerId('1'),
+
+      position:
+      LatLng(widget.currentLat, widget.currentLong),
+    ));
   }
 
   @override

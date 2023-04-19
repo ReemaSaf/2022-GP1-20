@@ -10,6 +10,7 @@ import 'package:sekkah_app/helpers/user_model.dart';
 
 import '../Homepage/components/user_nav.dart';
 import '../Planning/DigitalCard/DigitalCardExist.dart';
+import '../helpers/route_model.dart';
 import 'TicketWidget.dart';
 
 class Tickets extends StatefulWidget {
@@ -20,7 +21,8 @@ class Tickets extends StatefulWidget {
       required this.date,
       required this.paymentType,
       required this.tickets,
-      required this.routeTime})
+      required this.routeTime,
+      required this.route,})
       : super(key: key);
 
   final String start;
@@ -29,6 +31,7 @@ class Tickets extends StatefulWidget {
   final int tickets;
   final String paymentType;
   final String routeTime;
+  final List<RouteModel> route;
   @override
   State<Tickets> createState() => _Tickets();
 }
@@ -99,6 +102,7 @@ class _Tickets extends State<Tickets> {
                           tickets: widget.tickets,
                           paymentType: widget.paymentType,
                           username: user.firstName + " " + user.lastName,
+                          route: widget.route,
                         ),
                         const SizedBox(height: 20),
                         SizedBox(

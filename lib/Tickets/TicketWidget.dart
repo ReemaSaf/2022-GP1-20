@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_sizes.dart';
 import '../constants/app_text_styles.dart';
+import '../helpers/route_model.dart';
+import '../services/tracking.dart';
 import 'Ticket1.dart';
 
 class TripDurationBox extends StatefulWidget {
@@ -18,6 +20,7 @@ class TripDurationBox extends StatefulWidget {
     required this.tickets,
     required this.username,
     required this.routeTime,
+    required this.route,
   }) : super(key: key);
 
   final String start;
@@ -27,6 +30,7 @@ class TripDurationBox extends StatefulWidget {
   final String paymentType;
   final String username;
   final String routeTime;
+  final List<RouteModel> route;
 
   @override
   State<TripDurationBox> createState() => _TripDurationBoxState();
@@ -37,13 +41,22 @@ class _TripDurationBoxState extends State<TripDurationBox> {
   late var inputDate = inputFormat.parse(
       '${widget.date.day}/${widget.date.month}/${widget.date.year} ${widget.date.hour}:${widget.date.minute}');
   var outputFormat = DateFormat('dd MMM');
+  DateTime now = new DateTime.now();
+  late var currentDate = outputFormat.format(now);
   late var outputDate = outputFormat.format(inputDate);
   late var arrivalTime = DateFormat('HH:mm a').format(inputDate);
+  // late var checkTime = DateFormat('HH:mm').parse('${widget.date.hour}:${widget.date.minute}');
+  // late var currentTime = DateFormat('HH:mm').parse('${now.hour-1}:${now.minute}');
+  double currentTime=(DateTime.now().hour+1) + DateTime.now().minute/60.0;
+  late double checkTime;
+
   var dapartureTime = "";
+
   @override
   void initState() {
     // ignore: todo
     // TODO: implement initState
+    checkTime=widget.date.hour + widget.date.minute/60.0;
     if (widget.routeTime.contains("m")) {
       dapartureTime = DateFormat('HH:mm a').format(widget.date
           .add(Duration(minutes: int.parse(widget.routeTime.split(" ")[0]))));
@@ -58,7 +71,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
       padding: EdgeInsets.only(top: height(context) * 0.02),
       child: TicketWidget(
         width: width(context),
-        height: 380,
+        height: 400,
         isCornerRounded: true,
         //padding: EdgeInsets.all(10),
         color: AppColors.whiteColor,
@@ -88,28 +101,45 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                         color: AppColors.skyColor,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.blueDarkColor,
-                          ),
-                          borderRadius: BorderRadius.circular(18)),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Start",
-                            style: poppinsSemiBold.copyWith(
-                              fontSize: 15,
+                    InkWell(
+                      onTap: () {
+                        print("===================================== ${currentTime} oooo $checkTime");
+                        if (currentDate == outputDate) {
+                          if(checkTime==currentTime || currentTime>checkTime){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Tracking(
+                                          route: widget.route,
+                                          time: widget.routeTime,
+                                        )));
+                          }
+
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                            border: Border.all(
                               color: AppColors.blueDarkColor,
                             ),
-                          ),
-                          const Icon(
-                            Icons.near_me,
-                            color: AppColors.blueDarkColor,
-                          ),
-                        ],
+                            borderRadius: BorderRadius.circular(18)),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Start",
+                              style: poppinsSemiBold.copyWith(
+                                fontSize: 15,
+                                color: AppColors.blueDarkColor,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.near_me,
+                              color: AppColors.blueDarkColor,
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ]),
@@ -198,7 +228,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                         textAlign: TextAlign.center,
                         widget.start,
                         style: poppinsMedium.copyWith(
-                          
                           fontSize: 14.0,
                           color: AppColors.blueDarkColor,
                           overflow: TextOverflow.visible,
@@ -211,7 +240,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                       height: .2.sw,
                       child: Text(
                         widget.end,
-                         textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
                         style: poppinsMedium.copyWith(
                           fontSize: 14.0,
                           color: AppColors.blueDarkColor,

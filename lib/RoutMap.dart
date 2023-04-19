@@ -238,7 +238,7 @@ class _RouteMapState extends State<RouteMap> {
     return Column(
       children: [
         SizedBox(
-            height: (MediaQuery.of(context).size.height) * 0.7,
+            height: (MediaQuery.of(context).size.height) * 0.8,
             child: isLoad == true
                 ? const Center(child: CircularProgressIndicator())
                 : Padding(
@@ -272,7 +272,7 @@ class _RouteMapState extends State<RouteMap> {
                       },
                       initialCameraPosition: CameraPosition(
                         target: LatLng(latlan[0].latitude, latlan[0].longitude),
-                        zoom: 11,
+                        zoom: 13,
                       ),
                       zoomControlsEnabled: false,
                       zoomGesturesEnabled: true,
@@ -292,8 +292,8 @@ class _RouteMapState extends State<RouteMap> {
 
   Widget bottomDetailsSheet() {
     return DraggableScrollableSheet(
-      initialChildSize: .3,
-      minChildSize: .3,
+      initialChildSize: .2,
+      minChildSize: .2,
       maxChildSize: .9,
       builder: (BuildContext context, ScrollController scrollController) {
         return SingleChildScrollView(
@@ -404,31 +404,31 @@ class _RouteMapState extends State<RouteMap> {
                                 ),
                             ),
                               const SizedBox(width: 6),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Tracking(
-                                                route: widget.route,
-                                                time: widget.time,
-                                              )));
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: const Color(0xff50B2CC)),
-                                      borderRadius: BorderRadius.circular(18)),
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.near_me,
-                                          color: Color(0xff50B2CC),size:16),
-                                    ],
-                                  ),
-                                ),
-                              )
+                              // InkWell(
+                              //   onTap: () {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) => Tracking(
+                              //                   route: widget.route,
+                              //                   time: widget.time,
+                              //                 )));
+                              //   },
+                              //   child: Container(
+                              //     padding: const EdgeInsets.symmetric(
+                              //         horizontal: 12, vertical: 12),
+                              //     decoration: BoxDecoration(
+                              //         border:
+                              //             Border.all(color: const Color(0xff50B2CC)),
+                              //         borderRadius: BorderRadius.circular(18)),
+                              //     child: Row(
+                              //       children: const [
+                              //         Icon(Icons.near_me,
+                              //             color: Color(0xff50B2CC),size:16),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         ],
@@ -474,7 +474,7 @@ class _RouteMapState extends State<RouteMap> {
                                           "${widget.route.length - 2} Stops Before",
                                           style: const TextStyle(
                                               color: AppColors.skyColor,
-                                              fontSize: 16)): Text(""),
+                                              fontSize: 16)): const Text(""),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)

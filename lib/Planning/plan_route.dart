@@ -49,7 +49,7 @@ class _PlanARoute extends State<PlanARoute> {
   List<dynamic> placeId = [];
   List originLatLong = [];
   List destinationLatLong = [];
-  List exchangeLatLong=[];
+  List exchangeLatLong = [];
   String? exchangeName;
   double currentLocationLat = 0;
   double currentLocationLng = 0;
@@ -70,11 +70,18 @@ class _PlanARoute extends State<PlanARoute> {
         placeId = [];
       }
     });
-    CurrentLocationLng().then((value) {
+    currentLocation();
+    super.initState();
+  }
+  currentLocation() async {
+    await  CurrentLocationLat().then((value) {
+      currentLocationLat = value;
+      setState(() {});
+    });
+    await CurrentLocationLng().then((value) {
       currentLocationLng = value;
       setState(() {});
     });
-    super.initState();
   }
 
   void toOnChanged() {
@@ -144,8 +151,9 @@ class _PlanARoute extends State<PlanARoute> {
         originLatLong = [];
         originLatLong.add(lat);
         originLatLong.add(lang);
+        currentLocation();
       } else if (isToFieldFocus && isFromFieldFocus == false) {
-        if(originLatLong.isEmpty){
+        if (originLatLong.isEmpty) {
           fromController.text = "Your Current Location";
           originLatLong = [];
           originLatLong.add(currentLocationLat);
@@ -155,6 +163,8 @@ class _PlanARoute extends State<PlanARoute> {
         destinationLatLong = [];
         destinationLatLong.add(lat);
         destinationLatLong.add(lang);
+        currentLocation();
+
         FocusManager.instance.primaryFocus?.unfocus();
       }
       isFromFieldFocus = false;
@@ -167,21 +177,26 @@ class _PlanARoute extends State<PlanARoute> {
       currentLocationLng = value;
       setState(() {});
     });
+    await CurrentLocationLat().then((value) {
+      currentLocationLat = value;
+      setState(() {});
+    });
     fromController.text = "Your Current Location";
     originLatLong = [];
     originLatLong.add(currentLocationLat);
     originLatLong.add(currentLocationLng);
   }
-  onExchange(){
+
+  onExchange() {
     setState(() {
-      exchangeName=fromController.text;
-      exchangeLatLong=originLatLong;
-      originLatLong=[];
-      originLatLong=destinationLatLong;
-      fromController.text=toController.text;
-      destinationLatLong=[];
-      destinationLatLong=exchangeLatLong;
-      toController.text=exchangeName!;
+      exchangeName = fromController.text;
+      exchangeLatLong = originLatLong;
+      originLatLong = [];
+      originLatLong = destinationLatLong;
+      fromController.text = toController.text;
+      destinationLatLong = [];
+      destinationLatLong = exchangeLatLong;
+      toController.text = exchangeName!;
     });
   }
 
@@ -336,13 +351,13 @@ class _PlanARoute extends State<PlanARoute> {
                                     }),
                                 SizedBox(height: 4.h),
                                 Text(
-                                        "Where would you like to go?",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: CustomFontWeight
-                                                .kSemiBoldFontWeight,
-                                            color: CustomColor.klightblue),
-                                      ),
+                                  "Where would you like to go?",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight:
+                                          CustomFontWeight.kSemiBoldFontWeight,
+                                      color: CustomColor.klightblue),
+                                ),
                                 SizedBox(height: 11.h),
                                 Text(
                                   "From",
@@ -370,6 +385,9 @@ class _PlanARoute extends State<PlanARoute> {
                                             showCalenderIcon: false,
                                             oncross: () {
                                               fromController.clear();
+                                              setState(() {
+                                                originLatLong=[];
+                                              });
                                             },
                                             onChanged: (String value) {
                                               getSuggestion(value);
@@ -401,16 +419,63 @@ class _PlanARoute extends State<PlanARoute> {
                                               CustomFontWeight.kLightFontWeight,
                                           color: CustomColor.ksemigrey),
                                     ),
-                                    SizedBox(width: Get.width * 0.8 - 55),
+                                    SizedBox(width: Get.width * 0.8 - 12),
+                                    // InkWell(
+                                    //   onTap: () async {
+                                    //     setState(() {
+                                    //       isFromFieldFocus = true;
+                                    //     });
+                                    //     await onExchange();
+                                    //     await Future.delayed(
+                                    //         const Duration(milliseconds: 50));
+                                    //     setState(() {
+                                    //       isFromFieldFocus = false;
+                                    //     });
+                                    //   },
+                                    //   child: Image.asset(
+                                    //       "assets/images/arrows.png",
+                                    //       height: 30,
+                                    //       width: 30),
+                                    // )
+                                  ],
+                                ),
+                                //const SizedBox(height: 3),
+                                Row(
+                                  children: [
+                                    FocusScope(
+                                      child: Focus(
+                                        onFocusChange: (focus) => setState(() {
+                                          isToFieldFocus = focus;
+                                        }),
+                                        child: SizedBox(
+                                          height: Get.height * 0.05,
+                                          width: Get.width * 0.8,
+                                          child: CustomTextField(
+                                            controller: toController,
+                                            textInputType: TextInputType.text,
+                                            hintText: '',
+                                            showCalenderIcon: false,
+                                            oncross: () {
+                                              toController.clear();
+                                              setState(() {
+                                                destinationLatLong=[];
+                                              });
+                                            },
+                                            onChanged: (String value) {},
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     InkWell(
                                       onTap: () async {
                                         setState(() {
-                                          isFromFieldFocus=true;
+                                          isFromFieldFocus = true;
                                         });
                                         await onExchange();
-                                        await Future.delayed(const Duration(milliseconds: 50));
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 50));
                                         setState(() {
-                                          isFromFieldFocus=false;
+                                          isFromFieldFocus = false;
                                         });
                                       },
                                       child: Image.asset(
@@ -420,28 +485,6 @@ class _PlanARoute extends State<PlanARoute> {
                                     )
                                   ],
                                 ),
-                                //const SizedBox(height: 3),
-                                FocusScope(
-                                  child: Focus(
-                                    onFocusChange: (focus) => setState(() {
-                                      isToFieldFocus = focus;
-                                    }),
-                                    child: SizedBox(
-                                      height: Get.height * 0.05,
-                                      width: Get.width * 0.8,
-                                      child: CustomTextField(
-                                        controller: toController,
-                                        textInputType: TextInputType.text,
-                                        hintText: '',
-                                        showCalenderIcon: false,
-                                        oncross: () {
-                                          toController.clear();
-                                        },
-                                        onChanged: (String value) {},
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(height: 8.h),
                               ],
                             )
@@ -449,22 +492,23 @@ class _PlanARoute extends State<PlanARoute> {
                         ),
                         isFromFieldFocus || isToFieldFocus
                             ? const SizedBox()
-                            :InkWell(
-                          onTap: () {
-                            if(originLatLong==[]){
-                              fromController.text = "Your Current Location";
-                              originLatLong = [];
-                              originLatLong.add(currentLocationLat);
-                              originLatLong.add(currentLocationLng);
-                            }
-                          },
-                              child: SearchRoutesButton(
+                            : InkWell(
+                                onTap: () {
+                                  if (originLatLong == []) {
+                                    fromController.text =
+                                        "Your Current Location";
+                                    originLatLong = [];
+                                    originLatLong.add(currentLocationLat);
+                                    originLatLong.add(currentLocationLng);
+                                  }
+                                },
+                                child: SearchRoutesButton(
                                   originLatLong: originLatLong,
                                   destinationLatLang: destinationLatLong,
                                   originAddress: fromController.text,
                                   destinationAddress: toController.text,
                                 ),
-                            ),
+                              ),
                         isFromFieldFocus || isToFieldFocus
                             ? SizedBox(
                                 height: 300.h,
@@ -502,6 +546,8 @@ class _PlanARoute extends State<PlanARoute> {
                       child: PlanRouteMap(
                         originLatLong: originLatLong,
                         destinationLatLong: destinationLatLong,
+                        currentLat: currentLocationLat,
+                        currentLong: currentLocationLng,
                       ),
                     )
             ],
