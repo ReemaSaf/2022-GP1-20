@@ -12,7 +12,6 @@ import 'others/constants.dart';
 
 MetroService metroService=MetroService();
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

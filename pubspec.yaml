@@ -69,6 +69,8 @@ dependencies:
   flutter_paypal: ^0.0.8
   motion_toast: ^2.6.4
   shared_preferences: ^2.0.18
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   flutter_test:
