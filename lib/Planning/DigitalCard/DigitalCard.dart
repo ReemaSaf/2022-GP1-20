@@ -62,15 +62,18 @@ class _DigitalCard extends State<DigitalCard> {
   Widget getDigitalCard() {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 30, bottom: 20),
-          child: Center(
-            child: Text(
-              "Digital Card",
-              style: TextStyle(color: Colors.white),
+        Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              child: Center(
+                child: Text(
+                  'Digital Card',
+                  style: poppinsMedium.copyWith(
+                    fontSize: 18.0,
+                    color: AppColors.whiteColor,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
         AspectRatio(
           aspectRatio: Get.width / (Get.height * 0.79),
           child: Container(
