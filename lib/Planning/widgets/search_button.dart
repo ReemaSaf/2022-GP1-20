@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison, prefer_is_empty
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -77,7 +77,6 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
           onPressed: () async
           {
             print("========================= ${widget.destinationAddress} pppp ${widget.originAddress}");
-            // ignore: prefer_is_empty
             if(widget.destinationLatLang.length==0){
               if(widget.destinationAddress!="" || widget.originAddress!=""){
                 Get.snackbar(

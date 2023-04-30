@@ -106,7 +106,7 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
     return GoogleMap(
       initialCameraPosition: CameraPosition(
         target:
-            widget.originLatLong.isEmpty && widget.destinationLatLong.isEmpty
+            (widget.originLatLong.isEmpty || widget.destinationLatLong.isEmpty)
                 ? const LatLng(24.71619956670347, 46.68385748947401)
                 : LatLng(
                     widget.originLatLong[0],

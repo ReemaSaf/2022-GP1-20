@@ -137,8 +137,8 @@ class _TrackingState extends State<Tracking> {
                 markerId: MarkerId(i.toString()),
                 visible: false,
                 icon: metroIcon,
-                infoWindow:InfoWindow(
-                title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+                infoWindow:
+                InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
           } else {
             if (i == currentLocationNumber) {
@@ -146,7 +146,7 @@ class _TrackingState extends State<Tracking> {
                   markerId: MarkerId(i.toString()),
                   visible: true,
                   infoWindow: InfoWindow(
-                      title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+                      title: 'Station', snippet: widget.route[i].name),
                   icon: metroIcon,
                   position: latlan[currentLocationNumber]));
             } else {
@@ -155,7 +155,7 @@ class _TrackingState extends State<Tracking> {
                   visible: true,
                   icon: dotIcon,
                   infoWindow: InfoWindow(
-                      title:  widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+                      title: 'Station', snippet: widget.route[i].name),
                   position: latlan[i]));
             }
           }
@@ -273,16 +273,16 @@ class _TrackingState extends State<Tracking> {
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: metroIcon,
-              infoWindow:InfoWindow(
-              title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+              infoWindow:
+                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
               position: latlan[currentLocationNumber]));
         } else {
           _marker.add(Marker(
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: dotIcon,
-              infoWindow:InfoWindow(
-              title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+              infoWindow:
+                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
               position: latlan[i]));
         }
       }
@@ -598,7 +598,7 @@ class _TrackingState extends State<Tracking> {
                                   child: Row(
                                     children: [
                                   isShow == false?Text(
-                                  "${widget.route.length - 2} Stops Before",
+                                  "${widget.route.length - 4} Stops Before",
                                       style: const TextStyle(
                                           color: AppColors.skyColor,
                                           fontSize: 16)): const Text(""),

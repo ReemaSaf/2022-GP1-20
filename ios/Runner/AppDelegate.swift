@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 import Flutter
 import GoogleMaps
 
@@ -8,8 +9,10 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    GMSServices.provideAPIKey("AIzaSyCJisn-kRPI3m5-N0QgeHj5toEAd2wy2EM")
+    // GMSServices.provideAPIKEY("AIzaSyCJisn-kRPI3m5-N0QgeHj5toEAd2wy2EM")
     GeneratedPluginRegistrant.register(with: self)
-    GMSServices.provideAPIKEY("AIzaSyCJisn-kRPI3m5-N0QgeHj5toEAd2wy2EM")
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

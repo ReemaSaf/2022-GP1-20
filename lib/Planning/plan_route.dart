@@ -383,10 +383,19 @@ class _PlanARoute extends State<PlanARoute> {
                                             textInputType: TextInputType.text,
                                             hintText: '',
                                             showCalenderIcon: false,
-                                            oncross: () {
+                                            oncross: () async {
+                                              setState(() {
+                                                isFromFieldFocus = true;
+                                              });
                                               fromController.clear();
                                               setState(() {
                                                 originLatLong=[];
+                                              })
+                                              ;
+                                              await Future.delayed(
+                                                  const Duration(milliseconds: 50));
+                                              setState(() {
+                                                isFromFieldFocus = false;
                                               });
                                             },
                                             onChanged: (String value) {
@@ -455,10 +464,18 @@ class _PlanARoute extends State<PlanARoute> {
                                             textInputType: TextInputType.text,
                                             hintText: '',
                                             showCalenderIcon: false,
-                                            oncross: () {
+                                            oncross: () async {
+                                              setState(() {
+                                                isFromFieldFocus = true;
+                                              });
                                               toController.clear();
                                               setState(() {
                                                 destinationLatLong=[];
+                                              });
+                                              await Future.delayed(
+                                                  const Duration(milliseconds: 50));
+                                              setState(() {
+                                                isFromFieldFocus = false;
                                               });
                                             },
                                             onChanged: (String value) {},
@@ -541,7 +558,7 @@ class _PlanARoute extends State<PlanARoute> {
               isFromFieldFocus || isToFieldFocus
                   ? const SizedBox()
                   : SizedBox(
-                      height: 390.h,
+                      height: 416.h,
                       width: double.infinity,
                       child: PlanRouteMap(
                         originLatLong: originLatLong,
