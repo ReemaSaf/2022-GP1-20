@@ -19,7 +19,6 @@ class Tickets extends StatefulWidget {
       required this.start,
       required this.end,
       required this.date,
-      required this.paymentType,
       required this.tickets,
       required this.routeTime,
       required this.route,})
@@ -29,7 +28,6 @@ class Tickets extends StatefulWidget {
   final String end;
   final DateTime date;
   final int tickets;
-  final String paymentType;
   final String routeTime;
   final List<RouteModel> route;
   @override
@@ -100,7 +98,6 @@ class _Tickets extends State<Tickets> {
                           end: widget.end,
                           date: widget.date,
                           tickets: widget.tickets,
-                          paymentType: widget.paymentType,
                           username: user.firstName + " " + user.lastName,
                           route: widget.route,
                         ),

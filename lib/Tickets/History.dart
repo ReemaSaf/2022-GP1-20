@@ -156,8 +156,6 @@ class _HistoryTickets extends State<HistoryTickets> {
                                               .toDate(),
                                           tickets: snapshot.data!.docs[index]
                                               ['tickets'],
-                                          paymentType: snapshot
-                                              .data!.docs[index]['paymentType'],
                                           username: user.firstName +
                                               " " +
                                               user.lastName,

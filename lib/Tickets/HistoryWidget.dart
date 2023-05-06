@@ -14,7 +14,6 @@ class TripDurationBox extends StatefulWidget {
       required this.start,
       required this.end,
       required this.date,
-      required this.paymentType,
       required this.tickets,
       required this.username})
       : super(key: key);
@@ -23,7 +22,6 @@ class TripDurationBox extends StatefulWidget {
   final String end;
   final DateTime date;
   final int tickets;
-  final String paymentType;
   final String username;
 
   @override
