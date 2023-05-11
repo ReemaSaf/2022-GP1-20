@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, file_names, unnecessary_string_interpolations, deprecated_member_use
+// ignore_for_file: non_constant_identifier_names, file_names, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

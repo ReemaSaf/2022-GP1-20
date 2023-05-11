@@ -16,7 +16,6 @@ class TripDurationBox extends StatefulWidget {
     required this.start,
     required this.end,
     required this.date,
-    required this.paymentType,
     required this.tickets,
     required this.username,
     required this.routeTime,
@@ -27,7 +26,6 @@ class TripDurationBox extends StatefulWidget {
   final String end;
   final DateTime date;
   final int tickets;
-  final String paymentType;
   final String username;
   final String routeTime;
   final List<RouteModel> route;
@@ -71,13 +69,11 @@ class _TripDurationBoxState extends State<TripDurationBox> {
       padding: EdgeInsets.only(top: height(context) * 0.02),
       child: TicketWidget(
         width: width(context),
-        height: 400,
+        height: 380,
         isCornerRounded: true,
         //padding: EdgeInsets.all(10),
         color: AppColors.whiteColor,
-        onPressed: () {
-          print('he');
-        },
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -95,7 +91,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      widget.username,
+                      'SEKKAH',
                       style: poppinsBold.copyWith(
                         fontSize: 20.0,
                         color: AppColors.skyColor,
@@ -154,7 +150,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     // ignore: prefer_const_constructors
 
                     Text(
-                      'Arrival',
+                      'Departure',
                       style: poppinsMedium.copyWith(
                         fontSize: 14.0,
                         color: AppColors.greyDarkColor,
@@ -162,7 +158,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      'Departure',
+                      'Arrival',
                       style: poppinsMedium.copyWith(
                         fontSize: 14.0,
                         color: AppColors.greyDarkColor,
@@ -222,7 +218,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     // ignore: prefer_const_constructors
 
                     SizedBox(
-                      width: .25.sw,
+                      width: .35.sw,
                       height: .2.sw,
                       child: Text(
                         textAlign: TextAlign.center,
@@ -236,7 +232,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     ),
                     const SizedBox(width: 3),
                     SizedBox(
-                      width: .25.sw,
+                      width: .35.sw,
                       height: .2.sw,
                       child: Text(
                         widget.end,
@@ -343,7 +339,6 @@ class TicketWidget extends StatefulWidget {
     this.padding,
     this.margin,
     this.shadow,
-    required this.onPressed,
   }) : super(key: key);
 
   final double width;
@@ -354,7 +349,6 @@ class TicketWidget extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? shadow;
-  final VoidCallback onPressed;
 
   @override
   _TicketWidgetState createState() => _TicketWidgetState();
@@ -366,7 +360,6 @@ class _TicketWidgetState extends State<TicketWidget> {
     return ClipPath(
       clipper: TicketClipper(),
       child: InkWell(
-        onTap: widget.onPressed,
         child: Container(
           // ignore: sort_child_properties_last
           child: widget.child,

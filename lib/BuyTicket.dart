@@ -85,14 +85,17 @@ class _BuyTicketState extends State<BuyTicket> {
   String endAddress = "";
   String allRoutesCombine = "";
   String passtime = "";
+  bool isTimeSelected = false;
 
-  DateTime _dateTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      DateTime.now().hour,
-      (((DateTime.now().minute / 15).round() + 1) * 15) % 60);
+// DateTime _dateTime = DateTime(
+  //     DateTime.now().year,
+  //     DateTime.now().month,
+  //     DateTime.now().day,
+  //     DateTime.now().hour,
+  //     (((DateTime.now().minute / 15).round() + 1) * 15) % 60);
+  DateTime _dateTime = DateTime.now();
 
+  
   @override
   void initState() {
     // ignore: todo
@@ -305,24 +308,55 @@ class _BuyTicketState extends State<BuyTicket> {
                       ),
                     ),
                     ButtonWidget(
-                      time: time,
-                      onClicked: () => Utils.showSheet(
-                        buildContext,
-                        child: buildDateTimePicker(),
-                        onClicked: () {
-                          final value =
-                              DateFormat('dd/MM/yyyy HH:mm').format(_dateTime);
-                              time= value;
-                              setState(() {
+                        time: time,
+                         onClicked: () async {
+                           // final value =
+                           //     DateFormat('dd/MM/yyyy HH:mm').format(_dateTime);
+                           //     time= value;
+                           //     setState(() {
+                           //
+                           //      });
+                           //
+                           // Navigator.pop(buildContext);
+                           _dateTime = DateTime.now();
+                           if (_dateTime.minute >= 0 && _dateTime.minute <= 15) {
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                _dateTime.day, _dateTime.hour, 15);
+                           } else if (_dateTime.minute >= 15 &&
+                              _dateTime.minute <= 30) {
+                            _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                _dateTime.day, _dateTime.hour, 30);
+                          } else if (_dateTime.minute >= 30 &&
+                               _dateTime.minute <= 45) {
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                              _dateTime.day, _dateTime.hour, 45);
+                           } else {
+                             int hour = _dateTime.minute >= 45
+                                 ? _dateTime.hour + 1
+                                 : _dateTime.hour;
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                 _dateTime.day, hour, 0);
+                           }
 
-                               });
-           
-                          Navigator.pop(buildContext);
-                        },
-                      ),
-                       
-                      
-                    ),
+                           setState(() {});
+                           Utils.showSheet(
+                             buildContext,
+                             child: buildDateTimePicker(),
+                         onClicked: () {
+                          isTimeSelected = true;
+                          setState(() {
+                            
+                          });
+                               final value = DateFormat('MM/dd/yyyy HH:mm a')
+                                   .format(_dateTime);
+                               time = value;
+                              
+                               setState(() {});
+                               Navigator.pop(buildContext);
+                             },
+                           );
+                         },
+                       ),
                     
                     Text(
                       'Passengers:',
@@ -582,6 +616,15 @@ class _BuyTicketState extends State<BuyTicket> {
                                         const Color.fromARGB(255, 204, 84, 80));
                                 return;
                               }
+                              if (!isTimeSelected ) {
+                                Get.snackbar(
+                                    'Alert', 'Select Time First',
+                                    colorText: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 204, 84, 80));
+                                return;
+                              }
+
                               if (_dateTime == null ||
                                   _passengerCount <= 0 ||
                                   _selectedOption == 0) {
@@ -661,7 +704,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                 'tickets': _passengerCount,
                                                 'time': _dateTime,
                                                 'user': auth.currentUser!.uid,
-                                                'paymentType': "Paypal",
                                               }).then((value) {
                                                 Navigator.of(buildContext).push(
                                                   MaterialPageRoute(
@@ -675,7 +717,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                       end: widget.endLocation,
                                                       date: _dateTime,
                                                       tickets: _passengerCount,
-                                                      paymentType: "Paypal",
                                                           route: widget.allRoutes,
                                                     ),
                                                   ),
@@ -714,7 +755,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                     'time': _dateTime,
                                     'tickets': _passengerCount,
                                     'user': auth.currentUser!.uid,
-                                    'paymentType': "Card",
                                   }).then((value) {
                                     Navigator.of(buildContext).push(
                                       MaterialPageRoute(
@@ -725,8 +765,7 @@ class _BuyTicketState extends State<BuyTicket> {
                                           end: widget.endLocation,
                                           date: _dateTime,
                                           tickets: _passengerCount,
-                                          paymentType: "Card",
-                                              route: widget.allRoutes,
+                                          route: widget.allRoutes,
                                         ),
                                       ),
                                     );
@@ -741,7 +780,7 @@ class _BuyTicketState extends State<BuyTicket> {
 
   Widget buildDateTimePicker() => SizedBox(
         height: 180,
-        child: CupertinoDatePicker( 
+        child: CupertinoDatePicker(
           mode: CupertinoDatePickerMode.dateAndTime,
           minimumDate: DateTime(
               DateTime.now().year,

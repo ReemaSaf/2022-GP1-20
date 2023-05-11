@@ -58,15 +58,10 @@ class _HistoryTickets extends State<HistoryTickets> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                           topLeft: Radius.circular(40))),
-                  child: auth.currentUser == null ||
-                          auth.currentUser!.isAnonymous
+                  child: auth.currentUser == null
                       ? const Center(
                           child: Center(
-                            child: Text(
-                              'No tickets',
-                              style:
-                                  TextStyle(fontSize: 19, color: Colors.white),
-                            ),
+                            child: Text('No tickets Founded!'),
                           ),
                         )
                       : StreamBuilder<UserModel>(
@@ -85,17 +80,8 @@ class _HistoryTickets extends State<HistoryTickets> {
                               return const Center(
                                   child: CircularProgressIndicator());
                             }
-                            if (snapshot.data == null) {
-                              return const Center(
-                                child: Text(
-                                  'Login first....',
-                                  style: TextStyle(
-                                      fontSize: 19, color: Colors.white),
-                                ),
-                              );
-                            }
                             UserModel? user = snapshot.data!;
-                            
+
                             return StreamBuilder<QuerySnapshot>(
                               stream: _firestore
                                   .collection('tickets')
@@ -107,42 +93,30 @@ class _HistoryTickets extends State<HistoryTickets> {
                                 if (!snapshot.hasData) {
                                   return const Center(
                                     child: Center(
-                                      child: Text(
-                                        'No tickets',
-                                        style: TextStyle(
-                                            color: AppColors.whiteColor),
-                                      ),
+                                      child: Text(''),
                                     ),
                                   );
                                 }
-                                if (snapshot.data!.docs.isEmpty) {
+                                if(snapshot.data!.docs.isEmpty){
                                   return const Center(
                                     child: Center(
-                                      child: Text(
-                                        'No tickets',
-                                        style: TextStyle(
-                                            color: AppColors.whiteColor),
-                                      ),
+                                      child: Text('No Tickets' ,style: TextStyle(color: AppColors.whiteColor ),),
                                     ),
                                   );
                                 }
-                                if (snapshot.hasError) {
+                                if(snapshot.hasError){
                                   return const Center(
                                     child: Center(
-                                      child: Text(
-                                        'Something went wrong',
-                                        style: TextStyle(
-                                            color: AppColors.whiteColor),
-                                      ),
+                                      child: Text('Something went wrong' ,style: TextStyle(color: AppColors.whiteColor),),
                                     ),
                                   );
                                 }
 
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 2.0,
-                                    // vertical: 5
-                                  ),
+                                      horizontal: 2.0,
+                                     // vertical: 5
+                                      ),
                                   child: ListView.builder(
                                       itemCount: snapshot.data!.size,
                                       itemBuilder: (context, int index) {
@@ -172,3 +146,4 @@ class _HistoryTickets extends State<HistoryTickets> {
     );
   }
 }
+

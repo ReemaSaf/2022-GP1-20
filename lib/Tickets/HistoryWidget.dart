@@ -54,9 +54,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
         isCornerRounded: true,
         //padding: EdgeInsets.all(10),
         color: AppColors.whiteColor,
-        onPressed: () {
-          print('he');
-        },
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -76,7 +74,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        widget.username,
+                        "SEKKAH",
                         style: poppinsBold.copyWith(
                           fontSize: 20.0,
                           color: AppColors.skyColor,
@@ -330,7 +328,6 @@ class TicketWidget extends StatefulWidget {
     this.padding,
     this.margin,
     this.shadow,
-    required this.onPressed,
   }) : super(key: key);
 
   final double width;
@@ -341,7 +338,6 @@ class TicketWidget extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? shadow;
-  final VoidCallback onPressed;
 
   @override
   _TicketWidgetState createState() => _TicketWidgetState();
@@ -353,7 +349,6 @@ class _TicketWidgetState extends State<TicketWidget> {
     return ClipPath(
       clipper: TicketClipper(),
       child: InkWell(
-        onTap: widget.onPressed,
         child: Container(
           // ignore: sort_child_properties_last
           child: widget.child,

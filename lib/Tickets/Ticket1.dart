@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, file_names, unused_import, prefer_interpolation_to_compose_strings, avoid_print
+// ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,12 +76,14 @@ class _Tickets extends State<Tickets> {
                     ),
                   ),
                 ),
-                AspectRatio(
-                  aspectRatio: Get.width / (Get.height * 0.79),
-                  child: Container(
+               
+                   Expanded(
+                    child:Container(
+                    
                     width: width(context),
                     padding: EdgeInsets.symmetric(
-                        horizontal: height(context) * 0.02),
+                        horizontal: height(context) * 0.01,
+                        vertical: height(context) * 0.02),
                     decoration: const BoxDecoration(
                         color: AppColors.blueDarkColor,
                         borderRadius: BorderRadius.only(
@@ -101,7 +103,7 @@ class _Tickets extends State<Tickets> {
                           username: user.firstName + " " + user.lastName,
                           route: widget.route,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 100),
                         SizedBox(
                           // height: 35, //height of button
                           width: 200,
@@ -125,11 +127,12 @@ class _Tickets extends State<Tickets> {
                       ],
                     ),
                   ),
-                ),
-                const Expanded(
-                    child: Scaffold(
-                  backgroundColor: Color(0xFFFAFAFA),
-                ))
+                   ),
+                
+                // const Expanded(
+                //     child: Scaffold(
+                //   backgroundColor: Color(0xFFFAFAFA),
+                // ))
               ],
             );
           },

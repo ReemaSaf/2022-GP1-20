@@ -74,9 +74,9 @@ class _DigitalCard extends State<DigitalCard> {
                 ),
               ),
             ),
-        AspectRatio(
-          aspectRatio: Get.width / (Get.height * 0.79),
-          child: Container(
+        Expanded(
+              child: Container(
+                 width: width(context),
             decoration: const BoxDecoration(
                 color: Color(0xFFFAFAFA),
                 borderRadius: BorderRadius.only(
@@ -356,10 +356,7 @@ class _DigitalCard extends State<DigitalCard> {
             ),
           ),
         ),
-        const Expanded(
-            child: Scaffold(
-          backgroundColor: Color(0xFFFAFAFA),
-        ))
+        
       ],
     );
   }
