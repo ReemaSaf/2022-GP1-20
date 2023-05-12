@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
+import 'package:sekkah_app/constants/app_sizes.dart';
+import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 
 import '../Homepage/components/user_nav.dart';
-import '../Planning/DigitalCard/DigitalCardExist.dart';
 import '../helpers/route_model.dart';
 import 'TicketWidget.dart';
 

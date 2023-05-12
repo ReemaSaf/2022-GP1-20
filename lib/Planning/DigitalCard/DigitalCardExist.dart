@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
+import 'package:sekkah_app/constants/app_sizes.dart';
+import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 
 import '../../Profile/widgets/show_loading_dialoges.dart';
@@ -165,7 +168,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                                               fontWeight: FontWeight.w700,
                                               fontSize: 18,
                                               color: Color(0xFF273169))),
-                                      Text('5SAR',
+                                      Text('10SAR',
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Color(0xff50B2CC))),
@@ -180,7 +183,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                                     selectedIndex = 1;
                                   });
                                   print(
-                                      'p2'); // Add your code here to handle the tap event on the daily container
+                                      'p2'); 
                                 },
                                 child: Container(
                                   width: 260,
@@ -204,7 +207,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                                               fontWeight: FontWeight.w700,
                                               fontSize: 18,
                                               color: Color(0xFF273169))),
-                                      Text('30SAR',
+                                      Text('60SAR',
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Color(0xff50B2CC))),
@@ -251,7 +254,7 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                                               fontWeight: FontWeight.w700,
                                               fontSize: 18,
                                               color: Color(0xFF273169))),
-                                      Text('100SAR',
+                                      Text('130SAR',
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Color(0xff50B2CC))),
@@ -311,18 +314,18 @@ class _DigitalCardExist extends State<DigitalCardExist> {
   void handlePass(BuildContext context) {
     var name = '';
     var days = 0;
-    var price = 0;
+    double price = 0;
     if (selectedIndex == 0) {
-      name = "Daily, Only 5 SAR";
+      name = "Daily, Only 10 SAR";
       days = 1;
-      price = 5;
+      price = 2.67;
     } else if (selectedIndex == 1) {
-      name = "Weekly,  Only 30 SAR";
-      price = 30;
+      name = "Weekly,  Only 60 SAR";
+      price = 16.02;
       days = 7;
     } else if (selectedIndex == 2) {
-      name = "Monthly, Only 100 SAR";
-      price = 100;
+      name = "Monthly, Only 130 SAR";
+      price = 34.71;
       days = 30;
     }
     Navigator.of(context).push(
@@ -346,15 +349,12 @@ class _DigitalCardExist extends State<DigitalCardExist> {
                   "shipping_discount": 0
                 }
               },
-              "description": "The payment transaction description.",
-              // "payment_options": {
-              //   "allowed_payment_method":
-              //       "INSTANT_FUNDING_SOURCE"
-              // },
+              "description": "To Buy A Digital Card Pass",
+              
               "item_list": {
                 "items": [
                   {
-                    "name": "A demo product",
+                    "name": "A digital card",
                     "quantity": 1,
                     "price": price.toString(),
                     "currency": "USD"
@@ -363,14 +363,14 @@ class _DigitalCardExist extends State<DigitalCardExist> {
 
                 // shipping address is not required though
                 "shipping_address": const {
-                  "recipient_name": "Jane Foster",
-                  "line1": "Travis County",
+                  "recipient_name": "SEKKAH",
+                  "line1": "King Khaled Road",
                   "line2": "",
-                  "city": "Austin",
+                  "city": "Riyadh",
                   "country_code": "US",
-                  "postal_code": "73301",
-                  "phone": "+00000000",
-                  "state": "Texas"
+                  "postal_code": "11111",
+                  "phone": "+966592000422",
+                  "state": "Riyadh"
                 },
               }
             }
@@ -398,49 +398,4 @@ class _DigitalCardExist extends State<DigitalCardExist> {
       ),
     );
   }
-}
-
-TextStyle poppinsLight = GoogleFonts.poppins(
-  fontWeight: FontWeight.w300,
-  height: 1.5,
-);
-
-TextStyle poppinsRegular = GoogleFonts.poppins(
-  fontWeight: FontWeight.normal,
-  height: 1.5,
-);
-
-TextStyle poppinsMedium = GoogleFonts.poppins(
-  fontWeight: FontWeight.w600,
-  height: 1.5,
-);
-
-TextStyle poppinsSemiBold = GoogleFonts.poppins(
-  fontWeight: FontWeight.w700,
-  height: 1.5,
-);
-
-TextStyle poppinsBold = GoogleFonts.poppins(
-  fontWeight: FontWeight.w800,
-  height: 1.5,
-);
-
-class AppColors {
-  static const Color blueDarkColor = Color(0xff273A69);
-  static const Color whiteColor = Color(0xffFFFFFF);
-  static const Color blackColor = Color(0xff000000);
-  static const Color greyLightColor = Color(0xffBABEC5);
-  static const Color whiteLightColor = Color(0xffF2F2F2);
-  static const Color greyColor = Color(0xffD8D8D8);
-  static const Color skyColor = Color(0xff50B2CC);
-  static const Color dashColor = Color(0xffECEEF3);
-  static const Color greyDarkColor = Color(0xffB3B7C3);
-}
-
-double height(context) {
-  return MediaQuery.of(context).size.height;
-}
-
-double width(context) {
-  return MediaQuery.of(context).size.width;
 }

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:get/get.dart';
 import 'package:sekkah_app/Planning/DigitalCard/DigitalCardExist.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
+import 'package:sekkah_app/constants/app_sizes.dart';
+import 'package:sekkah_app/constants/app_text_styles.dart';
 
 import '../../Profile/widgets/show_loading_dialoges.dart';
 import '../../data/constants.dart';
@@ -63,20 +66,20 @@ class _DigitalCard extends State<DigitalCard> {
     return Column(
       children: [
         Padding(
-              padding: const EdgeInsets.only(top: 30, bottom: 20),
-              child: Center(
-                child: Text(
-                  'Digital Card',
-                  style: poppinsMedium.copyWith(
-                    fontSize: 18.0,
-                    color: AppColors.whiteColor,
-                  ),
-                ),
+          padding: const EdgeInsets.only(top: 30, bottom: 20),
+          child: Center(
+            child: Text(
+              'Digital Card',
+              style: poppinsMedium.copyWith(
+                fontSize: 18.0,
+                color: AppColors.whiteColor,
               ),
             ),
+          ),
+        ),
         Expanded(
-              child: Container(
-                 width: width(context),
+          child: Container(
+            width: width(context),
             decoration: const BoxDecoration(
                 color: Color(0xFFFAFAFA),
                 borderRadius: BorderRadius.only(
@@ -163,7 +166,7 @@ class _DigitalCard extends State<DigitalCard> {
                                                       groupValue:
                                                           _selectedOption,
                                                       title: const Text(
-                                                          'Daily,      Only 5 SAR',
+                                                          'Daily, Only 10 SAR',
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               color: Color(
@@ -180,7 +183,7 @@ class _DigitalCard extends State<DigitalCard> {
                                                       groupValue:
                                                           _selectedOption,
                                                       title: const Text(
-                                                          'Weekly,  Only 30 SAR',
+                                                          'Weekly, Only 60 SAR',
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               color: Color(
@@ -197,7 +200,7 @@ class _DigitalCard extends State<DigitalCard> {
                                                       groupValue:
                                                           _selectedOption,
                                                       title: const Text(
-                                                          'Monthly, Only 100 SAR',
+                                                          'Monthly, Only 130 SAR',
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               color: Color(
@@ -356,7 +359,6 @@ class _DigitalCard extends State<DigitalCard> {
             ),
           ),
         ),
-        
       ],
     );
   }
@@ -364,18 +366,18 @@ class _DigitalCard extends State<DigitalCard> {
   void handlePass(BuildContext context) {
     var name = '';
     var days = 0;
-    var price = 0;
+    double price = 0;
     if (_selectedOption == 1) {
-      name = "Daily, Only 5 SAR";
+      name = "Daily, Only 10 SAR";
       days = 1;
-      price = 5;
+      price = 2.67;
     } else if (_selectedOption == 2) {
-      name = "Weekly,  Only 30 SAR";
-      price = 30;
+      name = "Weekly,  Only 60 SAR";
+      price = 16.02;
       days = 7;
     } else if (_selectedOption == 3) {
-      name = "Monthly, Only 100 SAR";
-      price = 100;
+      name = "Monthly, Only 130 SAR";
+      price = 34.71;
       days = 30;
     }
     Navigator.of(context).pop();
@@ -400,15 +402,12 @@ class _DigitalCard extends State<DigitalCard> {
                   "shipping_discount": 0
                 }
               },
-              "description": "The payment transaction description.",
-              // "payment_options": {
-              //   "allowed_payment_method":
-              //       "INSTANT_FUNDING_SOURCE"
-              // },
+              "description": "To Buy A Digital Card Pass",
+              
               "item_list": {
                 "items": [
                   {
-                    "name": "A demo product",
+                    "name": "A digital card",
                     "quantity": 1,
                     "price": price.toString(),
                     "currency": "USD"
@@ -417,14 +416,14 @@ class _DigitalCard extends State<DigitalCard> {
 
                 // shipping address is not required though
                 "shipping_address": const {
-                  "recipient_name": "Jane Foster",
-                  "line1": "Travis County",
+                  "recipient_name": "SEKKAH",
+                  "line1": "King Khaled Road",
                   "line2": "",
-                  "city": "Austin",
+                  "city": "Riyadh",
                   "country_code": "US",
-                  "postal_code": "73301",
-                  "phone": "+00000000",
-                  "state": "Texas"
+                  "postal_code": "11111",
+                  "phone": "+966592000422",
+                  "state": "Riyadh"
                 },
               }
             }
@@ -436,7 +435,6 @@ class _DigitalCard extends State<DigitalCard> {
                   AuthController.checkIfUserHasPass().then((result) {
                     hideLoadingDialog();
                     setState(() {});
-                    
                   })
                 });
           },
