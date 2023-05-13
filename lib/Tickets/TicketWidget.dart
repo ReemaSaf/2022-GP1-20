@@ -1,6 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, library_private_types_in_public_api, unnecessary_new, unnecessary_brace_in_string_interps
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, library_private_types_in_public_api, unnecessary_brace_in_string_interps, unnecessary_new
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../constants/app_colors.dart';
@@ -45,9 +47,10 @@ class _TripDurationBoxState extends State<TripDurationBox> {
   late var currentDate = outputFormat.format(now);
   late var outputDate = outputFormat.format(inputDate);
   late var arrivalTime = DateFormat('HH:mm a').format(inputDate);
+
   // late var checkTime = DateFormat('HH:mm').parse('${widget.date.hour}:${widget.date.minute}');
   // late var currentTime = DateFormat('HH:mm').parse('${now.hour-1}:${now.minute}');
-  double currentTime=(DateTime.now().hour+1) + DateTime.now().minute/60.0;
+  double currentTime = (DateTime.now().hour) + DateTime.now().minute / 60.0;
   late double checkTime;
 
   var dapartureTime = "";
@@ -56,7 +59,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
   void initState() {
     // ignore: todo
     // TODO: implement initState
-    checkTime=widget.date.hour + widget.date.minute/60.0;
+    checkTime = (widget.date.hour + widget.date.minute / 60.0)-1;
     if (widget.routeTime.contains("m")) {
       dapartureTime = DateFormat('HH:mm a').format(widget.date
           .add(Duration(minutes: int.parse(widget.routeTime.split(" ")[0]))));
@@ -103,9 +106,13 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     ),
                     InkWell(
                       onTap: () {
-                        print("===================================== ${currentTime} oooo $checkTime");
+                        print(
+                            "===================================== ${currentTime} oooo $checkTime");
+                        print(
+                            "===============================================${currentTime - checkTime}");
                         if (currentDate == outputDate) {
-                          if(checkTime==currentTime || currentTime>checkTime){
+                          if (checkTime - currentTime == 1 ||
+                              checkTime - currentTime < 0) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -113,8 +120,17 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                           route: widget.route,
                                           time: widget.routeTime,
                                         )));
+                          }else{
+                            Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
+                                colorText: Colors.white,
+                                backgroundColor:
+                                const Color.fromARGB(255, 204, 84, 80));
                           }
-
+                        }else{
+                          Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
+                              colorText: Colors.white,
+                              backgroundColor:
+                              const Color.fromARGB(255, 204, 84, 80));
                         }
                       },
                       child: Container(
@@ -178,7 +194,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // ignore: prefer_const_constructors
-
                     Text(
                       arrivalTime,
                       style: poppinsMedium.copyWith(

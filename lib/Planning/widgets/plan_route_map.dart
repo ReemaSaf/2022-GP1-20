@@ -1,11 +1,13 @@
 
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/core/const.dart';
+
 
 class PlanRouteMap extends StatefulWidget {
   const PlanRouteMap({
@@ -13,13 +15,13 @@ class PlanRouteMap extends StatefulWidget {
     required this.originLatLong,
     required this.destinationLatLong,
     required this.currentLat,
-    required this.currentLong,
+    required this.currentLng,
   }) : super(key: key);
 
   final List originLatLong;
   final List destinationLatLong;
   final double currentLat;
-  final double currentLong;
+  final double currentLng;
 
   @override
   State<PlanRouteMap> createState() => _PlanRouteMapState();
@@ -31,13 +33,34 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
   Set<Marker> _markers = {};
+  double currentLocationLat = 0;
+  double currentLocationLng = 0;
 
   @override
   void initState() {
+    currentLocation();
     _getPolyline();
     setMapPins();
     super.initState();
     
+  }
+  currentLocation() async {
+    print("this is called ======================================================");
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentLocationLat=position.latitude;
+    currentLocationLng=position.longitude;
+    setState(() {
+
+    });
+    //   await CurrentLocationLat().then((value) {
+    //   currentLocationLat = value;
+    //   setState(() {});
+    // });
+    // await  CurrentLocationLng().then((value) {
+    //   currentLocationLng = value;
+    //   setState(() {});
+    // });
+    print("==================================== this is the current location ====== $currentLocationLat 4444 $currentLocationLng");
   }
 
   // void _onMapCreated(GoogleMapController controller) async {
@@ -93,11 +116,11 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
             LatLng(widget.destinationLatLong[0], widget.destinationLatLong[1]),
       ));
     _markers.add(Marker(
-      icon: await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), 'assets/images/rec8.png'),
+      icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(280.h, 280.h)), 'assets/images/rec8.png'),
       markerId: const MarkerId('1'),
 
       position:
-      LatLng(widget.currentLat, widget.currentLong),
+      LatLng(widget.currentLat, widget.currentLng),
     ));
   }
 

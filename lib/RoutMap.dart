@@ -28,8 +28,9 @@ import 'data/constants.dart';
 class RouteMap extends StatefulWidget {
   final List<RouteModel> route;
   final String? time;
+  final int routeNo;
 
-  const RouteMap({super.key, required this.route, this.time});
+  const RouteMap({super.key, required this.route, this.time,required this.routeNo});
 
   @override
   State<RouteMap> createState() => _RouteMapState();
@@ -292,8 +293,8 @@ class _RouteMapState extends State<RouteMap> {
 
   Widget bottomDetailsSheet() {
     return DraggableScrollableSheet(
-      initialChildSize: .2,
-      minChildSize: .2,
+      initialChildSize: .225,
+      minChildSize: .225,
       maxChildSize: .9,
       builder: (BuildContext context, ScrollController scrollController) {
         return SingleChildScrollView(
@@ -388,6 +389,8 @@ class _RouteMapState extends State<RouteMap> {
                                           .route[widget.route.length - 1].name!,
                                       allRoutes: widget.route,
                                       routeTime: widget.time!,
+                                  routeNo: widget.routeNo!,
+                                  timeTaken: widget.time!,
                                     ));
                               },
                               child: Container(

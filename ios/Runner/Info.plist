@@ -53,7 +53,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	
+		<key>io.flutter.embedded_views_preview</key>
+    	<string>YES</string>
+
    <!-- Permission options for the `location` group -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Need location when in use</string>
