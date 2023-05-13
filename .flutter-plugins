@@ -8,6 +8,7 @@ firebase_core_web=/Users/yara/.pub-cache/hosted/pub.dev/firebase_core_web-1.7.3/
 firebase_storage=/Users/yara/.pub-cache/hosted/pub.dev/firebase_storage-10.3.11/
 firebase_storage_web=/Users/yara/.pub-cache/hosted/pub.dev/firebase_storage_web-3.3.9/
 flutter_plugin_android_lifecycle=/Users/yara/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.7/
+fluttertoast=/Users/yara/.pub-cache/hosted/pub.dev/fluttertoast-8.2.1/
 geocoding=/Users/yara/.pub-cache/hosted/pub.dev/geocoding-2.0.5/
 geolocator=/Users/yara/.pub-cache/hosted/pub.dev/geolocator-9.0.2/
 geolocator_android=/Users/yara/.pub-cache/hosted/pub.dev/geolocator_android-4.1.4/

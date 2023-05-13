@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, file_names, unnecessary_string_interpolations, deprecated_member_use
+// ignore_for_file: non_constant_identifier_names, file_names, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,14 +60,14 @@ class _MetroTabState extends State<MetroTab> {
                                 Text('${station.Name}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.normal,
                                             color: Colors.black)),
                                 Text('${station.Distance.toPrecision(2)}km',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(color: Colors.black)),
                               ],
                             ),

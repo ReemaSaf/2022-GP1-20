@@ -89,24 +89,17 @@ class _BuyTicketState extends State<BuyTicket> {
   String endAddress = "";
   String allRoutesCombine = "";
   String passtime = "";
+  bool isTimeSelected = false;
 
-  DateTime _dateTime = DateTime(
-      DateTime
-          .now()
-          .year,
-      DateTime
-          .now()
-          .month,
-      DateTime
-          .now()
-          .day,
-      DateTime
-          .now()
-          .hour,
-      (((DateTime
-          .now()
-          .minute / 15).round() + 1) * 15) % 60);
+// DateTime _dateTime = DateTime(
+  //     DateTime.now().year,
+  //     DateTime.now().month,
+  //     DateTime.now().day,
+  //     DateTime.now().hour,
+  //     (((DateTime.now().minute / 15).round() + 1) * 15) % 60);
+  DateTime _dateTime = DateTime.now();
 
+  
   @override
   void initState() {
     // ignore: todo
@@ -285,160 +278,187 @@ class _BuyTicketState extends State<BuyTicket> {
                                       child: Column(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .start,
-                                        children: [
-                                          Text(
-                                            'To',
-                                            maxLines: 1,
-                                            style: poppinsRegular.copyWith(
-                                              fontSize: 12.0,
-                                              color: AppColors.greyLightColor,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Text(
-                                            widget.endLocation,
-                                            maxLines: 1,
-                                            style: poppinsMedium.copyWith(
-                                              fontSize: 14.0,
-                                              color: AppColors.blueDarkColor,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'To',
+                                        maxLines: 1,
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: 12.0,
+                                          color: AppColors.greyLightColor,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        widget.endLocation,
+                                        maxLines: 1,
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 14.0,
+                                          color: AppColors.blueDarkColor,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(top: 20, left: 20)),
-                        Text(
-                          'Time:',
-                          // textAlign: TextAlign.left,
-                          style: poppinsMedium.copyWith(
-                            fontSize: 15.0,
-                            color: AppColors.blueDarkColor,
-                          ),
-                        ),
-                        ButtonWidget(
-                          time: time,
-                          onClicked: () =>
-                              Utils.showSheet(
-                                buildContext,
-                                child: buildDateTimePicker(),
-                                onClicked: () {
-                                  final value =
-                                  DateFormat('dd/MM/yyyy HH:mm').format(
-                                      _dateTime);
-                                  time = value;
-                                  setState(() {
-
-                                  });
-
-                                  Navigator.pop(buildContext);
-                                },
-                              ),
-
-
-                        ),
-
-                        Text(
-                          'Passengers:',
-                          // textAlign: TextAlign.left,
-                          style: poppinsMedium.copyWith(
-                            fontSize: 15.0,
-                            color: AppColors.blueDarkColor,
-                          ),
-                        ),
-                        Container(
-                          width: 350,
-                          height: 44,
-                          decoration: const BoxDecoration(
-                            color: AppColors.whiteLightColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.account_circle_outlined,
-                                  size: 35, color: AppColors.skyColor),
-                              const SizedBox(width: 200),
-                              SizedBox(
-                                height: 35, //height of button
-                                width: 30,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.blueDarkColor,
-                                    shape: const CircleBorder(),
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  onPressed: _decrementPassengerCount,
-                                  child: const Icon(Icons.remove),
-                                ),
-                              ),
-                              const SizedBox(width: 7),
-                              SizedBox(
-                                width: 7,
-                                child: Text(
-                                  _passengerCount.toString(),
-                                  style: poppinsMedium.copyWith(
-                                    fontSize: 18.0,
-                                    color: AppColors.blueDarkColor,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 11),
-                              SizedBox(
-                                height: 35, //height of button
-                                width: 30,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.blueDarkColor,
-                                    shape: const CircleBorder(),
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  onPressed: _incrementPassengerCount,
-                                  child: const Icon(Icons.add),
-                                ),
-                              ),
-                            ],
-                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(top: 20, left: 20)),
+                    Text(
+                      'Time:',
+                      // textAlign: TextAlign.left,
+                      style: poppinsMedium.copyWith(
+                        fontSize: 15.0,
+                        color: AppColors.blueDarkColor,
+                      ),
+                    ),
+                    ButtonWidget(
+                        time: time,
+                         onClicked: () async {
+                           // final value =
+                           //     DateFormat('dd/MM/yyyy HH:mm').format(_dateTime);
+                           //     time= value;
+                           //     setState(() {
+                           //
+                           //      });
+                           //
+                           // Navigator.pop(buildContext);
+                           _dateTime = DateTime.now();
+                           if (_dateTime.minute >= 0 && _dateTime.minute <= 15) {
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                _dateTime.day, _dateTime.hour, 15);
+                           } else if (_dateTime.minute >= 15 &&
+                              _dateTime.minute <= 30) {
+                            _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                _dateTime.day, _dateTime.hour, 30);
+                          } else if (_dateTime.minute >= 30 &&
+                               _dateTime.minute <= 45) {
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                              _dateTime.day, _dateTime.hour, 45);
+                           } else {
+                             int hour = _dateTime.minute >= 45
+                                 ? _dateTime.hour + 1
+                                 : _dateTime.hour;
+                             _dateTime = DateTime(_dateTime.year, _dateTime.month,
+                                 _dateTime.day, hour, 0);
+                           }
+
+                           setState(() {});
+                           Utils.showSheet(
+                             buildContext,
+                             child: buildDateTimePicker(),
+                         onClicked: () {
+                          isTimeSelected = true;
+                          setState(() {
+                            
+                          });
+                               final value = DateFormat('MM/dd/yyyy HH:mm a')
+                                   .format(_dateTime);
+                               time = value;
+                              
+                               setState(() {});
+                               Navigator.pop(buildContext);
+                             },
+                           );
+                         },
+                       ),
+                    
+                    Text(
+                      'Passengers:',
+                      // textAlign: TextAlign.left,
+                      style: poppinsMedium.copyWith(
+                        fontSize: 15.0,
+                        color: AppColors.blueDarkColor,
+                      ),
+                    ),
+                    Container(
+                      width: 350,
+                      height: 44,
+                      decoration: const BoxDecoration(
+                        color: AppColors.whiteLightColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.0),
                         ),
-                        Text(
-                          'Payment:',
-                          // textAlign: TextAlign.left,
-                          style: poppinsMedium.copyWith(
-                            fontSize: 15.0,
-                            color: AppColors.blueDarkColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.account_circle_outlined,
+                              size: 35, color: AppColors.skyColor),
+                          const SizedBox(width: 200),
+                          SizedBox(
+                            height: 35, //height of button
+                            width: 30,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.blueDarkColor,
+                                shape: const CircleBorder(),
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: _decrementPassengerCount,
+                              child: const Icon(Icons.remove),
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: 350,
-                          height: 100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  padding: const EdgeInsets.only(bottom: 7),
-                                  height: 47,
-                                  width: 350,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.whiteLightColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20.0),
-                                    ),
-                                  ),
-                                  child: ListView(
-                                    // padding: EdgeInsets.only(left: 10,bottom: 15),
+                          const SizedBox(width: 7),
+                          SizedBox(
+                            width: 7,
+                            child: Text(
+                              _passengerCount.toString(),
+                              style: poppinsMedium.copyWith(
+                                fontSize: 18.0,
+                                color: AppColors.blueDarkColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 11),
+                          SizedBox(
+                            height: 35, //height of button
+                            width: 30,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.blueDarkColor,
+                                shape: const CircleBorder(),
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: _incrementPassengerCount,
+                              child: const Icon(Icons.add),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      'Payment:',
+                      // textAlign: TextAlign.left,
+                      style: poppinsMedium.copyWith(
+                        fontSize: 15.0,
+                        color: AppColors.blueDarkColor,
+                      ),
+                    ),
+                    Container(
+                      width: 350,
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              padding: const EdgeInsets.only(bottom: 7),
+                              height: 47,
+                              width: 350,
+                              decoration: const BoxDecoration(
+                                color: AppColors.whiteLightColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0),
+                                ),
+                              ),
+                              child: ListView(
+                                // padding: EdgeInsets.only(left: 10,bottom: 15),
 
                                     children: [
                                       RadioListTile(
@@ -547,79 +567,86 @@ class _BuyTicketState extends State<BuyTicket> {
                                           ),
                                         ),
 
-                                      if (auth.currentUser!.isAnonymous ||
-                                          !isDigitalCard)
-                                        Container(
-                                          height: 47,
-                                          width: 175,
-                                          padding: const EdgeInsets.only(
-                                            right: 10,
-                                          ),
-                                          decoration: const BoxDecoration(
-                                            color: AppColors.whiteLightColor,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(20.0),
-                                              bottomRight: Radius.circular(
-                                                  20.0),
-                                            ),
-                                          ),
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            "* No Active Pass ",
-                                            style: poppinsMedium.copyWith(
-                                              fontSize: 13.0,
-                                              color: AppColors.skyColor,
-                                            ),
-                                          ),
-                                        )
-
-                                    ],
-                                  )),
-                            ],
-                          ),
+                                     if (auth.currentUser!.isAnonymous || !isDigitalCard)
+                                    Container(
+                                      height: 47,
+                                      width: 175,
+                                      padding: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.whiteLightColor,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20.0),
+                                          bottomRight: Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        "* No Active Pass ",
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 13.0,
+                                          color: AppColors.skyColor,
+                                        ),
+                                      ),
+                                    )
+                                    
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Center(
+                      child: Text(
+                        'Total Price: $_price SAR',
+                        style: poppinsMedium.copyWith(
+                          fontSize: 20.0,
+                          color: AppColors.blueDarkColor,
                         ),
-                        const SizedBox(height: 40),
-                        Center(
-                          child: Text(
-                            'Total Price: $_price SAR',
-                            style: poppinsMedium.copyWith(
-                              fontSize: 20.0,
-                              color: AppColors.blueDarkColor,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: Container(
+                        width: 200,
+                        height: 40,
+                        child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: AppColors.skyColor,
                             ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Center(
-                          child: Container(
-                            width: 200,
-                            height: 40,
-                            child: ElevatedButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: AppColors.skyColor,
-                                ),
-                                child: Text(
-                                  'Continue',
-                                  style: poppinsMedium.copyWith(
-                                    fontSize: 16.0,
-                                    color: AppColors.whiteColor,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (auth.currentUser!.isAnonymous) {
-                                    Get.snackbar(
-                                        'Alert', 'You have to Register First',
-                                        colorText: Colors.white,
-                                        backgroundColor:
+                            child: Text(
+                              'Continue',
+                              style: poppinsMedium.copyWith(
+                                fontSize: 16.0,
+                                color: AppColors.whiteColor,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (auth.currentUser!.isAnonymous) {
+                                Get.snackbar(
+                                    'Alert', 'You have to Register First',
+                                    colorText: Colors.white,
+                                    backgroundColor:
                                         const Color.fromARGB(255, 204, 84, 80));
-                                    return;
-                                  }
-                                  if (_dateTime == null ||
-                                      _passengerCount <= 0 ||
-                                      _selectedOption == 0) {
-                                    Get.snackbar(
-                                        'Alert', 'Select Payment Type First',
-                                        colorText: Colors.white,
-                                        backgroundColor:
+                                return;
+                              }
+                              if (!isTimeSelected ) {
+                                Get.snackbar(
+                                    'Alert', 'Select Time First',
+                                    colorText: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 204, 84, 80));
+                                return;
+                              }
+
+                              if (_dateTime == null ||
+                                  _passengerCount <= 0 ||
+                                  _selectedOption == 0) {
+                                Get.snackbar(
+                                    'Alert', 'Select Payment Type First',
+                                    colorText: Colors.white,
+                                    backgroundColor:
                                         const Color.fromARGB(255, 204, 84, 80));
                                     return;
                                   }
@@ -693,7 +720,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                     'time': _dateTime,
                                                     'user': auth.currentUser!
                                                         .uid,
-                                                    'paymentType': "Paypal",
                                                     'startingLat': widget.allRoutes[0].lat,
                                                     'startingLng': widget.allRoutes[0].lng,
                                                     'endLat': widget.allRoutes.last.lat,
@@ -716,7 +742,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                                   .endLocation,
                                                               date: _dateTime,
                                                               tickets: _passengerCount,
-                                                              paymentType: "Paypal",
                                                               route: widget
                                                                   .allRoutes,
                                                             ),
@@ -755,7 +780,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                         'time': _dateTime,
                                         'tickets': _passengerCount,
                                         'user': auth.currentUser!.uid,
-                                        'paymentType': "Card",
                                         'startingLat': widget.allRoutes[0].lat,
                                         'startingLng': widget.allRoutes[0].lng,
                                         'endLat': widget.allRoutes.last.lat,
@@ -773,7 +797,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                   end: widget.endLocation,
                                                   date: _dateTime,
                                                   tickets: _passengerCount,
-                                                  paymentType: "Card",
                                                   route: widget.allRoutes,
                                                 ),
                                           ),

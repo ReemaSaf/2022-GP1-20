@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api, unnecessary_new
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,7 +19,6 @@ class TripDurationBox extends StatefulWidget {
     required this.start,
     required this.end,
     required this.date,
-    required this.paymentType,
     required this.tickets,
     required this.username,
     required this.originLatLong,
@@ -32,7 +31,6 @@ class TripDurationBox extends StatefulWidget {
   final String end;
   final DateTime date;
   final int tickets;
-  final String paymentType;
   final String username;
   final List destinationLatLang;
   final List originLatLong;
@@ -80,9 +78,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
             isCornerRounded: true,
             //padding: EdgeInsets.all(10),
             color: AppColors.whiteColor,
-            onPressed: () {
-              print('he');
-            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -148,7 +143,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                     setState(() {
                                       isLoading = true;
                                     });
-                                    print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the rouet ${routeListList.length}");
+                                    print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the route ${routeListList.length}");
                                     await createRoute(
                                       originLatLong: widget.originLatLong,
                                       originAddress: widget.start,
@@ -162,7 +157,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                       setState(() {
                                         isLoading = false;
                                       });
-                                      print("this is the rouet ${routeListList.length}");
+                                      print("this is the route ${routeListList.length}");
 
                                       if (currentDate == outputDate) {
                                         if (checkTime - currentTime == 1 ||
@@ -404,7 +399,6 @@ class TicketWidget extends StatefulWidget {
     this.padding,
     this.margin,
     this.shadow,
-    required this.onPressed,
   }) : super(key: key);
 
   final double width;
@@ -415,7 +409,6 @@ class TicketWidget extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? shadow;
-  final VoidCallback onPressed;
 
   @override
   _TicketWidgetState createState() => _TicketWidgetState();
@@ -427,7 +420,6 @@ class _TicketWidgetState extends State<TicketWidget> {
     return ClipPath(
       clipper: TicketClipper(),
       child: InkWell(
-        onTap: widget.onPressed,
         child: Container(
           // ignore: sort_child_properties_last
           child: widget.child,

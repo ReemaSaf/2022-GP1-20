@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, await_only_futures, duplicate_ignore, null_check_always_fails
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -9,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sekkah_app/constants/app_colors.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:sekkah_app/helpers/bus_station_model.dart';
 import 'package:timelines/timelines.dart';
 import '../Homepage/providers/locationProvider.dart';
 import '../Homepage/viewmap.dart';
@@ -267,7 +269,21 @@ class _TrackingState extends State<Tracking> {
     setState(() {
       stationNumber = widget.route.length - 2;
     });
+    busStationNames();
     getPoline();
+  }
+ 
+  List<BusStationModel> buses = [];
+  Set<String> stationNames = {};
+  bool isItdelayed = false;
+  busStationNames() {
+    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    for (int i = 0; i < widget.route.length; i++) {
+      if (widget.route[i].type!.toLowerCase() == 'bus') {
+        stationNames.add(widget.route[i].name!);
+      }
+    }
+    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
   }
 
   getPoline() async {
@@ -592,30 +608,111 @@ class _TrackingState extends State<Tracking> {
                                   // ),
                                 ],
                               ),
-                              isShowdelay?Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16, top: 8),
-                                  child: widget.route[1].type == 'Bus'
-                                      ? widget.route[1].OnTime == false
-                                          ? const Text("Delay",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.red,
-                                                  fontSize: 20))
-                                          : const Text(
-                                              "On Route",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.skyColor,
-                                                  fontSize: 20),
-                                            )
-                                      : const Text(
-                                          "On Route",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.skyColor,
-                                              fontSize: 20),
-                                        )):const SizedBox()
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 16, top: 8),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      "On Route",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.skyColor,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 16,
+                                      ),
+                                      child: StreamBuilder(
+                                          stream: FirebaseFirestore.instance
+                                              .collection('Bus_Station')
+                                              .snapshots(),
+                                          builder: (_,
+                                              AsyncSnapshot<
+                                                      QuerySnapshot<
+                                                          Map<String, dynamic>>>
+                                                  snapshots) {
+                                            if (snapshots.hasData) {
+                                              Set<BusStationModel> temp = {};
+                                              buses = [];
+                                              if (snapshots.data == null) {
+                                                return const Text(
+                                                    'Something went wrong');
+                                              }
+                                              if (snapshots
+                                                  .data!.docs.isNotEmpty) {
+                                                for (var doc
+                                                    in snapshots.data!.docs) {
+                                                  var data = doc.data();
+                                                  var bus =
+                                                      BusStationModel.fromMap(
+                                                          data);
+                                                  buses.add(bus);
+                                                }
+                                              }
+                                              if (buses.isNotEmpty) {
+                                                for (var name in stationNames) {
+                                                  temp.add(buses.firstWhere(
+                                                      (element) =>
+                                                          name.toLowerCase() ==
+                                                          element.Name
+                                                              .toLowerCase()));
+                                                }
+                                              }
+                                              if (temp.isNotEmpty) {
+                                                for (int i = 0;
+                                                    i < widget.route.length;
+                                                    i++) {
+                                                  if (widget.route[i].type!
+                                                          .toLowerCase() ==
+                                                      'bus') {
+                                                    bool ontime = temp
+                                                        .firstWhere((element) =>
+                                                            element.Name
+                                                                .toLowerCase() ==
+                                                            widget
+                                                                .route[i].name!
+                                                                .toLowerCase())
+                                                        .OnTime!;
+                                                    widget.route[i].OnTime =
+                                                        ontime;
+                                                  }
+                                                }
+                                              }
+                                              isItdelayed = false;
+                                              for (int i = 0;
+                                                  i < widget.route.length;
+                                                  i++) {
+                                                if (widget.route[i].type!
+                                                        .toLowerCase() ==
+                                                    'bus') {
+                                                  if (widget.route[i].OnTime ==
+                                                      false) {
+                                                    isItdelayed = true;
+                                                    break;
+                                                  }
+                                                }
+                                              }
+
+                                              return isItdelayed
+                                                  ? const DelayWidget()
+                                                  : const Text(
+                                                      "",
+                                                    );
+                                            } else {
+                                              return const Text(
+                                                "",
+                                              );
+                                            }
+                                          }),
+                                      
+                                    ),
+                                  ],
+                                ),
+                              ),
+
                             ],
                           ),
                         ],
@@ -751,6 +848,42 @@ class _TrackingState extends State<Tracking> {
       },
     );
   }
+} 
+class DelayWidget extends StatelessWidget {
+  const DelayWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  Row(
+      children: const [
+        Padding(
+          padding: EdgeInsets.only(
+              left: 6,),
+          child: Icon(
+            Icons.bus_alert,
+            color: Colors.red,
+            size: 20,
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 3.0),
+          child: Text(
+            'Slight Delay ',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.red,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 
 // Future<void> initMarkers() async {
 //   controller.allStations.isEmpty ? null : await 2.seconds.delay();
@@ -765,4 +898,4 @@ class _TrackingState extends State<Tracking> {
 //   }
 //   controller.setAllMarkers();
 // }
-}
+

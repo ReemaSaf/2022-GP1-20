@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, prefer_is_empty, deprecated_member_use
+// ignore_for_file: file_names, non_constant_identifier_names, prefer_is_empty
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,14 +68,14 @@ class _BusTabState extends State<BusTab> {
                               '${station.Number}',
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                               fontWeight: FontWeight.normal,
                               color: Colors.black)),
                       Text('${station.Distance.toPrecision(2)}km',
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(color: Colors.black)),
                     ],
                   ),

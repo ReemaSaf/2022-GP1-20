@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, file_names, unused_import, prefer_interpolation_to_compose_strings, avoid_print
+// ignore_for_file: prefer_const_literals_to_create_immutables, file_names, prefer_interpolation_to_compose_strings
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 
 import '../Homepage/components/user_nav.dart';
@@ -19,7 +17,6 @@ class Tickets extends StatefulWidget {
       required this.start,
       required this.end,
       required this.date,
-      required this.paymentType,
       required this.tickets,
       required this.routeTime,
       required this.route,})
@@ -29,7 +26,6 @@ class Tickets extends StatefulWidget {
   final String end;
   final DateTime date;
   final int tickets;
-  final String paymentType;
   final String routeTime;
   final List<RouteModel> route;
   @override
@@ -78,12 +74,14 @@ class _Tickets extends State<Tickets> {
                     ),
                   ),
                 ),
-                AspectRatio(
-                  aspectRatio: Get.width / (Get.height * 0.79),
-                  child: Container(
+               
+                   Expanded(
+                    child:Container(
+                    
                     width: width(context),
                     padding: EdgeInsets.symmetric(
-                        horizontal: height(context) * 0.02),
+                        horizontal: height(context) * 0.01,
+                        vertical: height(context) * 0.02),
                     decoration: const BoxDecoration(
                         color: AppColors.blueDarkColor,
                         borderRadius: BorderRadius.only(
@@ -100,11 +98,10 @@ class _Tickets extends State<Tickets> {
                           end: widget.end,
                           date: widget.date,
                           tickets: widget.tickets,
-                          paymentType: widget.paymentType,
                           username: user.firstName + " " + user.lastName,
                           route: widget.route,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 100),
                         SizedBox(
                           // height: 35, //height of button
                           width: 200,
@@ -128,11 +125,12 @@ class _Tickets extends State<Tickets> {
                       ],
                     ),
                   ),
-                ),
-                const Expanded(
-                    child: Scaffold(
-                  backgroundColor: Color(0xFFFAFAFA),
-                ))
+                   ),
+                
+                // const Expanded(
+                //     child: Scaffold(
+                //   backgroundColor: Color(0xFFFAFAFA),
+                // ))
               ],
             );
           },
