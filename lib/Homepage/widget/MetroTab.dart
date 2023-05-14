@@ -60,14 +60,14 @@ class _MetroTabState extends State<MetroTab> {
                                 Text('${station.Name}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.normal,
                                             color: Colors.black)),
                                 Text('${station.Distance.toPrecision(2)}km',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(color: Colors.black)),
                               ],
                             ),

@@ -67,6 +67,7 @@ class _ViewMap extends State<ViewMap> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -209,7 +210,9 @@ class _ViewMap extends State<ViewMap> {
                         ConnectionState.waiting ||
                     snapshots.snapshot2.connectionState ==
                         ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                          return Container();
+                  // return const Center(child: Text("1"));
+                  // return const Center(child: CircularProgressIndicator());
                 }
                 controller.setAllStations = snapshots.snapshot1.data ?? [];
                 controller.setAllBuses = snapshots.snapshot2.data ?? [];
@@ -224,7 +227,9 @@ class _ViewMap extends State<ViewMap> {
                     builder: (context, markersSnapshot) {
                       if (markersSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        // return const Center(child: Text("2"));
+                        return Container();
+                        // return const Center(child: CircularProgressIndicator());
                       }
 
                       return StreamBuilder<LocationData>(

@@ -46,6 +46,7 @@ class _TrackingState extends State<Tracking> {
   BitmapDescriptor startIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor metroIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor busIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor dotIcon = BitmapDescriptor.defaultMarker;
   PolylinePoints polylinePoints = PolylinePoints();
   List<LatLng> polylineCoordinates = [];
@@ -54,9 +55,10 @@ class _TrackingState extends State<Tracking> {
   int stationNumber = 0;
   bool isLoad = true;
   int currentLocationNumber = 1;
-  bool isReachedStation=false;
-  int num1=0;
-  int alert=200;
+  bool isReachedStation = false;
+  int num1 = 0;
+  int alert = 200;
+  bool isShowdelay = false;
 
   Future<void> getCurrentLocation() async {
     Location location = Location();
@@ -75,60 +77,69 @@ class _TrackingState extends State<Tracking> {
     print("this is to check $isReachedStation");
     var dis1 = Geolocator.distanceBetween(
         lat!, lng!, widget.route[1].lat!, widget.route[1].lng!);
-    if(dis1<10){
+    if (dis1 < 10) {
       setState(() {
-        isReachedStation=true;
+        isReachedStation = true;
       });
     }
-    if(isReachedStation==false){
+    if (isReachedStation == false) {
       print("station check ${startToStation[0].latitude}");
       var dis2 = Geolocator.distanceBetween(
-          lat!, lng!,startToStation[0].latitude,startToStation[0].longitude);
+          lat!, lng!, startToStation[0].latitude, startToStation[0].longitude);
       print("this is distance $dis2");
-      if(dis2==0){
+      if (dis2 == 0) {
         setState(() {
-          num1=num1+1;
+          num1 = num1 + 1;
         });
-      }else{
-        if(dis2>alert){
-          Get.snackbar(
-              'Alert', 'You are on wrong path',
+      } else {
+        if (dis2 > alert) {
+          Get.snackbar('Alert', 'You are on wrong path',
               colorText: Colors.white,
-              backgroundColor:
-              const Color.fromARGB(255, 204, 84, 80));
+              backgroundColor: const Color.fromARGB(255, 204, 84, 80));
           setState(() {
-            alert=alert+1000;
+            alert = alert + 1000;
           });
         }
       }
     }
     var dis = Geolocator.distanceBetween(
         lat!, lng!, widget.route[num].lat!, widget.route[num].lng!);
-    if(widget.route[num].isChange==true){
-      if(dis<300){
+    if(num==1){
+      if(dis>50){
+        isShowdelay=true;
+        setState(() {
+
+        });
+      }
+    }
+
+    if (widget.route[num].isChange == true) {
+      if (dis < 300) {
         MotionToast.warning(
             barrierColor: widget.route[num].lineColor!,
             title: Text("You Need To change line to ${widget.route[num].line}"),
             description: Text("${widget.route[num].name}"));
       }
     }
-    if (dis < 100) {
+    if (dis < 50) {
       print("your have reached station");
-      num==1?await getDisPolyLine(
-        startLat:latlan[0].latitude,
-        startLng:latlan[0].longitude,
-        endLng:latlan[1].longitude,
-        endLat:latlan[1].latitude,
-        isDash: false,
-        color: AppColors.blueDarkColor,
-      ):_polyline.add(Polyline(
-          color: AppColors.blueDarkColor,
-          width: 3,
-          polylineId: PolylineId(num.toString()),
-          points: [
-            LatLng(latlan[num - 1].latitude, latlan[num - 1].longitude),
-            LatLng(latlan[num].latitude, latlan[num].longitude)
-          ]));
+      num == 1
+          ? await getDisPolyLine(
+              startLat: latlan[0].latitude,
+              startLng: latlan[0].longitude,
+              endLng: latlan[1].longitude,
+              endLat: latlan[1].latitude,
+              isDash: false,
+              color: AppColors.blueDarkColor,
+            )
+          : _polyline.add(Polyline(
+              color: AppColors.blueDarkColor,
+              width: 3,
+              polylineId: PolylineId(num.toString()),
+              points: [
+                  LatLng(latlan[num - 1].latitude, latlan[num - 1].longitude),
+                  LatLng(latlan[num].latitude, latlan[num].longitude)
+                ]));
       setState(() {
         stationNumber = stationNumber - 1;
         currentLocationNumber = currentLocationNumber + 1;
@@ -138,9 +149,9 @@ class _TrackingState extends State<Tracking> {
             _marker.add(Marker(
                 markerId: MarkerId(i.toString()),
                 visible: false,
-                icon: metroIcon,
+                icon: widget.route[i].type=="Buss"?busIcon:metroIcon,
                 infoWindow:
-                InfoWindow(title: 'Station', snippet: widget.route[i].name),
+                    InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
           } else {
             if (i == currentLocationNumber) {
@@ -149,7 +160,7 @@ class _TrackingState extends State<Tracking> {
                   visible: true,
                   infoWindow: InfoWindow(
                       title: 'Station', snippet: widget.route[i].name),
-                  icon: metroIcon,
+                  icon: widget.route[i].type=="Bus"?busIcon:metroIcon,
                   position: latlan[currentLocationNumber]));
             } else {
               _marker.add(Marker(
@@ -164,8 +175,8 @@ class _TrackingState extends State<Tracking> {
         }
       });
       MotionToast.error(
-          title: const Text("Your Have Reached"),
-          description: Text("${widget.route[num].name}"))
+              title: const Text("Your Have Reached"),
+              description: Text("${widget.route[num].name}"))
           .show(context);
       setState(() {
         num = num + 1;
@@ -191,7 +202,7 @@ class _TrackingState extends State<Tracking> {
                   const SizedBox(height: 22),
                   const Text("You Have Reach At Your Destination",
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
                 ],
               ),
             );
@@ -244,6 +255,11 @@ class _TrackingState extends State<Tracking> {
         .then((value) {
       dotIcon = value;
     });
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty, 'assets/images/bus.png')
+        .then((value) {
+      busIcon = value;
+    });
   }
 
   @override
@@ -289,25 +305,31 @@ class _TrackingState extends State<Tracking> {
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: metroIcon,
-              infoWindow:
-                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+              infoWindow: InfoWindow(
+                  title: widget.route[i].type == 'Bus'
+                      ? 'Bus Station'
+                      : 'Metro Station',
+                  snippet: widget.route[i].name),
               position: latlan[currentLocationNumber]));
         } else {
           _marker.add(Marker(
               markerId: MarkerId(i.toString()),
               visible: true,
               icon: dotIcon,
-              infoWindow:
-                  InfoWindow(title: widget.route[i].type=='Bus'?'Bus Station':'Metro Station', snippet: widget.route[i].name),
+              infoWindow: InfoWindow(
+                  title: widget.route[i].type == 'Bus'
+                      ? 'Bus Station'
+                      : 'Metro Station',
+                  snippet: widget.route[i].name),
               position: latlan[i]));
         }
       }
       if (i == 0) {
         await getDisPolyLine(
-          startLat:latlan[0].latitude,
-          startLng:latlan[0].longitude,
-          endLng:latlan[1].longitude,
-          endLat:latlan[1].latitude,
+          startLat: latlan[0].latitude,
+          startLng: latlan[0].longitude,
+          endLng: latlan[1].longitude,
+          endLat: latlan[1].latitude,
         );
       } else if (i == latlan.length - 1) {
         // await _polyline.add(Polyline(
@@ -325,9 +347,9 @@ class _TrackingState extends State<Tracking> {
         //           latlan[latlan.length - 1].longitude)
         //     ]));
         await getDisPolyLine(
-          startLat:latlan[latlan.length - 2].latitude,
-          startLng:latlan[latlan.length - 2].longitude,
-          endLat:latlan[latlan.length - 1].latitude,
+          startLat: latlan[latlan.length - 2].latitude,
+          startLng: latlan[latlan.length - 2].longitude,
+          endLat: latlan[latlan.length - 1].latitude,
           endLng: latlan[latlan.length - 1].longitude,
         );
       } else {
@@ -344,8 +366,15 @@ class _TrackingState extends State<Tracking> {
       isLoad = false;
     });
   }
-  getDisPolyLine({double? startLat,double? startLng,double? endLat,double? endLng,bool? isDash,Color? color}) async {
-    polylineCoordinates=[];
+
+  getDisPolyLine(
+      {double? startLat,
+      double? startLng,
+      double? endLat,
+      double? endLng,
+      bool? isDash,
+      Color? color}) async {
+    polylineCoordinates = [];
     print("called for creating line =========================== ");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Const.apiKey,
@@ -359,24 +388,24 @@ class _TrackingState extends State<Tracking> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
-    if(startLat==latlan[0].latitude&& startLng==latlan[0].longitude) {
+    if (startLat == latlan[0].latitude && startLng == latlan[0].longitude) {
       setState(() {
-        startToStation=polylineCoordinates;
+        startToStation = polylineCoordinates;
       });
     }
-    _addPolyLine(isDash:isDash,color: color);
+    _addPolyLine(isDash: isDash, color: color);
   }
-  _addPolyLine({bool? isDash,Color? color}) {
+
+  _addPolyLine({bool? isDash, Color? color}) {
     _polyline.add(Polyline(
       width: 3,
       polylineId: const PolylineId("poly"),
-      color:isDash==false?color!: const Color(0xff4CA7C3),
-      patterns:isDash==false?[
-        PatternItem.dash(1),
-      ]: [
-              PatternItem.dash(8),
-              PatternItem.gap(15)
-            ],
+      color: isDash == false ? color! : const Color(0xff4CA7C3),
+      patterns: isDash == false
+          ? [
+              PatternItem.dash(1),
+            ]
+          : [PatternItem.dash(8), PatternItem.gap(15)],
       points: polylineCoordinates,
     ));
 
@@ -390,6 +419,7 @@ class _TrackingState extends State<Tracking> {
     super.dispose();
     getCurrentLocation();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -421,7 +451,7 @@ class _TrackingState extends State<Tracking> {
     return Column(
       children: [
         SizedBox(
-            height: (MediaQuery.of(context).size.height) * 0.7,
+            height: (MediaQuery.of(context).size.height) * 0.9,
             child: isLoad == true
                 ? const Center(child: CircularProgressIndicator())
                 : GoogleMap(
@@ -472,14 +502,14 @@ class _TrackingState extends State<Tracking> {
 
   Widget bottomDetailsSheet() {
     return DraggableScrollableSheet(
-      initialChildSize: .3,
-      minChildSize: .3,
+      initialChildSize: .225,
+      minChildSize: .225,
       maxChildSize: .9,
       builder: (BuildContext context, ScrollController scrollController) {
         return SingleChildScrollView(
           controller: scrollController,
           child: Container(
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -514,8 +544,8 @@ class _TrackingState extends State<Tracking> {
                     ),
                     const SizedBox(height: 16),
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 22),
                       margin: const EdgeInsets.only(left: 16, right: 16),
                       decoration: BoxDecoration(
                           color: const Color(0xffF2F2F2),
@@ -528,24 +558,37 @@ class _TrackingState extends State<Tracking> {
                             children: [
                               Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      const SizedBox(width: 16),
-                                      Text(
-                                        "$stationNumber",
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.blueDarkColor,
-                                            fontSize: 30),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Text("Stops",
-                                          style: TextStyle(
-                                              color: AppColors.blueDarkColor,
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.bold))
-                                    ],
-                                  ),
+                                  (stationNumber < 0 || stationNumber == 0)
+                                      ? const SizedBox()
+                                      : Row(
+                                          children: [
+                                            const SizedBox(width: 16),
+                                            Text(
+                                              "$stationNumber",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      AppColors.blueDarkColor,
+                                                  fontSize: 30),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            stationNumber == 1
+                                                ? const Text("Stop",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .blueDarkColor,
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.bold))
+                                                : const Text("Stops",
+                                                    style: TextStyle(
+                                                        color: AppColors
+                                                            .blueDarkColor,
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.bold))
+                                          ],
+                                        ),
                                   // SizedBox(
                                   //   width: 12,
                                   // ),
@@ -684,7 +727,11 @@ class _TrackingState extends State<Tracking> {
                         children: [
                           Row(
                             children: [
-                              DotIndicator(size: 20,color:currentLocationNumber==2?Colors.grey:Colors.blue),
+                              DotIndicator(
+                                  size: 20,
+                                  color: currentLocationNumber == 2
+                                      ? Colors.grey
+                                      : Colors.blue),
                               const SizedBox(width: 8),
                               Text(widget.route[0].name!,
                                   style: const TextStyle(
@@ -697,9 +744,12 @@ class _TrackingState extends State<Tracking> {
                             padding: const EdgeInsets.only(left: 8),
                             child: Row(
                               children: [
-                                 SizedBox(
+                                SizedBox(
                                   height: 50.0,
-                                  child: SolidLineConnector(color:currentLocationNumber==2?Colors.grey:Colors.blue),
+                                  child: SolidLineConnector(
+                                      color: currentLocationNumber == 2
+                                          ? Colors.grey
+                                          : Colors.blue),
                                 ),
                                 const SizedBox(width: 16),
                                 InkWell(
@@ -710,11 +760,13 @@ class _TrackingState extends State<Tracking> {
                                   },
                                   child: Row(
                                     children: [
-                                  isShow == false?Text(
-                                  "${widget.route.length - 4} Stops Before",
-                                      style: const TextStyle(
-                                          color: AppColors.skyColor,
-                                          fontSize: 16)): const Text(""),
+                                      isShow == false
+                                          ? Text(
+                                              "${widget.route.length - 2} Stops Before",
+                                              style: const TextStyle(
+                                                  color: AppColors.skyColor,
+                                                  fontSize: 16))
+                                          : const Text(""),
                                       isShow == false
                                           ? const Icon(Icons.arrow_drop_down,
                                               color: AppColors.skyColor)
@@ -735,7 +787,12 @@ class _TrackingState extends State<Tracking> {
                                         children: [
                                           Row(
                                             children: [
-                                              DotIndicator(size: 20,color:index+2==currentLocationNumber?Colors.grey:Colors.blue),
+                                              DotIndicator(
+                                                  size: 20,
+                                                  color: index + 2 ==
+                                                          currentLocationNumber
+                                                      ? Colors.grey
+                                                      : Colors.blue),
                                               const SizedBox(width: 8),
                                               Text(
                                                   widget.route[index + 1].name!,
@@ -748,13 +805,17 @@ class _TrackingState extends State<Tracking> {
                                             ],
                                           ),
                                           Row(
-                                            children:  [
+                                            children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(left: 8.0),
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0),
                                                 child: SizedBox(
                                                   height: 20.0,
-                                                  child: SolidLineConnector(color:index+2==currentLocationNumber?Colors.grey:Colors.blue),
+                                                  child: SolidLineConnector(
+                                                      color: index + 2 ==
+                                                              currentLocationNumber
+                                                          ? Colors.grey
+                                                          : Colors.blue),
                                                 ),
                                               ),
                                             ],
@@ -771,9 +832,10 @@ class _TrackingState extends State<Tracking> {
                               const SizedBox(width: 8),
                               Text(widget.route[widget.route.length - 1].name!,
                                   style: const TextStyle(
-                                      color: AppColors.blueDarkColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))
+                                    color: AppColors.blueDarkColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ))
                             ],
                           ),
                         ],
@@ -836,5 +898,4 @@ class DelayWidget extends StatelessWidget {
 //   }
 //   controller.setAllMarkers();
 // }
-
 

@@ -140,7 +140,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RouteMap(route: widget.exproute!)));
+                        builder: (context) => RouteMap(route: widget.exproute!,routeNo:widget.selectedindex,)));
               },
               child: Text(
                 'Details',

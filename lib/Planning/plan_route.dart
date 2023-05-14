@@ -406,8 +406,17 @@ class _PlanARoute extends State<PlanARoute> {
                                       ),
                                     ),
                                     InkWell(
-                                        onTap: () {
-                                          getCurrentLocation();
+                                        onTap: () async {
+                                          setState(() {
+                                            isFromFieldFocus = true;
+                                          });
+                                          await getCurrentLocation();
+                                          await Future.delayed(
+                                              const Duration(milliseconds: 50));
+                                          setState(() {
+                                            isFromFieldFocus = false;
+                                          });
+
                                         },
                                         child: Image.asset(
                                             'assets/images/currentLocation.png',
@@ -563,8 +572,8 @@ class _PlanARoute extends State<PlanARoute> {
                       child: PlanRouteMap(
                         originLatLong: originLatLong,
                         destinationLatLong: destinationLatLong,
-                        currentLat: currentLocationLat,
-                        currentLong: currentLocationLng,
+                        currentLat:currentLocationLat ,
+                        currentLng:currentLocationLng ,
                       ),
                     )
             ],

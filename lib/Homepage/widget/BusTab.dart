@@ -68,14 +68,14 @@ class _BusTabState extends State<BusTab> {
                               '${station.Number}',
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                               fontWeight: FontWeight.normal,
                               color: Colors.black)),
                       Text('${station.Distance.toPrecision(2)}km',
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(color: Colors.black)),
                     ],
                   ),

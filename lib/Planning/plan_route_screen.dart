@@ -335,7 +335,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],)));
+                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],routeNo:index,)));
                                           },);
                                         }else{
                                           selectdIndexColor=null;
@@ -435,7 +435,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],)));
+                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],routeNo: index,)));
                                           },
                                           child: Text(
                                             'Details',

@@ -162,6 +162,16 @@ class _HistoryTickets extends State<HistoryTickets> {
                                           username: user.firstName +
                                               " " +
                                               user.lastName,
+                                          originLatLong: [snapshot.data!.docs[index]
+                                          ['startingLat'],snapshot.data!.docs[index]
+                                          ['startingLng']],
+                                          destinationLatLang: [snapshot.data!.docs[index]
+                                          ['endLat'],snapshot.data!.docs[index]
+                                          ['endLng']],
+                                          routeNo:snapshot.data!.docs[index]
+                                          ['routeNo'] ,
+                                          timeTaken:snapshot.data!.docs[index]
+                                        ['timeTaken'],
                                         );
                                       }),
                                 );
