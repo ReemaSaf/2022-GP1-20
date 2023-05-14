@@ -122,7 +122,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
-                                    //: 86,
                                     child: Text(
                                       isActive ? "Active" : 'Expired',
                                       style: poppinsSemiBold.copyWith(
@@ -141,7 +140,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                               ? InkWell(
                                   onTap: () async {
                                     print(
-                                        "===================================== s oooo $checkTime");
+                                        "===================================== ${currentTime} oooo $checkTime");
                                     print(
                                         "===============================================${currentTime - checkTime}");
                                     print("this is the date %%%%%%%%%%%%%%%%%%%%%%%%%%%% c $currentDate o $outputDate");

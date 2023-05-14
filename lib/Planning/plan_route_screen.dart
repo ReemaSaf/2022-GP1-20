@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls, await_only_futures
+// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls, await_only_futures, avoid_print
 
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ import 'components/ticket_widget.dart';
 
 class PlanRouteScreen extends StatefulWidget {
   final List<List<RouteModel>>? exproute;
+
   const PlanRouteScreen({super.key, this.exproute});
 
   @override
@@ -42,6 +43,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
   bool isShow = false;
   int selectedIndex = 0;
   int? selectdIndexColor;
+
   @override
   void initState() {
     getAllPossibleRoutes();
@@ -106,14 +108,15 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 this is the size of list ${widget.exproute!.length}");
     return Scaffold(
       backgroundColor: AppColors.blueDarkColor,
 
       appBar: AppBar(
         leading: IconButton(
-    icon:const Icon(Icons.arrow_back, color: Colors.white),
-    onPressed: () => Navigator.of(context).pop(),
-  ), 
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         elevation: 0.0,
@@ -126,7 +129,8 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
           ),
         ),
       ),
-      /// body
+
+  
       body: isShow == false
           ? const Center(child: CircularProgressIndicator())
           : Column(
@@ -291,6 +295,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                           ),
                         ),
 
+                        ///
                         SizedBox(height: height(context) * 0.02),
                         Text(
                           'Trip duration:',
@@ -307,6 +312,13 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                             padding: const EdgeInsets.only(bottom: 50),
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
+                              if(totalDuration[index]==null){
+                                totalDuration[index]=totalDuration[0]+1;
+                                totalDistance[index]=totalDistance[0]+1;
+                                setState(() {
+
+                                });
+                              }
                               return InkWell(
                                 onTap: () {
                                   setState(() {
@@ -315,40 +327,60 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                   });
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: height(context) * 0.02),
+                                  padding: EdgeInsets.only(
+                                      top: height(context) * 0.02),
                                   child: TicketWidget(
                                     width: width(context),
                                     height: 180.h,
                                     isCornerRounded: true,
                                     padding: EdgeInsets.all(10.h),
-                                    color:selectdIndexColor==index?AppColors.skyColor:Colors.white,
+                                    color: selectdIndexColor == index
+                                        ? AppColors.skyColor
+                                        : Colors.white,
                                     onPressed: () {
                                       setState(() {
-                                        if(selectdIndexColor!=index){
-                                          selectdIndexColor=index;
-                                          Future.delayed(const Duration(seconds: 1),() {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],routeNo:index,)));
-                                          },);
-                                        }else{
-                                          selectdIndexColor=null;
+                                        if (selectdIndexColor != index) {
+                                          selectdIndexColor = index;
+                                          Future.delayed(
+                                            const Duration(seconds: 1),
+                                            () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          RouteMap(
+                                                            route: widget
+                                                                    .exproute![
+                                                                index],
+                                                            time: totalDuration[
+                                                                index],
+                                                            routeNo: index,
+                                                          )));
+                                            },
+                                          );
+                                        } else {
+                                          selectdIndexColor = null;
                                         }
                                       });
                                     },
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               totalDuration[index],
                                               style: poppinsMedium.copyWith(
                                                 fontSize: 24.0,
-                                                color: selectdIndexColor==index?Colors.white:AppColors.skyColor,
+                                                color:
+                                                    selectdIndexColor == index
+                                                        ? Colors.white
+                                                        : AppColors.skyColor,
                                               ),
                                             ),
                                             SizedBox(width: 3.h),
@@ -356,7 +388,10 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                               totalDistance[index],
                                               style: poppinsMedium.copyWith(
                                                 fontSize: 24.0,
-                                                color: selectdIndexColor==index?Colors.white:AppColors.blueDarkColor,
+                                                color: selectdIndexColor ==
+                                                        index
+                                                    ? Colors.white
+                                                    : AppColors.blueDarkColor,
                                               ),
                                             ),
                                           ],
@@ -371,8 +406,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                             AppIcons.ticketcomponent,
                                             fit: BoxFit.fitWidth,
                                           ),
-                                        )
-                                        ,
+                                        ),
                                         SizedBox(
                                           height: 30.h,
                                         ),
@@ -381,13 +415,22 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => RouteMap(route: widget.exproute![index],time: totalDuration[index],routeNo: index,)));
+                                                    builder: (context) =>
+                                                        RouteMap(
+                                                          route: widget
+                                                              .exproute![index],
+                                                          time: totalDuration[
+                                                              index],
+                                                          routeNo: index,
+                                                        )));
                                           },
                                           child: Text(
                                             'Details',
                                             style: poppinsSemiBold.copyWith(
                                               fontSize: 14.sp,
-                                              color:selectdIndexColor==index?Colors.white: AppColors.skyColor,
+                                              color: selectdIndexColor == index
+                                                  ? Colors.white
+                                                  : AppColors.skyColor,
                                             ),
                                           ),
                                         ),

@@ -169,7 +169,6 @@ class _BuyTicketState extends State<BuyTicket> {
                   padding: const EdgeInsets.only(left: 20, top: 10),
                   width: double.infinity,
 
-
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -437,7 +436,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                 ),
                               ),
                               child: ListView(
-
                                     children: [
                                       RadioListTile(
                                         value: 1,
@@ -475,7 +473,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                             bottomLeft: Radius.circular(20.0),
                                           ),
                                         ),
-
 
                                         child: ListView(
                                           children: [

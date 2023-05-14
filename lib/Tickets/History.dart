@@ -85,16 +85,8 @@ class _HistoryTickets extends State<HistoryTickets> {
                               return const Center(
                                   child: CircularProgressIndicator());
                             }
-                            // if (snapshot.data == null) {
-                            //   return const Center(
-                            //     child: Text(
-                            //       'Login first....',
-                            //       style: TextStyle(
-                            //           fontSize: 19, color: Colors.white),
-                            //     ),
-                            //   );
-                            // }
                             UserModel? user = snapshot.data!;
+
                             return StreamBuilder<QuerySnapshot>(
                               stream: _firestore
                                   .collection('tickets')
@@ -184,3 +176,4 @@ class _HistoryTickets extends State<HistoryTickets> {
     );
   }
 }
+

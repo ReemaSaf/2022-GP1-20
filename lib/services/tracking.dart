@@ -14,6 +14,7 @@ import 'package:sekkah_app/helpers/bus_station_model.dart';
 import 'package:timelines/timelines.dart';
 import '../Homepage/providers/locationProvider.dart';
 import '../Homepage/viewmap.dart';
+import '../ReachedScreen.dart';
 import '../core/const.dart';
 import '../helpers/route_model.dart';
 import '../others/map_controller.dart';
@@ -132,7 +133,14 @@ class _TrackingState extends State<Tracking> {
               isDash: false,
               color: AppColors.blueDarkColor,
             )
-          : _polyline.add(Polyline(
+          :num==widget.route.length?await getDisPolyLine(
+        startLat: latlan[widget.route.length-1].latitude,
+        startLng: latlan[widget.route.length-1].longitude,
+        endLng: latlan[widget.route.length].longitude,
+        endLat: latlan[widget.route.length-1].latitude,
+        isDash: false,
+        color: AppColors.blueDarkColor,
+      ): _polyline.add(Polyline(
               color: AppColors.blueDarkColor,
               width: 3,
               polylineId: PolylineId(num.toString()),
@@ -182,33 +190,7 @@ class _TrackingState extends State<Tracking> {
         num = num + 1;
       });
       if (num == widget.route.length) {
-        showDialog(
-          barrierDismissible: false,
-          builder: (context) {
-            return Container(
-              height: 180,
-              width: 180,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Container(
-                    width: 120,
-                    height: 120,
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                        color: AppColors.blueDarkColor, shape: BoxShape.circle),
-                    child: const Icon(Icons.done, color: Colors.white),
-                  ),
-                  const SizedBox(height: 22),
-                  const Text("You Have Reach At Your Destination",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-                ],
-              ),
-            );
-          },
-          context: context,
-        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => const ReachedScreen(),));
         await const Duration(seconds: 3).delay();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const ViewMap()));
@@ -434,7 +416,7 @@ class _TrackingState extends State<Tracking> {
     return Column(
       children: [
         SizedBox(
-            height: (MediaQuery.of(context).size.height) * 0.8,
+            height: (MediaQuery.of(context).size.height) * 0.8 ,
             child: isLoad == true
                 ? const Center(child: CircularProgressIndicator())
                 : GoogleMap(

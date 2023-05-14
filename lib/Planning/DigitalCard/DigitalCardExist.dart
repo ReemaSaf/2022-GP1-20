@@ -1,12 +1,7 @@
 // ignore_for_file: file_names, avoid_print, empty_statements, prefer_interpolation_to_compose_strings, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
-import 'package:sekkah_app/constants/app_colors.dart';
-import 'package:sekkah_app/constants/app_sizes.dart';
-import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/constants/app_colors.dart';
 import 'package:sekkah_app/constants/app_sizes.dart';
 import 'package:sekkah_app/constants/app_text_styles.dart';
