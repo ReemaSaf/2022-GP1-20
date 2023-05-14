@@ -33,16 +33,11 @@ class ShowPolyLineOnMap extends StatefulWidget {
 
 class _ShowPolyLineOnMapState extends State<ShowPolyLineOnMap> {
   GoogleMapController? mapController;
-  // Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  // List<LatLng> markerList = [];
-  // final panelController = PanelController();
   MapStationsController controller = Get.put(MapStationsController());
   BitmapDescriptor? icon;
-  // bool get isAdmin =>
-  // FirebaseAuth.instance.currentUser!.email == "sekkahgp@gmail.com";
 
   RxBool showMetro = true.obs;
   RxBool showBus = true.obs;
@@ -57,7 +52,6 @@ class _ShowPolyLineOnMapState extends State<ShowPolyLineOnMap> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await setUserMarker();
     });
-    // _getPolyline();
   }
 
   Future<void> setUserMarker() async {

@@ -59,7 +59,6 @@ class _RouteMapState extends State<RouteMap> {
   bool isShow = false;
   bool isLoad = true;
 
-  // [LatLng(24.69480962821743,46.67990130161707),LatLng(24.696571105638657, 46.6837677588918),LatLng(24.737262838662325,46.66339794924775),LatLng(24.740640121256355,46.67113291220544)];
   Future<void> getCurrentLocation() async {
     Location location = Location();
     await location.getLocation().then((location) {
@@ -141,18 +140,6 @@ class _RouteMapState extends State<RouteMap> {
           endLng:latlan[1].longitude,
           endLat:latlan[1].latitude,
         );
-        // await _polyline.add(Polyline(
-        //     color: Color(0xff4CA7C3),
-        //     width: 3,
-        //     polylineId: const PolylineId('1'),
-        //     patterns: [
-        //       PatternItem.dash(8),
-        //       PatternItem.gap(15)
-        //     ],
-        //     points: [
-        //       LatLng(latlan[0].latitude, latlan[0].longitude),
-        //       LatLng(latlan[1].latitude, latlan[1].longitude)
-        //     ]));
       } else if (i == latlan.length - 1) {
         await getDisPolyLine(
           startLat:latlan[latlan.length - 2].latitude,
@@ -248,8 +235,6 @@ class _RouteMapState extends State<RouteMap> {
                       polylines: _polyline,
                       markers: {
                         ..._marker,
-                        // ...Set<Marker>.of(
-                        //     controller.allMarkers.values),
                         Marker(
                           markerId: const MarkerId('location'),
                           position: LatLng(currentLocation!.latitude!,
@@ -407,31 +392,6 @@ class _RouteMapState extends State<RouteMap> {
                                 ),
                             ),
                               const SizedBox(width: 6),
-                              // InkWell(
-                              //   onTap: () {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) => Tracking(
-                              //                   route: widget.route,
-                              //                   time: widget.time,
-                              //                 )));
-                              //   },
-                              //   child: Container(
-                              //     padding: const EdgeInsets.symmetric(
-                              //         horizontal: 12, vertical: 12),
-                              //     decoration: BoxDecoration(
-                              //         border:
-                              //             Border.all(color: const Color(0xff50B2CC)),
-                              //         borderRadius: BorderRadius.circular(18)),
-                              //     child: Row(
-                              //       children: const [
-                              //         Icon(Icons.near_me,
-                              //             color: Color(0xff50B2CC),size:16),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                         ],
@@ -565,19 +525,5 @@ class _RouteMapState extends State<RouteMap> {
       },
     );
   }
-
-// Future<void> initMarkers() async {
-//   controller.allStations.isEmpty ? null : await 2.seconds.delay();
-//   await controller.getAllContains();
-//   // await controller.getAllLines();
-//   // controller.setPolyLineData();
-//   for (var element in controller.allStations) {
-//     controller.initStationMarkers(element, "Station_${element.Name}");
-//   }
-//   for (var element in controller.allBuses) {
-//     controller.initBusMarkers(element, "Bus_${element.Number}");
-//   }
-//   controller.setAllMarkers();
-// }
 }
 

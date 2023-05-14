@@ -14,7 +14,6 @@ import 'package:sekkah_app/data/constants.dart';
 import 'package:sekkah_app/data/typography.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
-import 'package:sekkah_app/services/firebase_services.dart';
 
 import 'profile_textfeil.dart';
 import '../constants/app_colors.dart';
@@ -47,7 +46,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     firstName.text = widget.user.firstName;
     lastName.text = widget.user.lastName;
     email.text = widget.user.email;
-    imageUrl = widget.user.imageUrl??'';
 
     super.initState();
   }
@@ -101,13 +99,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         color: CustomColor.kblack,
                                         fontWeight:
                                             CustomFontWeight.kMediumFontWeight)),
-                            //   SizedBox(
-                            //   width: 8.h,
-                            // ),
-                            //   Icon(Icons.edit,
-                            //   size: 14.sp,
-                            //   color: CustomColor.kblack ,
-                            //   ),
                               ],
                             ),
                             SizedBox(
@@ -132,13 +123,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         color: CustomColor.kblack,
                                         fontWeight:
                                             CustomFontWeight.kMediumFontWeight)),
-                            //      SizedBox(
-                            //   width: 8.h,
-                            // ),
-                            //      Icon(Icons.edit,
-                            //   size: 14.sp,
-                            //   color: CustomColor.kblack ,
-                            //   ),
                               ],
                             ),
                             SizedBox(
@@ -190,14 +174,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               email: email.text,
                                               firstName: firstName.text,
                                               lastName: lastName.text,
-                                              imageUrl: image != null
-                                              //This Function is used To Upload Imagefile to Firebase storage
-                                                  ? await FirebaseStorageServices
-                                                      .uploadToStorage(
-                                                          file: image!,//File Name
-                                                          folderName: 'Users',//Folder Name in which Image Store
-                                                          )
-                                                  : widget.user.imageUrl,
                                               password: widget.user.password));
                                 }
                               },

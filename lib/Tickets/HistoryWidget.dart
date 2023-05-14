@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api, unnecessary_new
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api, unnecessary_new, unnecessary_brace_in_string_interps
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -45,8 +45,10 @@ class _TripDurationBoxState extends State<TripDurationBox> {
   var inputFormat = DateFormat('dd/MM/yyyy HH:mm');
   late var inputDate = inputFormat.parse(
       '${widget.date.day}/${widget.date.month}/${widget.date.year} ${widget.date.hour}:${widget.date.minute}');
-  var outputFormat = DateFormat('dd MMM, hh:mm a');
+  var outputFormat = DateFormat('dd MMM');
   late var outputDate = outputFormat.format(inputDate);
+  var showFormat = DateFormat('dd MMM HH:mm');
+  late var showDate=showFormat.format(inputDate);
   DateTime now = new DateTime.now();
   late var currentDate = outputFormat.format(now);
   var isActive = false;
@@ -76,7 +78,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
             width: width(context),
             height: 200,
             isCornerRounded: true,
-            //padding: EdgeInsets.all(10),
             color: AppColors.whiteColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,7 +110,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: isActive ? Colors.green : Colors.red,
-                                    //width: 5,
                                   ),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0),
@@ -122,7 +122,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
-                                    //width: 86,
+                                    //: 86,
                                     child: Text(
                                       isActive ? "Active" : 'Expired',
                                       style: poppinsSemiBold.copyWith(
@@ -140,46 +140,68 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                           isActive
                               ? InkWell(
                                   onTap: () async {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the route ${routeListList.length}");
-                                    await createRoute(
-                                      originLatLong: widget.originLatLong,
-                                      originAddress: widget.start,
-                                      destinationLatLang:
+                                    print(
+                                        "===================================== s oooo $checkTime");
+                                    print(
+                                        "===============================================${currentTime - checkTime}");
+                                    print("this is the date %%%%%%%%%%%%%%%%%%%%%%%%%%%% c $currentDate o $outputDate");
+                                    if(currentDate == outputDate){
+                                      print("same date %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55");
+                                      if(checkTime - currentTime == 1 ||
+                                          checkTime - currentTime < 0){
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+                                        print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the route ${routeListList.length}");
+                                        await createRoute(
+                                          originLatLong: widget.originLatLong,
+                                          originAddress: widget.start,
+                                          destinationLatLang:
                                           widget.destinationLatLang,
-                                      destinationAddress: widget.end,
-                                    ).then((value) {
-                                      setState(() {
-                                        routeListList = value;
-                                      });
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      print("this is the route ${routeListList.length}");
+                                          destinationAddress: widget.end,
+                                        ).then((value) {
+                                          setState(() {
+                                            routeListList = value;
+                                          });
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          print("this is the route ${routeListList.length}");
 
-                                      if (currentDate == outputDate) {
-                                        if (checkTime - currentTime == 1 ||
-                                            checkTime - currentTime < 0) {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Tracking(
-                                                        route: routeListList[
-                                                        widget.routeNo],
-                                                        time: widget.timeTaken,
-                                                      )));
+                                          if (currentDate == outputDate) {
+                                            if (checkTime - currentTime == 1 ||
+                                                checkTime - currentTime < 0) {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Tracking(
+                                                            route: routeListList[
+                                                            widget.routeNo],
+                                                            time: widget.timeTaken,
+                                                          )));
 
-                                        } else {
-                                          Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
-                                              colorText: Colors.white,
-                                              backgroundColor:
-                                              const Color.fromARGB(255, 204, 84, 80));
-                                        }
+                                            } else {
+                                              Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
+                                                  colorText: Colors.white,
+                                                  backgroundColor:
+                                                  const Color.fromARGB(255, 204, 84, 80));
+                                            }
+                                          }
+                                        });
+                                      }else{
+                                        Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
+                                            colorText: Colors.white,
+                                            backgroundColor:
+                                            const Color.fromARGB(255, 204, 84, 80));
                                       }
-                                    });
+                                    }else{
+                                      Get.snackbar('Alert', 'Tracking will be available one hour ahead of your trip',
+                                          colorText: Colors.white,
+                                          backgroundColor:
+                                          const Color.fromARGB(255, 204, 84, 80));
+                                    }
+
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -257,11 +279,9 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                           ),
                         ),
 
-                        //SizedBox(width: 2),
 
                         SizedBox(
                           height: 14,
-                          // width: 20,
                           child: Image.asset(
                             'assets/icons/traincomponent.png',
                             fit: BoxFit.fitWidth,
@@ -304,7 +324,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.greyColor,
-                                    //width: 5,
                                   ),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0),
@@ -337,7 +356,6 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.greyColor,
-                                    //width: 5,
                                   ),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0),
@@ -350,10 +368,9 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                     const Icon(Icons.timer_sharp,
                                         size: 20, color: AppColors.skyColor),
                                     Container(
-                                      // alignment: Alignment.center,
                                       width: 120,
                                       child: Text(
-                                        outputDate,
+                                        showDate,
                                         style: poppinsSemiBold.copyWith(
                                           fontSize: 11,
                                           color: AppColors.blueDarkColor,
@@ -430,9 +447,6 @@ class _TicketWidgetState extends State<TicketWidget> {
           decoration: BoxDecoration(
             boxShadow: widget.shadow,
             color: widget.color,
-            // borderRadius: widget.isCornerRounded
-            //     ? BorderRadius.circular(20.0)
-            //     : BorderRadius.circular(0.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),

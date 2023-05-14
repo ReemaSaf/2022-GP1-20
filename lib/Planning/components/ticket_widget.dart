@@ -47,9 +47,6 @@ class _TicketWidgetState extends State<TicketWidget> {
           decoration: BoxDecoration(
             boxShadow: widget.shadow,
             color: widget.color,
-            // borderRadius: widget.isCornerRounded
-            //     ? BorderRadius.circular(20.0)
-            //     : BorderRadius.circular(0.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),

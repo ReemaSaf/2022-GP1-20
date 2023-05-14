@@ -273,10 +273,6 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                         horizontal: height(context) * 0.02),
                     decoration: BoxDecoration(
                       color: const Color(0xffFAFAFA).withOpacity(0.98),
-                      // borderRadius: const BorderRadius.only(
-                      //   topRight: Radius.circular(40.0),
-                      //   topLeft: Radius.circular(40.0),
-                      // ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +291,6 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                           ),
                         ),
 
-                        ///
                         SizedBox(height: height(context) * 0.02),
                         Text(
                           'Trip duration:',
@@ -377,55 +372,6 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                             fit: BoxFit.fitWidth,
                                           ),
                                         )
-                                        // Row(
-                                        //   children:[
-                                        //     Container(
-                                        //       width: 30,
-                                        //       height: 30,
-                                        //       margin:const  EdgeInsets.only(right: 6),
-                                        //       padding:const EdgeInsets.all(6),
-                                        //       alignment: Alignment.center,
-                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
-                                        //       child: Image.asset("assets/icons/walk.png"),
-                                        //     ),
-                                        //     widget.index==1?Container(
-                                        //       width: 30,
-                                        //       height: 30,
-                                        //       margin:const  EdgeInsets.only(right: 6),
-                                        //       padding:const EdgeInsets.all(6),
-                                        //       alignment: Alignment.center,
-                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
-                                        //       child: Image.asset("assets/icons/bus.png"),
-                                        //     ):SizedBox(),
-                                        //     Container(
-                                        //       width: 30,
-                                        //       height: 30,
-                                        //       margin:const  EdgeInsets.only(right: 6),
-                                        //       padding:const EdgeInsets.all(6),
-                                        //       alignment: Alignment.center,
-                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
-                                        //       child:Image.asset("assets/icons/metro.png"),
-                                        //     ),
-                                        //     Container(
-                                        //       width: 30,
-                                        //       height: 30,
-                                        //       margin:const  EdgeInsets.only(right: 6),
-                                        //       padding:const EdgeInsets.all(6),
-                                        //       alignment: Alignment.center,
-                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
-                                        //       child:Image.asset("assets/icons/metro.png"),
-                                        //     ),
-                                        //     Container(
-                                        //       width: 30,
-                                        //       height: 30,
-                                        //       margin:const  EdgeInsets.only(right: 6),
-                                        //       padding:const EdgeInsets.all(6),
-                                        //       alignment: Alignment.center,
-                                        //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.black.withOpacity(0.5)),
-                                        //       child: Image.asset("assets/icons/walk.png"),
-                                        //     ),
-                                        //   ],
-                                        // )
                                         ,
                                         SizedBox(
                                           height: 30.h,

@@ -127,7 +127,6 @@ Future<List<RouteModel>?> busRoute({searchname? start,searchname? end}) async {
           if(element==e){
             print('inter line is $e =============================');
             intersectionLineName.add(e);
-            // intersectionLineName=e;
           }
         }
       }

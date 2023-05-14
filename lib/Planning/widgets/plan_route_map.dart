@@ -52,20 +52,9 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
     setState(() {
 
     });
-    //   await CurrentLocationLat().then((value) {
-    //   currentLocationLat = value;
-    //   setState(() {});
-    // });
-    // await  CurrentLocationLng().then((value) {
-    //   currentLocationLng = value;
-    //   setState(() {});
-    // });
     print("==================================== this is the current location ====== $currentLocationLat 4444 $currentLocationLng");
   }
 
-  // void _onMapCreated(GoogleMapController controller) async {
-  //   mapController = controller;
-  // }
 
   _addPolyLine() {
     PolylineId id = const PolylineId("poly");

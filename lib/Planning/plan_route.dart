@@ -228,8 +228,8 @@ class _PlanARoute extends State<PlanARoute> {
                 child: AspectRatio(
                   aspectRatio: Get.width /
                       (isFromFieldFocus || isToFieldFocus
-                          ? 600.h //Get.height*0.5-10
-                          : 319.h //Get.height * 0.44
+                          ? 600.h 
+                          : 319.h 
                       ),
                   child: Container(
                     decoration: const BoxDecoration(
@@ -438,26 +438,8 @@ class _PlanARoute extends State<PlanARoute> {
                                           color: CustomColor.ksemigrey),
                                     ),
                                     SizedBox(width: Get.width * 0.8 - 12),
-                                    // InkWell(
-                                    //   onTap: () async {
-                                    //     setState(() {
-                                    //       isFromFieldFocus = true;
-                                    //     });
-                                    //     await onExchange();
-                                    //     await Future.delayed(
-                                    //         const Duration(milliseconds: 50));
-                                    //     setState(() {
-                                    //       isFromFieldFocus = false;
-                                    //     });
-                                    //   },
-                                    //   child: Image.asset(
-                                    //       "assets/images/arrows.png",
-                                    //       height: 30,
-                                    //       width: 30),
-                                    // )
                                   ],
                                 ),
-                                //const SizedBox(height: 3),
                                 Row(
                                   children: [
                                     FocusScope(

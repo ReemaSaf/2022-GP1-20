@@ -7,7 +7,6 @@ class UserModel {
   String firstName;
   String lastName;
   String? password;
-  String? imageUrl;
   String? passType;
 
   String Pass_Expired_date = "0";
@@ -16,7 +15,7 @@ class UserModel {
       required this.firstName,
       required this.lastName,
       this.password,
-      this.imageUrl,
+
       this.passType,
       
       this.Pass_Expired_date = "0"});
@@ -29,9 +28,6 @@ class UserModel {
     result.addAll({'lastName': lastName});
     if (password != null) {
       result.addAll({'password': password});
-    }
-    if (imageUrl != null) {
-      result.addAll({'imageUrl': imageUrl});
     }
     if (passType != null) {
       result.addAll({'passType': passType});
@@ -49,7 +45,6 @@ class UserModel {
       firstName: map['firstName'] ?? '',
       lastName: map['lastName'] ?? '',
       password: map['password'],
-      imageUrl: map['imageUrl'],
       Pass_Expired_date: map['Pass_Expired_date'] ?? "0",
       passType: map['passType'] ?? '',
       

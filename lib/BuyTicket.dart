@@ -91,12 +91,6 @@ class _BuyTicketState extends State<BuyTicket> {
   String passtime = "";
   bool isTimeSelected = false;
 
-// DateTime _dateTime = DateTime(
-  //     DateTime.now().year,
-  //     DateTime.now().month,
-  //     DateTime.now().day,
-  //     DateTime.now().hour,
-  //     (((DateTime.now().minute / 15).round() + 1) * 15) % 60);
   DateTime _dateTime = DateTime.now();
 
   
@@ -173,13 +167,10 @@ class _BuyTicketState extends State<BuyTicket> {
                     ),
                   ),
                   padding: const EdgeInsets.only(left: 20, top: 10),
-                  // margin: const EdgeInsets.only(bottom: 20),
                   width: double.infinity,
 
-                  //  height: height(context) * 0.8,
 
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           width: width(buildContext),
@@ -194,7 +185,6 @@ class _BuyTicketState extends State<BuyTicket> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: 12.h,
-                                    //left: 5.w,
                                     right: 5.w),
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment
@@ -310,7 +300,6 @@ class _BuyTicketState extends State<BuyTicket> {
                     const Padding(padding: EdgeInsets.only(top: 20, left: 20)),
                     Text(
                       'Time:',
-                      // textAlign: TextAlign.left,
                       style: poppinsMedium.copyWith(
                         fontSize: 15.0,
                         color: AppColors.blueDarkColor,
@@ -319,14 +308,6 @@ class _BuyTicketState extends State<BuyTicket> {
                     ButtonWidget(
                         time: time,
                          onClicked: () async {
-                           // final value =
-                           //     DateFormat('dd/MM/yyyy HH:mm').format(_dateTime);
-                           //     time= value;
-                           //     setState(() {
-                           //
-                           //      });
-                           //
-                           // Navigator.pop(buildContext);
                            _dateTime = DateTime.now();
                            if (_dateTime.minute >= 0 && _dateTime.minute <= 15) {
                              _dateTime = DateTime(_dateTime.year, _dateTime.month,
@@ -369,7 +350,6 @@ class _BuyTicketState extends State<BuyTicket> {
                     
                     Text(
                       'Passengers:',
-                      // textAlign: TextAlign.left,
                       style: poppinsMedium.copyWith(
                         fontSize: 15.0,
                         color: AppColors.blueDarkColor,
@@ -433,7 +413,6 @@ class _BuyTicketState extends State<BuyTicket> {
                     ),
                     Text(
                       'Payment:',
-                      // textAlign: TextAlign.left,
                       style: poppinsMedium.copyWith(
                         fontSize: 15.0,
                         color: AppColors.blueDarkColor,
@@ -458,11 +437,9 @@ class _BuyTicketState extends State<BuyTicket> {
                                 ),
                               ),
                               child: ListView(
-                                // padding: EdgeInsets.only(left: 10,bottom: 15),
 
                                     children: [
                                       RadioListTile(
-                                        // contentPadding: EdgeInsets.only(bottom: 15,left: 10),
                                         value: 1,
 
                                         activeColor: AppColors.blueDarkColor,
@@ -499,8 +476,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                           ),
                                         ),
 
-                                        // padding: EdgeInsets.only(bottom: 10),
-                                        //alignment: Alignment.center,
 
                                         child: ListView(
                                           children: [
@@ -677,10 +652,6 @@ class _BuyTicketState extends State<BuyTicket> {
                                                     },
                                                     "description":
                                                     "To Buy A Metro Card.",
-                                                    // "payment_options": {
-                                                    //   "allowed_payment_method":
-                                                    //       "INSTANT_FUNDING_SOURCE"
-                                                    // },
                                                     "item_list": {
                                                       "items": [
                                                         {

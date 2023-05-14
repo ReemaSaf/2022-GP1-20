@@ -149,7 +149,7 @@ class _TrackingState extends State<Tracking> {
             _marker.add(Marker(
                 markerId: MarkerId(i.toString()),
                 visible: false,
-                icon: widget.route[i].type=="Buss"?busIcon:metroIcon,
+                icon: widget.route[i].type=="Bus"?busIcon:metroIcon,
                 infoWindow:
                     InfoWindow(title: 'Station', snippet: widget.route[i].name),
                 position: latlan[i]));
@@ -214,9 +214,6 @@ class _TrackingState extends State<Tracking> {
             context, MaterialPageRoute(builder: (context) => const ViewMap()));
       }
     }
-    // for( var i = 0; i<=widget.route.length; i++ ) {
-    //
-    // }
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -304,7 +301,7 @@ class _TrackingState extends State<Tracking> {
           _marker.add(Marker(
               markerId: MarkerId(i.toString()),
               visible: true,
-              icon: metroIcon,
+              icon: widget.route[i].type == 'Bus'?busIcon:metroIcon,
               infoWindow: InfoWindow(
                   title: widget.route[i].type == 'Bus'
                       ? 'Bus Station'
@@ -332,20 +329,6 @@ class _TrackingState extends State<Tracking> {
           endLat: latlan[1].latitude,
         );
       } else if (i == latlan.length - 1) {
-        // await _polyline.add(Polyline(
-        //     color: Color(0xff4CA7C3),
-        //     width: 3,
-        //     polylineId: const PolylineId('1'),
-        //     patterns: [
-        //       PatternItem.dash(8),
-        //       PatternItem.gap(15)
-        //     ],
-        //     points: [
-        //       LatLng(latlan[latlan.length - 2].latitude,
-        //           latlan[latlan.length - 2].longitude),
-        //       LatLng(latlan[latlan.length - 1].latitude,
-        //           latlan[latlan.length - 1].longitude)
-        //     ]));
         await getDisPolyLine(
           startLat: latlan[latlan.length - 2].latitude,
           startLng: latlan[latlan.length - 2].longitude,
@@ -451,15 +434,13 @@ class _TrackingState extends State<Tracking> {
     return Column(
       children: [
         SizedBox(
-            height: (MediaQuery.of(context).size.height) * 0.9,
+            height: (MediaQuery.of(context).size.height) * 0.8,
             child: isLoad == true
                 ? const Center(child: CircularProgressIndicator())
                 : GoogleMap(
                     polylines: _polyline,
                     markers: {
                       ..._marker,
-                      // ...Set<Marker>.of(
-                      //     controller.allMarkers.values),
                       Marker(
                         markerId: const MarkerId('location'),
                         position: LatLng(currentLocation!.latitude!,
@@ -589,23 +570,6 @@ class _TrackingState extends State<Tracking> {
                                                             FontWeight.bold))
                                           ],
                                         ),
-                                  // SizedBox(
-                                  //   width: 12,
-                                  // ),
-                                  // Text('|',
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 14)),
-                                  // SizedBox(
-                                  //   width: 12,
-                                  // ),
-                                  // Text(
-                                  //   widget.time!,
-                                  //   style: const TextStyle(
-                                  //       fontWeight: FontWeight.bold,
-                                  //       color: AppColors.skyColor,
-                                  //       fontSize: 30),
-                                  // ),
                                 ],
                               ),
                               Padding(
@@ -883,19 +847,3 @@ class DelayWidget extends StatelessWidget {
     );
   }
 }
-
-
-// Future<void> initMarkers() async {
-//   controller.allStations.isEmpty ? null : await 2.seconds.delay();
-//   await controller.getAllContains();
-//   // await controller.getAllLines();
-//   // controller.setPolyLineData();
-//   for (var element in controller.allStations) {
-//     controller.initStationMarkers(element, "Station_${element.Name}");
-//   }
-//   for (var element in controller.allBuses) {
-//     controller.initBusMarkers(element, "Bus_${element.Number}");
-//   }
-//   controller.setAllMarkers();
-// }
-

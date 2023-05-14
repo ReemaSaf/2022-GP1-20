@@ -35,7 +35,6 @@ class ProfileButton extends StatelessWidget {
                   width: 24.h,
                   child: Image.asset(
                     imageurl,
-                    //color: CustomColor.kprimaryblue,
                   ),
                 ),
                 SizedBox(

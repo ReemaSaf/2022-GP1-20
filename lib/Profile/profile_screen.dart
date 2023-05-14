@@ -57,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       }
                       UserModel? user =
-                          snapshot.data!; // Snapshot to UserModel!!
+                          snapshot.data!; // Snapshot to UserModel
                       return SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,15 +195,3 @@ class ProfileScreen extends StatelessWidget {
                     }));
   }
 }
-
-// AppBar(
-//   backgroundColor: Colors.transparent,
-//   automaticallyImplyLeading: false,
-//   elevation: 0.0,
-//   centerTitle: true,
-//   title: Text(
-//     'My Profile',
-//     style: poppinsMedium.copyWith(
-//         fontSize: 18.0, color: AppColors.whiteColor),
-// ),
-//),

@@ -59,11 +59,6 @@ class SignUpForm extends StatelessWidget {
                 if (val!.isEmpty) {
                   return 'Please Enter your first name.';
                 }
-              
-              /*  if (firstNameController.text.length < 3) {
-                  return 'First name must be at least 3 characters.';
-                }
-              */
 
                 return null;
               },
@@ -88,11 +83,6 @@ class SignUpForm extends StatelessWidget {
                 if (val!.isEmpty) {
                   return 'Please Enter your last name.';
                 }
-               /*
-                if (lastNameController.text.length < 3) {
-                  return 'Last name must be at least 3 characters.';
-                }
-               */
               
                 return null;
               },

@@ -64,14 +64,13 @@ class HelpCenter extends StatelessWidget {
                       width: 36.h,
                       child: SvgPicture.asset(
                        CustomAssets.arrowdown
-                        //color: CustomColor.kprimaryblue,
                       ),),
                       SizedBox(
                           height: 44.h,
                         ),
                         InkWell(
                           onTap: () async {
-          // I add the link in uri , and then Using Url launcher I call this link.
+          // added the link in uri , and then Using Url launcher called this link.
           var url = Uri.parse("https://twitter.com/sekkahsa?s=21&t=IwDOEhH6SEF0naUAEBydvQ");
 if (await canLaunchUrl(url)) {
   await launchUrl(url);

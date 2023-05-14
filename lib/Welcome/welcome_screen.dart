@@ -28,45 +28,6 @@ class MobileWelcomeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-       /* 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            
-            children: [
-              const Spacer(),
-              const SizedBox(
-                width: 32,
-              ),
-               Column(
-                children: [
-                  IconButton(
-                    iconSize: 70,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      Get.to(const AdminLoginScreen());
-                    },
-                    style: IconButton.styleFrom(
-                        backgroundColor: greenColor, elevation: 0),
-                    icon: const Icon(Icons.admin_panel_settings_rounded,
-                        color: blueColor),
-                  ),
-                  Text(
-                    "Admin".toUpperCase(),
-                    // ignore: prefer_const_constructors
-                    style: TextStyle(
-                      color: blueColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17,
-                    ),
-                  )
-                ],
-              ), 
-              const Spacer(),
-            ], 
-          ), 
-        ), */
         const SizedBox(
           height: 40,
         ),

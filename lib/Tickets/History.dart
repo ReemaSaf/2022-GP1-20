@@ -115,7 +115,6 @@ class _HistoryTickets extends State<HistoryTickets> {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 2.0,
-                                     // vertical: 5
                                       ),
                                   child: ListView.builder(
                                       itemCount: snapshot.data!.size,

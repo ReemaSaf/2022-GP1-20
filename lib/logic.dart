@@ -18,14 +18,7 @@ init({double? startlat,double? startlng,double? endLat,double? endLng,String? st
   distance? startdis;
   distance? enddis;
   bool? isAdd;
-  // name.forEach((element) {
-  //   if(element.name==widget.from){
-  //     start=element;
-  //     exproute.add(RouteModel(type: 'walk',isShow: true,name:start!.name!,lat: start!.lat!,lng:start!.lng!));
-  //   }else if(element.name==widget.to){
-  //     end=element;
-  //   }
-  // });
+
   start=searchname(name: startname,lat: startlat,lng: startlng);
   end=searchname(name: endname,lat: endLat,lng: endLng);
   await metroService.metroStation().then((v){

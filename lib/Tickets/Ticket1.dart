@@ -1,13 +1,17 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, file_names, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_const_literals_to_create_immutables, file_names, unused_import, prefer_interpolation_to_compose_strings, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
+import 'package:sekkah_app/constants/app_sizes.dart';
+import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 
 import '../Homepage/components/user_nav.dart';
-import '../Planning/DigitalCard/DigitalCardExist.dart';
 import '../helpers/route_model.dart';
 import 'TicketWidget.dart';
 
@@ -103,7 +107,6 @@ class _Tickets extends State<Tickets> {
                         ),
                         const SizedBox(height: 100),
                         SizedBox(
-                          // height: 35, //height of button
                           width: 200,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -127,10 +130,7 @@ class _Tickets extends State<Tickets> {
                   ),
                    ),
                 
-                // const Expanded(
-                //     child: Scaffold(
-                //   backgroundColor: Color(0xFFFAFAFA),
-                // ))
+               
               ],
             );
           },

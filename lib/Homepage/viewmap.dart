@@ -12,8 +12,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:sekkah_app/Homepage/widget/panel_widget.dart';
 import 'package:sekkah_app/others/constants.dart';
 import '../helpers/metro_station_model.dart';
-// ignore: unused_import
-import '../others/auth_controller.dart';
 import 'providers/locationProvider.dart';
 
 class ViewMap extends StatefulWidget {
@@ -211,8 +209,6 @@ class _ViewMap extends State<ViewMap> {
                     snapshots.snapshot2.connectionState ==
                         ConnectionState.waiting) {
                           return Container();
-                  // return const Center(child: Text("1"));
-                  // return const Center(child: CircularProgressIndicator());
                 }
                 controller.setAllStations = snapshots.snapshot1.data ?? [];
                 controller.setAllBuses = snapshots.snapshot2.data ?? [];
@@ -227,9 +223,7 @@ class _ViewMap extends State<ViewMap> {
                     builder: (context, markersSnapshot) {
                       if (markersSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        // return const Center(child: Text("2"));
                         return Container();
-                        // return const Center(child: CircularProgressIndicator());
                       }
 
                       return StreamBuilder<LocationData>(

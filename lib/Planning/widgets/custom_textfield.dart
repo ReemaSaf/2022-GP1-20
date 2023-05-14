@@ -44,8 +44,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
           color: CustomColor.ksemigrey),
       readOnly: widget.showCalenderIcon,
       decoration: InputDecoration(
-        // prefixIcon:
-        //     Icon(widget.prefixicon, color: focusNode.hasFocus?CustomColor.kprimaryblue:CustomColor.kgrey900, size: 18.sp),
         suffixIcon: widget.showCalenderIcon
             ? Padding(
                 padding: const EdgeInsets.all(12),

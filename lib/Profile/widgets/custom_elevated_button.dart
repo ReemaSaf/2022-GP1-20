@@ -35,7 +35,6 @@ class CustomElevatedButton extends StatelessWidget {
                 width: 24.h,
                 child: SvgPicture.asset(
                  iconUrl,
-                  //color: CustomColor.kprimaryblue,
                 ),
               ),
               SizedBox(
