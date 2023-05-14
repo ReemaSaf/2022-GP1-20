@@ -58,10 +58,15 @@ class _HistoryTickets extends State<HistoryTickets> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                           topLeft: Radius.circular(40))),
-                  child: auth.currentUser == null
+                  child: auth.currentUser == null ||
+                          auth.currentUser!.isAnonymous
                       ? const Center(
                           child: Center(
-                            child: Text('No tickets Founded!'),
+                            child: Text(
+                              '',
+                              style:
+                                  TextStyle(fontSize: 19, color: Colors.white),
+                            ),
                           ),
                         )
                       : StreamBuilder<UserModel>(
@@ -80,8 +85,16 @@ class _HistoryTickets extends State<HistoryTickets> {
                               return const Center(
                                   child: CircularProgressIndicator());
                             }
+                            // if (snapshot.data == null) {
+                            //   return const Center(
+                            //     child: Text(
+                            //       'Login first....',
+                            //       style: TextStyle(
+                            //           fontSize: 19, color: Colors.white),
+                            //     ),
+                            //   );
+                            // }
                             UserModel? user = snapshot.data!;
-
                             return StreamBuilder<QuerySnapshot>(
                               stream: _firestore
                                   .collection('tickets')
@@ -91,23 +104,39 @@ class _HistoryTickets extends State<HistoryTickets> {
                                   .snapshots(), // Eg a firebase query
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData) {
-                                  return const Center(
+                                  return  Center(
                                     child: Center(
-                                      child: Text(''),
+                                      child: Text(
+                                        '',
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 14.0,
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
                                     ),
                                   );
                                 }
-                                if(snapshot.data!.docs.isEmpty){
-                                  return const Center(
+                                if (snapshot.data!.docs.isEmpty) {
+                                  return Center(
                                     child: Center(
-                                      child: Text('No Tickets' ,style: TextStyle(color: AppColors.whiteColor ),),
+                                      child: Text(
+                                        'Begin your journey and book your first trip!',
+                                        style: poppinsMedium.copyWith(
+                                          fontSize: 14.0,
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
                                     ),
                                   );
                                 }
-                                if(snapshot.hasError){
+                                if (snapshot.hasError) {
                                   return const Center(
                                     child: Center(
-                                      child: Text('Something went wrong' ,style: TextStyle(color: AppColors.whiteColor),),
+                                      child: Text(
+                                        'Something went wrong',
+                                        style: TextStyle(
+                                            color: AppColors.whiteColor),
+                                      ),
                                     ),
                                   );
                                 }
@@ -155,4 +184,3 @@ class _HistoryTickets extends State<HistoryTickets> {
     );
   }
 }
-

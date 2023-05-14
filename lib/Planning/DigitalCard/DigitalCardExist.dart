@@ -7,6 +7,9 @@ import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:sekkah_app/constants/app_colors.dart';
 import 'package:sekkah_app/constants/app_sizes.dart';
 import 'package:sekkah_app/constants/app_text_styles.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
+import 'package:sekkah_app/constants/app_sizes.dart';
+import 'package:sekkah_app/constants/app_text_styles.dart';
 import 'package:sekkah_app/others/auth_controller.dart';
 
 import '../../Profile/widgets/show_loading_dialoges.dart';
