@@ -208,7 +208,7 @@ class _ViewMap extends State<ViewMap> {
                         ConnectionState.waiting ||
                     snapshots.snapshot2.connectionState ==
                         ConnectionState.waiting) {
-                          return Container();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 controller.setAllStations = snapshots.snapshot1.data ?? [];
                 controller.setAllBuses = snapshots.snapshot2.data ?? [];
@@ -223,7 +223,7 @@ class _ViewMap extends State<ViewMap> {
                     builder: (context, markersSnapshot) {
                       if (markersSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Container();
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       return StreamBuilder<LocationData>(

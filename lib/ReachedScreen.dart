@@ -1,10 +1,12 @@
-// ignore_for_file: file_names
+// ignore_for_file: unused_import, sized_box_for_whitespace, file_names
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'Homepage/components/user_nav.dart';
 import 'Homepage/viewmap.dart';
+import 'Planning/DigitalCard/DigitalCardExist.dart';
 import 'constants/app_colors.dart';
 
 class ReachedScreen extends StatefulWidget {
@@ -26,7 +28,7 @@ class _ReachedScreenState extends State<ReachedScreen> {
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                    const ViewMap()
+                    const NavScreen(inh:1)
             )
         )
     );
@@ -34,23 +36,27 @@ class _ReachedScreenState extends State<ReachedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 120,
-            height: 120,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-                color: AppColors.blueDarkColor, shape: BoxShape.circle),
-            child: const Icon(Icons.done, color: Colors.white),
-          ),
-          const SizedBox(height: 22),
-          const Text("You Have Reach At Your Destination",
-              style:
-              TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-        ],
+      body: Container(
+        height:MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 120,
+              height: 120,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  color: AppColors.blueDarkColor, shape: BoxShape.circle),
+              child: const Icon(Icons.done, color: Colors.white),
+            ),
+            const SizedBox(height: 22),
+            const Text("You reached your Destination.",
+                style:
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+          ],
+        ),
       ),
     );
   }

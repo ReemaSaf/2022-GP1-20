@@ -231,7 +231,7 @@ class AuthController {
   ) async {
     try {
       showLoadingDialog(
-          message: "Processing..."); //Mainly Show processing dialog.
+          message: "Processing..."); //Mainly Show prosseing dialog.
       final user =
           FirebaseAuth.instance.currentUser; //Getting firebase auth instance
 

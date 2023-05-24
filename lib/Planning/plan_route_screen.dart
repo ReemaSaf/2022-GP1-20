@@ -24,8 +24,12 @@ import 'components/ticket_widget.dart';
 
 class PlanRouteScreen extends StatefulWidget {
   final List<List<RouteModel>>? exproute;
+  final List originLatLong;
+  final List destinationLatLang;
+  final String originAddress;
+  final String destinationAddress;
 
-  const PlanRouteScreen({super.key, this.exproute});
+  const PlanRouteScreen({super.key, this.exproute,required this.destinationLatLang,required this.destinationAddress,required this.originLatLong,required this.originAddress});
 
   @override
   State<PlanRouteScreen> createState() => _PlanRouteScreenState();
@@ -66,12 +70,12 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
 
     final response = await directions.directionsWithLocation(
       Location(
-        lat: Get.arguments[0][0].toDouble(),
-        lng: Get.arguments[0][1].toDouble(),
+        lat: widget.originLatLong[0].toDouble(),
+        lng: widget.originLatLong[1].toDouble(),
       ),
       Location(
-        lat: Get.arguments[1][0].toDouble(),
-        lng: Get.arguments[1][1].toDouble(),
+        lat: widget.destinationLatLang[0].toDouble(),
+        lng: widget.destinationLatLang[1].toDouble(),
       ),
       alternatives: true,
     );
@@ -94,9 +98,9 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
       });
     });
     await const Duration(seconds: 3);
-    setState(() {
-      isShow = true;
-    });
+     setState(() {
+       isShow = true;
+     });
   }
 
   @override
@@ -106,8 +110,23 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    if(widget.exproute!.length>totalDuration.length){
+      widget.exproute!.forEach((element) {
+        totalDuration.add(totalDuration[0]);
+        totalDistance.add(totalDistance[0]);
+      });
+      setState(() {
+        isShow = true;
+      });
+
+    }else{
+      setState(() {
+        isShow = true;
+      });
+    }
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 this is the size of list ${widget.exproute!.length}");
     return Scaffold(
       backgroundColor: AppColors.blueDarkColor,
@@ -130,7 +149,7 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
         ),
       ),
 
-  
+      /// body
       body: isShow == false
           ? const Center(child: CircularProgressIndicator())
           : Column(
@@ -213,7 +232,8 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                     ),
                                   ),
                                   Text(
-                                    Get.arguments[2],
+                                    widget.originAddress,
+                                    // Get.arguments[2],
                                     maxLines: 1,
                                     style: poppinsMedium.copyWith(
                                       fontSize: 14.0,
@@ -250,7 +270,8 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                                     ),
                                   ),
                                   Text(
-                                    Get.arguments[3],
+                                    widget.destinationAddress,
+                                    // Get.arguments[3],
                                     maxLines: 1,
                                     style: poppinsMedium.copyWith(
                                       fontSize: 14.0,
@@ -277,6 +298,10 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                         horizontal: height(context) * 0.02),
                     decoration: BoxDecoration(
                       color: const Color(0xffFAFAFA).withOpacity(0.98),
+                      // borderRadius: const BorderRadius.only(
+                      //   topRight: Radius.circular(40.0),
+                      //   topLeft: Radius.circular(40.0),
+                      // ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,12 +337,8 @@ class _PlanRouteScreenState extends State<PlanRouteScreen> {
                             padding: const EdgeInsets.only(bottom: 50),
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              if(totalDuration[index]==null){
-                                totalDuration[index]=totalDuration[0]+1;
-                                totalDistance[index]=totalDistance[0]+1;
-                                setState(() {
+                              if(widget.exproute!.length>totalDuration.length){
 
-                                });
                               }
                               return InkWell(
                                 onTap: () {

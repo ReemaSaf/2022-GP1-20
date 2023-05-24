@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison, unused_local_variable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison, use_build_context_synchronously, unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -35,6 +35,7 @@ class SearchRoutesButton extends StatefulWidget {
 }
 
 class _SearchRoutesButtonState extends State<SearchRoutesButton> {
+  // List<distancemodel> distance=[];
   distancemodel? shortdistance;
   List<List<RouteModel>> routeListList = [];
   List<RouteModel> exproute = [];
@@ -98,6 +99,9 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                         isShow = false;
                       });
                     }
+
+                    print("this is the lat of the origin %%%%%%%%%%%% ${widget.originAddress} &&& ${widget.originLatLong[0]} &&& ${widget.originLatLong[1]}");
+                    print("this is the lat of the destination  %%%%%%%%%%%% ${widget.destinationAddress} &&& ${widget.destinationLatLang[0]} &&& ${widget.destinationLatLang[1]}");
                     await createRoute(
                             destinationAddress: widget.destinationAddress,
                             destinationLatLang: widget.destinationLatLang,
@@ -108,16 +112,12 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                         routeListList=value;
                       });
                     });
+                    await Future.delayed(const Duration(seconds: 6));
+                    Navigator.push(context,MaterialPageRoute(builder:(context) =>PlanRouteScreen(exproute: routeListList,destinationAddress:widget.destinationAddress,destinationLatLang:widget.destinationLatLang, originAddress: widget.originAddress,originLatLong:widget.originLatLong) ,));
+                    await Future.delayed(const Duration(seconds: 12));
                     setState(() {
                       isShow = true;
                     });
-                    Get.to(() => PlanRouteScreen(exproute: routeListList),
-                        arguments: [
-                          widget.originLatLong,
-                          widget.destinationLatLang,
-                          widget.originAddress,
-                          widget.destinationAddress,
-                        ]);
                   }
                 },
                 child: Text(
