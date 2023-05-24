@@ -16,6 +16,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:location/location.dart' as loc;
 import 'package:sekkah_app/Homepage/services/locationServices.dart';
+import 'package:sekkah_app/constants/app_colors.dart';
 import 'package:sekkah_app/constants/app_icons.dart';
 import 'package:uuid/uuid.dart';
 
@@ -26,6 +27,7 @@ import 'package:sekkah_app/data/constants.dart';
 import 'package:sekkah_app/data/typography.dart';
 import 'package:sekkah_app/helpers/user_model.dart';
 
+import '../constants/app_text_styles.dart';
 import 'routeHelpers/currentLocation.dart';
 import 'widgets/plan_route_map.dart';
 import 'widgets/search_button.dart';
@@ -209,15 +211,18 @@ class _PlanARoute extends State<PlanARoute> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
-                child: Center(
-                  child: Text(
-                    "Plan Your Trip",
-                    style: TextStyle(color: Colors.white),
+              Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              child: Center(
+                child: Text(
+                  'Plan Your Trip',
+                  style: poppinsMedium.copyWith(
+                    fontSize: 18.0,
+                    color: AppColors.whiteColor,
                   ),
                 ),
               ),
+            ),
               InkWell(
                 onTap: () {
                   setState(() {

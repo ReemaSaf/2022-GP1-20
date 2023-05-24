@@ -98,7 +98,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            widget.username,
+                            'SEKKAH',
                             style: poppinsBold.copyWith(
                               fontSize: 20.0,
                               color: AppColors.skyColor,
@@ -348,9 +348,10 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 ),
                               ),
                             ]),
-                            Row(children: [
+                            Row(
+                              children: [
                               Container(
-                                width: 150,
+                                width: 115,
                                 height: 30,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -362,12 +363,12 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.timer_sharp,
                                         size: 20, color: AppColors.skyColor),
                                     Container(
-                                      width: 120,
+                                      width: 80,
                                       child: Text(
                                         showDate,
                                         style: poppinsSemiBold.copyWith(
@@ -384,7 +385,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     ),
                     const SizedBox(height: 5),
 
-                    // ------------------------ QR CODE
+                   
                   ]),
                 ),
               ],

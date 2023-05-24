@@ -31,6 +31,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.blueDarkColor,
+        
         appBar: const CustomAppBar(
           title: 'My Profile',
           showBack: false,

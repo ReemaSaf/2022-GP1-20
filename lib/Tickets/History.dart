@@ -58,12 +58,11 @@ class _HistoryTickets extends State<HistoryTickets> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                           topLeft: Radius.circular(40))),
-                  child: auth.currentUser == null ||
-                          auth.currentUser!.isAnonymous
+                  child: auth.currentUser == null || auth.currentUser!.isAnonymous
                       ? const Center(
                           child: Center(
                             child: Text(
-                              '',
+                              'Login First,No tickets Founded!',
                               style:
                                   TextStyle(fontSize: 19, color: Colors.white),
                             ),
@@ -84,6 +83,15 @@ class _HistoryTickets extends State<HistoryTickets> {
                                 ConnectionState.waiting) {
                               return const Center(
                                   child: CircularProgressIndicator());
+                            }
+                            if (snapshot.data == null) {
+                              return const Center(
+                                child: Text(
+                                  'Login first....',
+                                  style: TextStyle(
+                                      fontSize: 19, color: Colors.white),
+                                ),
+                              );
                             }
                             UserModel? user = snapshot.data!;
 
