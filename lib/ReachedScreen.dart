@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, sized_box_for_whitespace, file_names
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -5,7 +7,8 @@ import 'package:sekkah_app/constants/app_colors.dart';
 
 import 'Homepage/components/user_nav.dart';
 import 'Homepage/viewmap.dart';
-
+import 'Planning/DigitalCard/DigitalCardExist.dart';
+import 'constants/app_colors.dart';
 
 class ReachedScreen extends StatefulWidget {
   const ReachedScreen({Key? key}) : super(key: key);
@@ -25,7 +28,7 @@ class _ReachedScreenState extends State<ReachedScreen> {
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                    NavScreen(inh:1)
+                    const NavScreen(inh:1)
             )
         )
     );
@@ -49,7 +52,7 @@ class _ReachedScreenState extends State<ReachedScreen> {
               child: const Icon(Icons.done, color: Colors.white),
             ),
             const SizedBox(height: 22),
-            const Text("You Have Reach At Your Destination",
+            const Text("You reached your Destination.",
                 style:
                 TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
           ],

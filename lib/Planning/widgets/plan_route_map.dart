@@ -1,5 +1,5 @@
 
-// ignore_for_file: prefer_final_fields, avoid_print
+// ignore_for_file: prefer_final_fields, unused_import, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sekkah_app/core/const.dart';
 
+import '../routeHelpers/currentLocation.dart';
 
 class PlanRouteMap extends StatefulWidget {
   const PlanRouteMap({
@@ -124,7 +125,7 @@ class _PlanRouteMapState extends State<PlanRouteMap> {
                     widget.originLatLong[0],
                     widget.originLatLong[1],
                   ),
-        zoom: 10,
+        zoom: 12,
       ),
       zoomControlsEnabled: false,
       zoomGesturesEnabled: true,

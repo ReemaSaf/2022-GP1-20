@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, await_only_futures, duplicate_ignore, null_check_always_fails
+// ignore_for_file: unused_field, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, await_only_futures, duplicate_ignore, null_check_always_fails, unused_import
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -470,7 +470,7 @@ class _TrackingState extends State<Tracking> {
                     initialCameraPosition: CameraPosition(
                       target: LatLng(currentLocation!.latitude!,
                           currentLocation!.longitude!),
-                      zoom: 11,
+                      zoom: 12,
                     ),
                     zoomControlsEnabled: false,
                     zoomGesturesEnabled: true,
