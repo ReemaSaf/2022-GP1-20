@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison, use_build_context_synchronously, unused_local_variable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_call_super, avoid_function_literals_in_foreach_calls, avoid_print, unnecessary_brace_in_string_interps, unnecessary_null_comparison
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -106,14 +106,16 @@ class _SearchRoutesButtonState extends State<SearchRoutesButton> {
                             destinationAddress: widget.destinationAddress,
                             destinationLatLang: widget.destinationLatLang,
                             originAddress: widget.originAddress,
-                            originLatLong: widget.originLatLong)
+                            originLatLong: widget.originLatLong,isNext: true,
+                      context: context,
+                    )
                         .then((value) {
                       setState(() {
                         routeListList=value;
                       });
                     });
                     await Future.delayed(const Duration(seconds: 6));
-                    Navigator.push(context,MaterialPageRoute(builder:(context) =>PlanRouteScreen(exproute: routeListList,destinationAddress:widget.destinationAddress,destinationLatLang:widget.destinationLatLang, originAddress: widget.originAddress,originLatLong:widget.originLatLong) ,));
+                    
                     await Future.delayed(const Duration(seconds: 12));
                     setState(() {
                       isShow = true;
@@ -137,7 +139,10 @@ Future<List<List<RouteModel>>> createRoute(
     {required List originLatLong,
     required List destinationLatLang,
     required String originAddress,
-    required String destinationAddress}) async {
+    required String destinationAddress,
+      required bool isNext,
+      required BuildContext context,
+    }) async {
   distancemodel? shortdistance;
   List<List<RouteModel>> routeListList = [];
   List<RouteModel> exproute = [];
@@ -567,7 +572,13 @@ Future<List<List<RouteModel>>> createRoute(
         });
         routeListList.add(exproute1);
       }
-      return routeListList;
+      if(isNext==true){
+        Navigator.push(context,MaterialPageRoute(builder:(context) =>PlanRouteScreen(exproute: routeListList,destinationAddress:destinationAddress,destinationLatLang:destinationLatLang, originAddress: originAddress,originLatLong:originLatLong),));
+        return routeListList;
+      }else{
+        return routeListList;
+      }
+
     }
   }
 }

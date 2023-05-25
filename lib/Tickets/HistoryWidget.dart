@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api, unnecessary_new, unnecessary_brace_in_string_interps
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, depend_on_referenced_packages, unused_import, avoid_print, avoid_unnecessary_containers, sized_box_for_whitespace, library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -158,6 +158,8 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                           destinationLatLang:
                                           widget.destinationLatLang,
                                           destinationAddress: widget.end,
+                                          isNext: false,
+                                          context: context
                                         ).then((value) {
                                           setState(() {
                                             routeListList = value;
