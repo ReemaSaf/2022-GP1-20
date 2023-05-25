@@ -327,15 +327,13 @@ class _BuyTicketState extends State<BuyTicket> {
                                  _dateTime.day, hour, 0);
                            }
 
-                           setState(() {});
+                          
                            Utils.showSheet(
                              buildContext,
                              child: buildDateTimePicker(),
                          onClicked: () {
                           isTimeSelected = true;
-                          setState(() {
-                            
-                          });
+                         
                                final value = DateFormat('MM/dd/yyyy HH:mm a')
                                    .format(_dateTime);
                                time = value;
