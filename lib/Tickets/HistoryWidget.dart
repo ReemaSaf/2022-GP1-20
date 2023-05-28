@@ -151,7 +151,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                         setState(() {
                                           isLoading = true;
                                         });
-                                        print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the route ${routeListList.length}");
+                                        print("%%%%%%%%%%%%%%%%%%%%%%%%5 this is the rouet ${routeListList.length}");
                                         await createRoute(
                                           originLatLong: widget.originLatLong,
                                           originAddress: widget.start,
@@ -167,7 +167,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                           setState(() {
                                             isLoading = false;
                                           });
-                                          print("this is the route ${routeListList.length}");
+                                          print("this is the rouet ${routeListList.length}");
 
                                           if (currentDate == outputDate) {
                                             if (checkTime - currentTime == 1 ||
@@ -280,9 +280,11 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                           ),
                         ),
 
+                        //SizedBox(width: 2),
 
                         SizedBox(
                           height: 14,
+                          // width: 20,
                           child: Image.asset(
                             'assets/icons/traincomponent.png',
                             fit: BoxFit.fitWidth,
@@ -325,6 +327,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.greyColor,
+                                    //width: 5,
                                   ),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0),
@@ -358,6 +361,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.greyColor,
+                                    //width: 5,
                                   ),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0),
@@ -387,7 +391,7 @@ class _TripDurationBoxState extends State<TripDurationBox> {
                     ),
                     const SizedBox(height: 5),
 
-                   
+                    // ------------------------ QR CODE
                   ]),
                 ),
               ],
@@ -449,6 +453,9 @@ class _TicketWidgetState extends State<TicketWidget> {
           decoration: BoxDecoration(
             boxShadow: widget.shadow,
             color: widget.color,
+            // borderRadius: widget.isCornerRounded
+            //     ? BorderRadius.circular(20.0)
+            //     : BorderRadius.circular(0.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),
